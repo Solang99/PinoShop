@@ -34,6 +34,7 @@ public class TopPanel extends JPanel {
 	private JMenuItem iteamTshirtsDonna;
 	
 	public TopPanel() {
+		setBorder(null);
 		setToolTipText("");
 		
 		setSize(906, 133);
@@ -49,6 +50,12 @@ public class TopPanel extends JPanel {
 		add(btnLogo);
 		
 		btnUser = new JButton("");
+		btnUser.setBorderPainted(false);
+		btnUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 
+			}
+		});
 		btnUser.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -66,7 +73,6 @@ public class TopPanel extends JPanel {
 		});
 		btnUser.setOpaque(false);
 		btnUser.setContentAreaFilled(false);
-		btnUser.setBorderPainted(false);
 		btnUser.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/userIcon.png")));
 		btnUser.setBounds(819, 84, 30, 38);
 		add(btnUser);
@@ -141,7 +147,7 @@ public class TopPanel extends JPanel {
 		mnUomo.add(itemAccessoriUomo);
 		
 		mnDonna = new JMenu("DONNA");
-		mnDonna.setForeground(UIManager.getColor("Button.focus"));
+		
 		mnDonna.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menuPino.add(mnDonna);
 		mnDonna.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/icons8-donna-in-piedi-30.png")));

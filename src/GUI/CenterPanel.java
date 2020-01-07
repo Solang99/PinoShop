@@ -4,6 +4,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 public class CenterPanel extends JPanel {
 
@@ -13,17 +16,10 @@ public class CenterPanel extends JPanel {
 	public CenterPanel() {
 		setBorder(null);
 		setSize(906, 546);
+		setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JScrollPane scrollPane = new JScrollPane();
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE)
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(scrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
-		);
-		setLayout(groupLayout);
+		scrollPane.setBorder(null);
+		add(scrollPane);
 	}
 }
