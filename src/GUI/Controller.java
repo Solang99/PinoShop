@@ -6,7 +6,7 @@ public class Controller {
 	LoginFrame loginFrame;
 	public static void main (String[] args) {
 		Controller controller = new Controller ();
-		 registerFrame = new RegisterFrame(controller);
+		registerFrame = new RegisterFrame(controller);
 		registerFrame.setVisible(true);
 	}
 	
