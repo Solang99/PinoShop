@@ -1,18 +1,28 @@
 package GUI;
 
 public class Controller {
-	RegisterFrame registerFrame;
+	private static RegisterFrame 
+	registerFrame;
 	LoginFrame loginFrame;
 	public static void main (String[] args) {
 		Controller controller = new Controller ();
-		RegisterFrame registerFrame = new RegisterFrame(controller);
+		 registerFrame = new RegisterFrame(controller);
+
 		registerFrame.setVisible(true);
 	}
 	
 	public void GoToLoginFrame() {
 		registerFrame.dispose();
-		loginFrame= new LoginFrame();
+		loginFrame= new LoginFrame(this);
 		loginFrame.setVisible(true);
 		
 	}
+	
+	public void GoToRegisterFrame() {
+		loginFrame.dispose();
+		registerFrame= new RegisterFrame(this);
+		registerFrame.setVisible(true);
+		
+	}
+	
 }
