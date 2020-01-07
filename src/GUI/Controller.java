@@ -6,14 +6,13 @@ public class Controller {
 	LoginFrame loginFrame;
 	public static void main (String[] args) {
 		Controller controller = new Controller ();
-<<<<<<< HEAD
+
 		MainFrame mainframe = new MainFrame();
 	 mainframe.setVisible(true);
-=======
 
 		registerFrame = new RegisterFrame(controller);
 		registerFrame.setVisible(true);
->>>>>>> 65d9edb500d943fc56809a9f841a6a00e39f3ccc
+
 	}
 	
 	public void GoToLoginFrame() {
