@@ -23,21 +23,20 @@ public class TopPanel extends JPanel {
 	private JButton btnLogo;
 	private JButton btnClose;
 	private JPanel panel;
-	private JMenuBar menuBar;
-	private JMenu mnNewMenu;
-	private JMenu mnNewMenu_1;
-	private JMenuItem mntmNewMenuItem;
-	private JMenuItem mntmNewMenuItem_2;
-	private JMenuItem mntmNewMenuItem_3;
-	private JMenuItem mntmNewMenuItem_4;
-	private JMenuItem mntmNewMenuItem_5;
-	private JMenu mnNewMenu_2;
-	private JMenuItem mntmNewMenuItem_6;
+	private JMenuBar menuPino;
+	private JMenu mnUomo;
+	private JMenu mnDonna;
+	private JMenuItem itemTshirtsUomo;
+	private JMenuItem itemPantaloniUomo;
+	private JMenuItem itemGiaccheUomo;
+	private JMenuItem itemScarpeUomo;
+	private JMenuItem itemAccessoriUomo;
+	private JMenuItem iteamTshirtsDonna;
 	
 	public TopPanel() {
-		setToolTipText("UOMO");
+		setToolTipText("");
 		
-		setSize(804, 133);
+		setSize(906, 133);
 		setLayout(null);
 		
 		btnLogo = new JButton("");
@@ -46,7 +45,7 @@ public class TopPanel extends JPanel {
 		btnLogo.setBorderPainted(false);
 		btnLogo.setBackground(new Color(240, 240, 240));
 		btnLogo.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/logo.png")));
-		btnLogo.setBounds(244, 11, 309, 62);
+		btnLogo.setBounds(322, 11, 309, 62);
 		add(btnLogo);
 		
 		btnUser = new JButton("");
@@ -69,7 +68,7 @@ public class TopPanel extends JPanel {
 		btnUser.setContentAreaFilled(false);
 		btnUser.setBorderPainted(false);
 		btnUser.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/userIcon.png")));
-		btnUser.setBounds(691, 84, 30, 38);
+		btnUser.setBounds(819, 84, 30, 38);
 		add(btnUser);
 		
 		btnCarrello = new JButton("");
@@ -87,7 +86,7 @@ public class TopPanel extends JPanel {
 			}
 		});
 		btnCarrello.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/icons8_shopping_cart_30px.png")));
-		btnCarrello.setBounds(743, 84, 37, 38);
+		btnCarrello.setBounds(859, 84, 37, 38);
 		add(btnCarrello);
 		
 		btnClose = new JButton("");
@@ -102,7 +101,7 @@ public class TopPanel extends JPanel {
 		btnClose.setContentAreaFilled(false);
 		btnClose.setBorderPainted(false);
 		btnClose.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/closeIcon.png")));
-		btnClose.setBounds(757, 11, 37, 23);
+		btnClose.setBounds(859, 11, 37, 23);
 		add(btnClose);
 		
 		panel = new JPanel();
@@ -112,60 +111,57 @@ public class TopPanel extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 		panel.setOpaque(false);
-		menuBar = new JMenuBar();
-		menuBar.setForeground(UIManager.getColor("Button.background"));
-		menuBar.setBackground(UIManager.getColor("Button.background"));
-		menuBar.setBounds(0, 0, 172, 39);
-		panel.add(menuBar);
+		menuPino = new JMenuBar();
+		menuPino.setForeground(UIManager.getColor("Button.background"));
+		menuPino.setBackground(UIManager.getColor("Button.background"));
+		menuPino.setBounds(0, 0, 172, 39);
+		panel.add(menuPino);
 		
-		mnNewMenu = new JMenu("UOMO");
-		mnNewMenu.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/pinoIcon.png")));
-		mnNewMenu.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		mnNewMenu.setOpaque(true);
-		mnNewMenu.setForeground(UIManager.getColor("Button.focus"));
-		mnNewMenu.setBackground(UIManager.getColor("Button.background"));
-		menuBar.add(mnNewMenu);
+		mnUomo = new JMenu("UOMO");
+		mnUomo.setOpaque(true);
+		mnUomo.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/pinoIcon.png")));
+		mnUomo.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		
-		mntmNewMenuItem = new JMenuItem("T-SHIRTS E FELPE");
-		mnNewMenu.add(mntmNewMenuItem);
+		mnUomo.setBackground(UIManager.getColor("Button.background"));
+		menuPino.add(mnUomo);
 		
-		mntmNewMenuItem_2 = new JMenuItem("PANTALONI");
-		mnNewMenu.add(mntmNewMenuItem_2);
+		itemTshirtsUomo = new JMenuItem("T-SHIRTS E FELPE");
+		mnUomo.add(itemTshirtsUomo);
 		
-		mntmNewMenuItem_3 = new JMenuItem("GIACCHE");
-		mnNewMenu.add(mntmNewMenuItem_3);
+		itemPantaloniUomo = new JMenuItem("PANTALONI");
+		mnUomo.add(itemPantaloniUomo);
 		
-		mntmNewMenuItem_4 = new JMenuItem("SCARPE");
-		mnNewMenu.add(mntmNewMenuItem_4);
+		itemGiaccheUomo = new JMenuItem("GIACCHE");
+		mnUomo.add(itemGiaccheUomo);
 		
-		mntmNewMenuItem_5 = new JMenuItem("ACCESSORI");
-		mnNewMenu.add(mntmNewMenuItem_5);
+		itemScarpeUomo = new JMenuItem("SCARPE");
+		mnUomo.add(itemScarpeUomo);
 		
-		mnNewMenu_1 = new JMenu("DONNA");
-		mnNewMenu_1.setForeground(UIManager.getColor("Button.focus"));
-		mnNewMenu_1.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		menuBar.add(mnNewMenu_1);
-		mnNewMenu_1.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/icons8-donna-in-piedi-30.png")));
-		mnNewMenu_1.setOpaque(true);
-		mnNewMenu_1.setBackground(UIManager.getColor("Button.background"));
+		itemAccessoriUomo = new JMenuItem("ACCESSORI");
+		mnUomo.add(itemAccessoriUomo);
 		
-		mntmNewMenuItem_6 = new JMenuItem("T-SHIRTS E FELPE");
-		mnNewMenu_1.add(mntmNewMenuItem_6);
+		mnDonna = new JMenu("DONNA");
+		mnDonna.setForeground(UIManager.getColor("Button.focus"));
+		mnDonna.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		menuPino.add(mnDonna);
+		mnDonna.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/icons8-donna-in-piedi-30.png")));
+		mnDonna.setOpaque(true);
+		mnDonna.setBackground(UIManager.getColor("Button.background"));
 		
-		JMenuItem mntmNewMenuItem_7 = new JMenuItem("JEANS E GONNE");
-		mnNewMenu_1.add(mntmNewMenuItem_7);
+		iteamTshirtsDonna = new JMenuItem("T-SHIRTS E FELPE");
+		mnDonna.add(iteamTshirtsDonna);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("GIACCHE");
-		mnNewMenu_1.add(mntmNewMenuItem_1);
+		JMenuItem itemPantaloniDonna = new JMenuItem("JEANS E GONNE");
+		mnDonna.add(itemPantaloniDonna);
 		
-		JMenuItem mntmNewMenuItem_8 = new JMenuItem("SCARPE");
-		mnNewMenu_1.add(mntmNewMenuItem_8);
+		JMenuItem itemGiaccheDonna = new JMenuItem("GIACCHE");
+		mnDonna.add(itemGiaccheDonna);
 		
-		JMenuItem mntmNewMenuItem_9 = new JMenuItem("ACCESSORI");
-		mnNewMenu_1.add(mntmNewMenuItem_9);
+		JMenuItem itemScarpeDonna = new JMenuItem("SCARPE");
+		mnDonna.add(itemScarpeDonna);
 		
-		mnNewMenu_2 = new JMenu("");
-		menuBar.add(mnNewMenu_2);
+		JMenuItem itemAccessoriDonna = new JMenuItem("ACCESSORI");
+		mnDonna.add(itemAccessoriDonna);
 		
 	}
 }

@@ -21,9 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class LoginFrame extends JFrame {
-	
-	
-	
+
 	private JPanel contentPane;
 	private JPanel PanelOverWallpaper;
 	private JTextField textUsername;
@@ -171,5 +169,4 @@ public class LoginFrame extends JFrame {
 		Sfondo.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(Sfondo);
 	}
-
 }

@@ -35,7 +35,7 @@ public class RegisterFrame extends JFrame {
 	private int mouseY;
 	
 	private Controller controller;
-	
+	//
 
 	/**
 	 * Create the frame.

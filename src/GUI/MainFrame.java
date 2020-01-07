@@ -27,18 +27,19 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
-		setBounds(100, 100, 804, 454);
+		setBounds(100, 100, 906, 680);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		TopPanel toppanel = new TopPanel();
+		toppanel.setBounds(0, 0, 906, 133);
 		contentPane.add(toppanel);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 133, 804, 321);
-		contentPane.add(panel);
+		CenterPanel centerpanel = new CenterPanel();
+		centerpanel.setBounds(0, 133, 906, 546);
+		contentPane.add(centerpanel);
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
