@@ -27,12 +27,12 @@ public class TopPanel extends JPanel {
 	private JMenu mnNewMenu;
 	private JMenu mnNewMenu_1;
 	private JMenuItem mntmNewMenuItem;
-	private JMenuItem mntmNewMenuItem_1;
 	private JMenuItem mntmNewMenuItem_2;
 	private JMenuItem mntmNewMenuItem_3;
 	private JMenuItem mntmNewMenuItem_4;
 	private JMenuItem mntmNewMenuItem_5;
 	private JMenu mnNewMenu_2;
+	private JMenuItem mntmNewMenuItem_6;
 	
 	public TopPanel() {
 		setToolTipText("UOMO");
@@ -91,6 +91,7 @@ public class TopPanel extends JPanel {
 		add(btnCarrello);
 		
 		btnClose = new JButton("");
+
 		btnClose.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -114,20 +115,19 @@ public class TopPanel extends JPanel {
 		menuBar = new JMenuBar();
 		menuBar.setForeground(UIManager.getColor("Button.background"));
 		menuBar.setBackground(UIManager.getColor("Button.background"));
-		menuBar.setBounds(0, 0, 140, 39);
+		menuBar.setBounds(0, 0, 172, 39);
 		panel.add(menuBar);
 		
 		mnNewMenu = new JMenu("UOMO");
+		mnNewMenu.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/pinoIcon.png")));
+		mnNewMenu.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		mnNewMenu.setOpaque(true);
-		mnNewMenu.setForeground(new Color(46, 139, 87));
+		mnNewMenu.setForeground(UIManager.getColor("Button.focus"));
 		mnNewMenu.setBackground(UIManager.getColor("Button.background"));
 		menuBar.add(mnNewMenu);
 		
-		mntmNewMenuItem = new JMenuItem("T-SHIRTS");
+		mntmNewMenuItem = new JMenuItem("T-SHIRTS E FELPE");
 		mnNewMenu.add(mntmNewMenuItem);
-		
-		mntmNewMenuItem_1 = new JMenuItem("FELPE");
-		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		mntmNewMenuItem_2 = new JMenuItem("PANTALONI");
 		mnNewMenu.add(mntmNewMenuItem_2);
@@ -142,10 +142,27 @@ public class TopPanel extends JPanel {
 		mnNewMenu.add(mntmNewMenuItem_5);
 		
 		mnNewMenu_1 = new JMenu("DONNA");
+		mnNewMenu_1.setForeground(UIManager.getColor("Button.focus"));
+		mnNewMenu_1.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menuBar.add(mnNewMenu_1);
 		mnNewMenu_1.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/icons8-donna-in-piedi-30.png")));
 		mnNewMenu_1.setOpaque(true);
 		mnNewMenu_1.setBackground(UIManager.getColor("Button.background"));
+		
+		mntmNewMenuItem_6 = new JMenuItem("T-SHIRTS E FELPE");
+		mnNewMenu_1.add(mntmNewMenuItem_6);
+		
+		JMenuItem mntmNewMenuItem_7 = new JMenuItem("JEANS E GONNE");
+		mnNewMenu_1.add(mntmNewMenuItem_7);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("GIACCHE");
+		mnNewMenu_1.add(mntmNewMenuItem_1);
+		
+		JMenuItem mntmNewMenuItem_8 = new JMenuItem("SCARPE");
+		mnNewMenu_1.add(mntmNewMenuItem_8);
+		
+		JMenuItem mntmNewMenuItem_9 = new JMenuItem("ACCESSORI");
+		mnNewMenu_1.add(mntmNewMenuItem_9);
 		
 		mnNewMenu_2 = new JMenu("");
 		menuBar.add(mnNewMenu_2);
