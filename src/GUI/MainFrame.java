@@ -17,10 +17,16 @@ import java.awt.Component;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import datechooser.beans.DateChooserCombo;
+import datechooser.beans.DateChooserDialog;
 
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
+	/**
+	 * @wbp.nonvisual location=76,349
+	 */
+	private final DateChooserDialog dateChooserDialog = new DateChooserDialog();
 
 
 	
@@ -40,6 +46,11 @@ public class MainFrame extends JFrame {
 		CenterPanel centerpanel = new CenterPanel();
 		centerpanel.setBounds(0, 133, 906, 546);
 		contentPane.add(centerpanel);
+		centerpanel.setLayout(null);
+		
+		DateChooserCombo dateChooserCombo = new DateChooserCombo();
+		dateChooserCombo.setBounds(92, 140, 155, 20);
+		centerpanel.add(dateChooserCombo);
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
