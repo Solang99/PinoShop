@@ -58,11 +58,10 @@ public class CommessoDAO {
 			preparedStatement = connection.prepareStatement("SELECT  \"username\", \"password\" FROM commesso WHERE \"username\" =  ? AND \"password\" = ? ;");
 			preparedStatement.setString(1, username);
 			preparedStatement.setString(2, password);
-<<<<<<< HEAD
+
 			preparedStatement.executeQuery();
-=======
+
 			ResultSet risultato = preparedStatement.executeQuery();
->>>>>>> f45ea27f3920ea864f28b73875e6021a74fb652c
 			
 			if (risultato.next())
 				return true;
