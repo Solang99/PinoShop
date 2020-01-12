@@ -1,14 +1,27 @@
 package GUI;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Calendar;
+
+import Database.CommessoDAO;
+
 public class Controller {
-	private static RegisterFrame 
-	registerFrame;
-	LoginFrame loginFrame;
+	private static RegisterFrame registerFrame;
+	private LoginFrame loginFrame;
+	private static MainFrame mainFrame;
+	
+	private static CommessoDAO commesso;
+	
 	public static void main (String[] args) {
 		Controller controller = new Controller ();
-
-		MainFrame mainframe = new MainFrame();
-		mainframe.setVisible(true);
+		
+//		mainFrame = new MainFrame(controller);
+//		mainFrame.setVisible(true);
+		registerFrame = new RegisterFrame(controller);
+		registerFrame.setVisible(true);
 
 	}
 	
@@ -26,4 +39,10 @@ public class Controller {
 		
 	}
 	
+	public void CreateAccount(String nome,String cognome,String username,char[] password,Calendar date,File fotoFile,String email) throws FileNotFoundException {
+		commesso = new CommessoDAO();
+		String s = String.copyValueOf(password);
+		commesso.AddUser(nome, cognome,username, s, date, fotoFile, email);
+	}
+
 }

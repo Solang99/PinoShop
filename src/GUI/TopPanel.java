@@ -32,13 +32,18 @@ public class TopPanel extends JPanel {
 	private JMenuItem itemScarpeUomo;
 	private JMenuItem itemAccessoriUomo;
 	private JMenuItem iteamTshirtsDonna;
+
+	private Controller controller;
 	
-	public TopPanel() {
+	public TopPanel(Controller ctrl) {
+		controller = ctrl;
 		setBorder(null);
 		setToolTipText("");
 		
 		setSize(906, 133);
 		setLayout(null);
+		
+
 		
 		btnLogo = new JButton("");
 		btnLogo.setOpaque(false);
@@ -51,11 +56,6 @@ public class TopPanel extends JPanel {
 		
 		btnUser = new JButton("");
 		btnUser.setBorderPainted(false);
-		btnUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				 
-			}
-		});
 		btnUser.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -66,10 +66,7 @@ public class TopPanel extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				btnUser.setSize(30,38);
 			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				System.out.println("a");
-			}
+		
 		});
 		btnUser.setOpaque(false);
 		btnUser.setContentAreaFilled(false);

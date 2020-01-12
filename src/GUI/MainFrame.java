@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
@@ -19,18 +21,19 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import datechooser.beans.DateChooserCombo;
 import datechooser.beans.DateChooserDialog;
+import java.awt.CardLayout;
 
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
-	/**
-	 * @wbp.nonvisual location=76,349
-	 */
 	private final DateChooserDialog dateChooserDialog = new DateChooserDialog();
-
-
+	private CenterPanel centralPanel;
+	private TopPanel toppanel;
+	private Controller controller;
+	private int mouseX,mouseY;
 	
-	public MainFrame() {
+	public MainFrame(Controller ctrl) {
+		controller = ctrl;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		setBounds(100, 100, 906, 685);
@@ -39,35 +42,32 @@ public class MainFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		TopPanel toppanel = new TopPanel();
+		toppanel = new TopPanel(controller);
 		toppanel.setBounds(0, 0, 906, 133);
-		contentPane.add(toppanel);
-		
-		CenterPanel centerpanel = new CenterPanel();
-		centerpanel.setBounds(0, 133, 906, 546);
-		contentPane.add(centerpanel);
-		centerpanel.setLayout(null);
-		
-		DateChooserCombo dateChooserCombo = new DateChooserCombo();
-		dateChooserCombo.setBounds(92, 140, 155, 20);
-		centerpanel.add(dateChooserCombo);
-	}
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
+		toppanel.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
+				mouseX= e.getX();
+				mouseY = e.getY();
 			}
 		});
+		toppanel.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				int x =e.getXOnScreen();
+				int y = e.getYOnScreen();
+				setLocation(x-mouseX,y-mouseY);
+			}
+		});
+		contentPane.add(toppanel);
+		
+		centralPanel = new CenterPanel();
+		centralPanel.setBounds(0, 133, 906, 546);
+		contentPane.add(centralPanel);
+		centralPanel.setLayout(new CardLayout(0, 0));
+
 	}
+	
+
 }
 
