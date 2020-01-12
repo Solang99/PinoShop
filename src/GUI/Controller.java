@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.util.Calendar;
 
 import Database.CommessoDAO;
@@ -47,9 +48,9 @@ public class Controller {
 		commesso.AddUser(nome, cognome,username, s, date, fotoFile, email);
 	}
 	
-	public void LogIn(String username, char[] password)  {
+	public boolean LogIn(String username, char[] password) throws SQLException  {
 		commesso = new CommessoDAO();
 		String s = String.copyValueOf(password);
-		commesso.LogInUser(username, s);
+		return commesso.LogInUser(username, s);
 	}
 }

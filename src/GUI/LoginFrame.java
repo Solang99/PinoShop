@@ -10,11 +10,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -61,7 +63,16 @@ public class LoginFrame extends JFrame {
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-					controller.LogIn(textUsername.getText(), passwordField.getPassword());
+					try {
+						boolean find = controller.LogIn(textUsername.getText(), passwordField.getPassword());
+						if (find)
+							JOptionPane.showMessageDialog(null, "Login Avvenuto con successo!", "Login", 2);
+						else
+							JOptionPane.showMessageDialog(null, "Coppia Username password non presente", "Errore", 2);
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(null, "Contatta l'amministratore", "Errore", 2);
+						e1.printStackTrace();
+					}
 				
 			}
 		});
