@@ -54,7 +54,7 @@ public class RegisterFrame extends JFrame {
 	private File fotoFile;
 	
 	public RegisterFrame(Controller ctrl) {
-		fotoFile = new File(RegisterFrame.class.getResource("/IconRegister/SfondRegister.png"));
+		//fotoFile = new File(RegisterFrame.class.getResource("/IconRegister/SfondRegister.png"));
 		
 		controller = ctrl;
 		

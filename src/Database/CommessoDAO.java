@@ -51,6 +51,18 @@ public class CommessoDAO {
 		
 		
 	}
-	
 
+	public void LogInUser(String username, String password) throws FileNotFoundException{
+		try {
+			preparedStatement = connection.prepareStatement("SELECT  username, password FROM commesso WHERE username =  ? AND password = ?");
+			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, password);
+			preparedStatement.executeUpdate();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
 }

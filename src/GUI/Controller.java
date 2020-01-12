@@ -44,5 +44,10 @@ public class Controller {
 		String s = String.copyValueOf(password);
 		commesso.AddUser(nome, cognome,username, s, date, fotoFile, email);
 	}
-
+	
+	public void LogIn(String username, char[] password) throws FileNotFoundException {
+		commesso = new CommessoDAO();
+		String s = String.copyValueOf(password);
+		commesso.LogInUser(username, s);
+	}
 }
