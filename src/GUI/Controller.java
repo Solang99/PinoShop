@@ -19,11 +19,11 @@ public class Controller {
 		Controller controller = new Controller ();
 		
 		ProfileFrame profileFrame= new ProfileFrame(controller);
-		profileFrame.setVisible(false);
+		profileFrame.setVisible(true);
 //		mainFrame = new MainFrame(controller);
 //		mainFrame.setVisible(true);
 		registerFrame = new RegisterFrame(controller);
-		registerFrame.setVisible(true);
+		registerFrame.setVisible(false);
 
 	}
 	

@@ -55,9 +55,9 @@ public class CommessoDAO {
 	public void LogInUser(String username, String password) {
 		try {
 			preparedStatement = connection.prepareStatement("SELECT  \"username\", \"password\" FROM commesso WHERE \"username\" =  ? AND \"password\" = ? ;");
-			preparedStatement.setString(0, username);
+			preparedStatement.setString(1, username);
 			preparedStatement.setString(2, password);
-			preparedStatement.executeUpdate();
+			preparedStatement.executeQuery();
 			
 		}catch (SQLException e) {
 			e.printStackTrace();

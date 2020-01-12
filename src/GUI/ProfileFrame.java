@@ -25,110 +25,128 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ProfileFrame extends JFrame {
 
 	private JPanel contentPane;
+	private JButton btnLogIn;
+	private JButton btnProfilo;
+	private JButton btnLogOut;
 	private Controller controller;
 	private TopPanel topPanel;
-
+	
 	public ProfileFrame(Controller ctrl) {
 		controller = ctrl;
 	
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 906, 648);
+		setBounds(100, 100, 907, 648);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(null);
 		setContentPane(contentPane);
 
 		topPanel = new TopPanel(controller);
+		topPanel.setBounds(0, 0, 897, 133);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 255, 153));
+		panel.setBounds(0, 131, 243, 517);
+		panel.setBorder(null);
+		panel.setBackground(new Color(1, 157, 73));
 		panel.setForeground(Color.LIGHT_GRAY);
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new EmptyBorder(0, 0, 0, 0));
-		panel_1.setOpaque(false);
-		panel_1.setPreferredSize(new Dimension(230, 200));
-		panel.add(panel_1);
-		
-		JButton button_1 = new JButton("PROFILO");
-		button_1.setSelectedIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/Rectangle.png")));
-		button_1.setPressedIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/Rectangle.png")));
-		button_1.setBorderPainted(false);
-		button_1.setRolloverIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/Rectangle.png")));
-		button_1.setIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/Rectangle 1.png")));
-		button_1.setPreferredSize(new Dimension(232, 40));
-		button_1.setHorizontalTextPosition(SwingConstants.CENTER);
-		button_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panel.add(button_1);
-		
-		JButton btnLogIn = new JButton("LOG IN");
-		btnLogIn.setPressedIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/Rectangle.png")));
-		btnLogIn.setSelectedIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/Rectangle.png")));
+		 btnLogIn = new JButton("LOG IN");
+		 btnLogIn.addMouseListener(new MouseAdapter() {
+		 	@Override
+		 	public void mouseClicked(MouseEvent e) {
+		 		SetColor(btnLogIn);
+		 		ResetColor(btnProfilo);
+		 		ResetColor(btnLogOut);
+		 	}
+		 });
+		btnLogIn.setBackground(new Color(1, 157, 73));
+	
 		btnLogIn.setBorderPainted(false);
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnLogIn.setIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/Rectangle 1.png")));
-		btnLogIn.setRolloverIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/Rectangle.png")));
-		btnLogIn.setPreferredSize(new Dimension(232, 40));
+				btnLogIn.setPreferredSize(new Dimension(232, 40));
 		btnLogIn.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnLogIn.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panel.add(btnLogIn);
-		
-		JButton btnNewButton = new JButton("LOG OUT");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setPressedIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/Rectangle.png")));
-		btnNewButton.setSelectedIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/Rectangle.png")));
-		btnNewButton.setBorderPainted(false);
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnNewButton.setRolloverIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/Rectangle.png")));
-		btnNewButton.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnNewButton.setIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/Rectangle 1.png")));
-		btnNewButton.setPreferredSize(new Dimension(232, 40));
-		panel.add(btnNewButton);
-		
-		JButton button = new JButton("LOG OUT");
-		button.setBackground(new Color(0, 255, 153));
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				button.setBackground(new Color(46, 139, 87));
-			}
-		});
-		button.setPreferredSize(new Dimension(232, 40));
-		button.setHorizontalTextPosition(SwingConstants.CENTER);
-		button.setFont(new Font("Tahoma", Font.BOLD, 13));
-		button.setBorderPainted(false);
-		panel.add(button);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/icons8-evergreen-tree-100.png")));
 		lblNewLabel.setPreferredSize(new Dimension(232, 100));
-		panel.add(lblNewLabel);
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(topPanel, GroupLayout.DEFAULT_SIZE, 903, Short.MAX_VALUE)
-				.addComponent(panel, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)
+		
+		btnProfilo = new JButton("PROFILO");
+		btnProfilo.setForeground(Color.WHITE);
+		btnProfilo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				SetColor(btnProfilo);
+				ResetColor(btnLogIn);
+				ResetColor(btnLogOut);
+				
+			}
+		});
+		btnProfilo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnProfilo.setPreferredSize(new Dimension(232, 40));
+		btnProfilo.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnProfilo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnProfilo.setBorderPainted(false);
+		btnProfilo.setBackground(new Color(1, 157, 73));
+		
+		btnLogOut = new JButton("LOG OUT");
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnLogOut.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				SetColor(btnLogOut);
+				ResetColor(btnProfilo);
+				ResetColor(btnLogIn);
+			}
+		});
+		btnLogOut.setPreferredSize(new Dimension(232, 40));
+		btnLogOut.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnLogOut.setBorderPainted(false);
+		btnLogOut.setBackground(new Color(1, 157, 73));
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addComponent(btnProfilo, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)
+				.addComponent(btnLogIn, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)
+				.addComponent(btnLogOut, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(20)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(505, Short.MAX_VALUE))
-				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(63)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnProfilo, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(56)
+							.addComponent(btnLogIn, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)))
+					.addGap(5)
+					.addComponent(btnLogOut, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+					.addGap(91)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		);
-		contentPane.setLayout(gl_contentPane);
+		panel.setLayout(gl_panel);
+		contentPane.setLayout(null);
+		contentPane.add(topPanel);
+		contentPane.add(panel);
 		
 		Component [] components = this.getContentPane().getComponents();
 		for(Component component : components)
@@ -137,6 +155,12 @@ public class ProfileFrame extends JFrame {
 				((JButton) component).setUI(new BasicButtonUI());
 		}
 	}
-	
-}
+
+	}
+	private void SetColor(JButton btn) {
+		btn.setBackground(new Color(132, 225, 168));
+	}
+	private void ResetColor (JButton btn) {
+		btn.setBackground(new Color(1, 157, 73));
+	}
 }
