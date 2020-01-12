@@ -19,11 +19,11 @@ public class Controller {
 		Controller controller = new Controller ();
 		
 		ProfileFrame profileFrame= new ProfileFrame(controller);
-		profileFrame.setVisible(true);
+		profileFrame.setVisible(false);
 //		mainFrame = new MainFrame(controller);
 //		mainFrame.setVisible(true);
 		registerFrame = new RegisterFrame(controller);
-		registerFrame.setVisible(false);
+		registerFrame.setVisible(true);
 
 	}
 	
@@ -47,7 +47,7 @@ public class Controller {
 		commesso.AddUser(nome, cognome,username, s, date, fotoFile, email);
 	}
 	
-	public void LogIn(String username, char[] password) throws FileNotFoundException {
+	public void LogIn(String username, char[] password)  {
 		commesso = new CommessoDAO();
 		String s = String.copyValueOf(password);
 		commesso.LogInUser(username, s);

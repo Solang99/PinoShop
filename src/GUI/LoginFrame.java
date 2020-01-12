@@ -9,6 +9,7 @@ import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.FileNotFoundException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -57,6 +58,13 @@ public class LoginFrame extends JFrame {
 		PanelOverWallpaper.setOpaque(false);
 
 		btnLogin = new JButton("");
+		btnLogin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+					controller.LogIn(textUsername.getText(), passwordField.getPassword());
+				
+			}
+		});
 		btnLogin.setBounds(107, 281, 67, 59);
 		btnLogin.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
