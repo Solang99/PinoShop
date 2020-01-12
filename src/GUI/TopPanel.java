@@ -40,7 +40,7 @@ public class TopPanel extends JPanel {
 		setBorder(null);
 		setToolTipText("");
 		
-		setSize(906, 133);
+		setSize(903, 133);
 		setLayout(null);
 		
 

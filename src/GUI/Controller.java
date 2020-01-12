@@ -18,10 +18,12 @@ public class Controller {
 	public static void main (String[] args) {
 		Controller controller = new Controller ();
 		
+		ProfileFrame profileFrame= new ProfileFrame(controller);
+		profileFrame.setVisible(true);
 //		mainFrame = new MainFrame(controller);
 //		mainFrame.setVisible(true);
 		registerFrame = new RegisterFrame(controller);
-		registerFrame.setVisible(true);
+		registerFrame.setVisible(false);
 
 	}
 	
