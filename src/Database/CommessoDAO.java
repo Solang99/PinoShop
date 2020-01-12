@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
@@ -23,7 +24,7 @@ public class CommessoDAO {
 	public void AddUser(String nome,String cognome,String username,String password, Calendar date, File fotoFile,String email) throws FileNotFoundException {
 		
 		try {
-			System.out.println("A");
+		
 			preparedStatement = connection.prepareStatement("INSERT INTO commesso VALUES (?,?,?,?,?,?,?)");
 			preparedStatement.setString(1, nome);
 			preparedStatement.setString(2, cognome);
@@ -52,16 +53,17 @@ public class CommessoDAO {
 		
 	}
 
-	public void LogInUser(String username, String password) {
-		try {
+	public boolean LogInUser(String username, String password) throws SQLException {
+	
 			preparedStatement = connection.prepareStatement("SELECT  \"username\", \"password\" FROM commesso WHERE \"username\" =  ? AND \"password\" = ? ;");
-			preparedStatement.setString(0, username);
+			preparedStatement.setString(1, username);
 			preparedStatement.setString(2, password);
-			preparedStatement.executeUpdate();
+			ResultSet risultato = preparedStatement.executeQuery();
 			
-		}catch (SQLException e) {
-			e.printStackTrace();
-		}
+			if (risultato.next())
+				return true;
+			else 
+				return false;
 	}
 
 	
