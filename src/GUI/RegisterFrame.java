@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 
 import datechooser.beans.DateChooserCombo;
 import java.awt.event.ActionListener;
@@ -54,8 +55,11 @@ public class RegisterFrame extends JFrame {
 	private File fotoFile;
 	
 	public RegisterFrame(Controller ctrl) {
-		//fotoFile = new File(RegisterFrame.class.getResource("/IconRegister/SfondRegister.png"));
-		
+
+		URL url = getClass().getResource("/IconRegister/notfound.png");
+		File fotoFile = new File(url.getPath());
+	
+
 		controller = ctrl;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
