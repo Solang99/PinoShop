@@ -4,15 +4,53 @@ import java.awt.Image;
 import java.util.Date;
 
 public class Commesso {
+	private String nome;
+	private String cognome;
 	private String username;
 	private String password;
 	private String mail;
-	private Date dataDiNascita;
+	private Date dataNascita;
 	private Image foto;
-	private int telefono;
-	private Date dataAssunzione;
-	private String anzianetà;
-	private int id;
+	
+	public Commesso(String nome,String cognome,String username,String password,Date dataNascita,Image foto,String mail) {
+		setNome(nome);
+		setCognome(cognome);
+		setUsername(username);
+		setPassword(password);
+		setMail(mail);
+		setDataNascita(dataNascita);
+		setFoto(foto);
+		
+	}
+
+	
+	
+	
+	
+	public String getNome() {
+		return nome;
+	}
+
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+
+	public String getCognome() {
+		return cognome;
+	}
+
+
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
+
+
 	public String getUsername() {
 		return username;
 	}
@@ -31,11 +69,11 @@ public class Commesso {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-	public Date getDataDiNascita() {
-		return dataDiNascita;
+	public Date getDataNascita() {
+		return dataNascita;
 	}
-	public void setDataDiNascita(Date dataDiNascita) {
-		this.dataDiNascita = dataDiNascita;
+	public void setDataNascita(Date dataDiNascita) {
+		this.dataNascita = dataDiNascita;
 	}
 	public Image getFoto() {
 		return foto;
@@ -43,31 +81,7 @@ public class Commesso {
 	public void setFoto(Image foto) {
 		this.foto = foto;
 	}
-	public int getTelefono() {
-		return telefono;
-	}
-	public void setTelefono(int telefono) {
-		this.telefono = telefono;
-	}
-	public Date getDataAssunzione() {
-		return dataAssunzione;
-	}
-	public void setDataAssunzione(Date dataAssunzione) {
-		this.dataAssunzione = dataAssunzione;
-	}
-	public String getAnzianetà() {
-		return anzianetà;
-	}
-	public void setAnzianetà(String anzianetà) {
-		this.anzianetà = anzianetà;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	
+
 	
 	
 }

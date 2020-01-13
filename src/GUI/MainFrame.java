@@ -28,7 +28,7 @@ public class MainFrame extends JFrame {
 	private JPanel contentPane;
 	private final DateChooserDialog dateChooserDialog = new DateChooserDialog();
 	private CenterPanel centralPanel;
-	private TopPanel toppanel;
+	private TopPanel topPanel;
 	private Controller controller;
 	private int mouseX,mouseY;
 	
@@ -42,16 +42,16 @@ public class MainFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		toppanel = new TopPanel(controller);
-		toppanel.setBounds(0, 0, 906, 133);
-		toppanel.addMouseListener(new MouseAdapter() {
+		topPanel = new TopPanel(controller,this);
+		topPanel.setBounds(0, 0, 906, 133);
+		topPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				mouseX= e.getX();
 				mouseY = e.getY();
 			}
 		});
-		toppanel.addMouseMotionListener(new MouseMotionAdapter() {
+		topPanel.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				int x =e.getXOnScreen();
@@ -59,7 +59,7 @@ public class MainFrame extends JFrame {
 				setLocation(x-mouseX,y-mouseY);
 			}
 		});
-		contentPane.add(toppanel);
+		contentPane.add(topPanel);
 		
 		centralPanel = new CenterPanel();
 		centralPanel.setBounds(0, 133, 906, 546);

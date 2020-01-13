@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.FlowLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -37,14 +38,20 @@ public class ProfileFrame extends JFrame {
 	private JButton btnLogOut;
 	private Controller controller;
 	private TopPanel topPanel;
-	private CardLayout cardLayout;
 	private JPanel panelCards;
-	private JPanel panelCard1;
-	private JPanel panelCard2;
+	private JPanel profileCard;
+	private JPanel recentiCard;
+	private CardLayout cardPanel;
+	private JPanel sidePanel;
+	private JLabel logoIcon;
+	private JLabel lblCognome;
+	private JLabel lblNome;
+	private int mouseX;
+	private int mouseY;
 	
 	public ProfileFrame(Controller ctrl) {
 		controller = ctrl;
-		CardLayout cl = new CardLayout();
+		cardPanel = new CardLayout();
 		
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,13 +60,28 @@ public class ProfileFrame extends JFrame {
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
 
-		topPanel = new TopPanel(controller);
+		topPanel = new TopPanel(controller,this);
 		topPanel.setBounds(0, 0, 897, 133);
+		topPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				mouseX= e.getX();
+				mouseY = e.getY();
+			}
+		});
+		topPanel.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				int x =e.getXOnScreen();
+				int y = e.getYOnScreen();
+				setLocation(x-mouseX,y-mouseY);
+			}
+		});
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 131, 243, 517);
-		panel.setBorder(null);
-		panel.setBackground(new Color(155, 220, 193));
+		sidePanel = new JPanel();
+		sidePanel.setBounds(0, 131, 243, 517);
+		sidePanel.setBorder(null);
+		sidePanel.setBackground(new Color(155, 220, 193));
 		
 		
 		 btnRecenti = new JButton("RECENTI");
@@ -78,18 +100,18 @@ public class ProfileFrame extends JFrame {
 		btnRecenti.setBorderPainted(false);
 		btnRecenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cl.show(panelCards, "2");
+				cardPanel.show(panelCards, "2");
 			}
 		});
 				btnRecenti.setPreferredSize(new Dimension(232, 40));
 		btnRecenti.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnRecenti.setFont(new Font("Segoe Print", Font.BOLD, 20));
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(10, 278, 216, 228);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/PineIcon+.png")));
-		lblNewLabel.setPreferredSize(new Dimension(232, 100));
+		logoIcon = new JLabel("");
+		logoIcon.setBounds(10, 278, 216, 228);
+		logoIcon.setHorizontalAlignment(SwingConstants.CENTER);
+		logoIcon.setIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/PineIcon+.png")));
+		logoIcon.setPreferredSize(new Dimension(232, 100));
 		
 		btnProfilo = new JButton("PROFILO");
 		btnProfilo.setBounds(0, 69, 242, 65);
@@ -105,7 +127,7 @@ public class ProfileFrame extends JFrame {
 		});
 		btnProfilo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cl.show(panelCards, "1");
+				cardPanel.show(panelCards, "1");
 			}
 			
 		});
@@ -137,52 +159,44 @@ public class ProfileFrame extends JFrame {
 		btnLogOut.setBackground(new Color(155, 220, 193));
 		contentPane.setLayout(null);
 		contentPane.add(topPanel);
-		contentPane.add(panel);
-		panel.setLayout(null);
-		panel.add(btnProfilo);
-		panel.add(btnRecenti);
-		panel.add(btnLogOut);
-		panel.add(lblNewLabel);
+		contentPane.add(sidePanel);
+		sidePanel.setLayout(null);
+		sidePanel.add(btnProfilo);
+		sidePanel.add(btnRecenti);
+		sidePanel.add(btnLogOut);
+		sidePanel.add(logoIcon);
 		
+
 		panelCards = new JPanel();
 		panelCards.setBounds(286, 154, 575, 439);
 		contentPane.add(panelCards);
 		panelCards.setBackground(new Color (220,255,192));
-		panelCards.setLayout(cl);
+		panelCards.setLayout(cardPanel);
 		
-		panelCard1 = new JPanel();
-		panelCard1.setBackground(new Color(220,255,192));
-		panelCards.add(panelCard1, "name_386263633130100");
-		panelCard1.setLayout(null);
-		panelCards.add(panelCard1, "1");
+		profileCard = new JPanel();
+		profileCard.setBackground(new Color(220,255,192));
+		panelCards.add(profileCard, "name_386263633130100");
+		profileCard.setLayout(null);
+		panelCards.add(profileCard, "1");
 		
-		JLabel lblNome = new JLabel("NOME");
+		lblNome = new JLabel("NOME");
 		lblNome.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		lblNome.setBounds(244, 31, 72, 22);
-		panelCard1.add(lblNome);
+		profileCard.add(lblNome);
 		
-		JLabel lblNewLabel_1 = new JLabel("\"\"");
-		lblNewLabel_1.setBounds(212, 64, 130, 28);
-		panelCard1.add(lblNewLabel_1);
-		
-		JLabel lblCognome = new JLabel("COGNOME");
+		lblCognome = new JLabel("COGNOME");
 		lblCognome.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		lblCognome.setBounds(231, 132, 111, 22);
-		panelCard1.add(lblCognome);
+		profileCard.add(lblCognome);
 		
-		panelCard2 = new JPanel();
-		panelCard2.setBackground(new Color(220,255,192));
-		panelCards.add(panelCard2, "2");
-		
-		Component [] components = this.getContentPane().getComponents();
-		for(Component component : components)
-		{
-			if (component instanceof JButton) {
-				((JButton) component).setUI(new BasicButtonUI());
-		}
-	}
+		recentiCard = new JPanel();
+		recentiCard.setBackground(new Color(220,255,192));
+		panelCards.add(recentiCard, "2");
+
+
 
 	}
+	
 	private void SetColor(JButton btn) {
 		btn.setBackground(new Color(131,181,160));
 	}

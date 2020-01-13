@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -35,7 +37,7 @@ public class TopPanel extends JPanel {
 
 	private Controller controller;
 	
-	public TopPanel(Controller ctrl) {
+	public TopPanel(Controller ctrl,JFrame Container) {
 		controller = ctrl;
 		setBorder(null);
 		setToolTipText("");
@@ -67,6 +69,10 @@ public class TopPanel extends JPanel {
 				btnUser.setSize(30,38);
 			}
 		
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.GoToProfileFrame(Container);
+			}
 		});
 		btnUser.setOpaque(false);
 		btnUser.setContentAreaFilled(false);
