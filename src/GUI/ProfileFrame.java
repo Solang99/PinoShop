@@ -26,19 +26,26 @@ import java.awt.event.KeyEvent;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.CardLayout;
+import javax.swing.JTextField;
 
 public class ProfileFrame extends JFrame {
 
 	private JPanel contentPane;
-	private JButton btnLogIn;
+	private JButton btnRecenti;
 	private JButton btnProfilo;
 	private JButton btnLogOut;
 	private Controller controller;
 	private TopPanel topPanel;
+	private CardLayout cardLayout;
+	private JPanel panelCards;
+	private JPanel panelCard1;
+	private JPanel panelCard2;
 	
 	public ProfileFrame(Controller ctrl) {
 		controller = ctrl;
-	
+		CardLayout cl = new CardLayout();
+		
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 907, 648);
@@ -55,27 +62,28 @@ public class ProfileFrame extends JFrame {
 		panel.setBackground(new Color(155, 220, 193));
 		
 		
-		 btnLogIn = new JButton("LOG IN");
-		 btnLogIn.setForeground(Color.BLACK);
-		 btnLogIn.setBounds(0, 119, 242, 65);
-		 btnLogIn.addMouseListener(new MouseAdapter() {
+		 btnRecenti = new JButton("RECENTI");
+		 btnRecenti.setForeground(Color.BLACK);
+		 btnRecenti.setBounds(0, 119, 242, 65);
+		 btnRecenti.addMouseListener(new MouseAdapter() {
 		 	@Override
 		 	public void mouseClicked(MouseEvent e) {
-		 		SetColor(btnLogIn);
+		 		SetColor(btnRecenti);
 		 		ResetColor(btnProfilo);
 		 		ResetColor(btnLogOut);
 		 	}
 		 });
-		btnLogIn.setBackground(new Color(155, 220, 193));
+		btnRecenti.setBackground(new Color(155, 220, 193));
 	
-		btnLogIn.setBorderPainted(false);
-		btnLogIn.addActionListener(new ActionListener() {
+		btnRecenti.setBorderPainted(false);
+		btnRecenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cl.show(panelCards, "2");
 			}
 		});
-				btnLogIn.setPreferredSize(new Dimension(232, 40));
-		btnLogIn.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnLogIn.setFont(new Font("Segoe Print", Font.BOLD, 20));
+				btnRecenti.setPreferredSize(new Dimension(232, 40));
+		btnRecenti.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnRecenti.setFont(new Font("Segoe Print", Font.BOLD, 20));
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(10, 278, 216, 228);
@@ -90,14 +98,16 @@ public class ProfileFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				SetColor(btnProfilo);
-				ResetColor(btnLogIn);
+				ResetColor(btnRecenti);
 				ResetColor(btnLogOut);
 				
 			}
 		});
 		btnProfilo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cl.show(panelCards, "1");
 			}
+			
 		});
 		btnProfilo.setPreferredSize(new Dimension(232, 40));
 		btnProfilo.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -117,7 +127,7 @@ public class ProfileFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				SetColor(btnLogOut);
 				ResetColor(btnProfilo);
-				ResetColor(btnLogIn);
+				ResetColor(btnRecenti);
 			}
 		});
 		btnLogOut.setPreferredSize(new Dimension(232, 40));
@@ -130,14 +140,39 @@ public class ProfileFrame extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		panel.add(btnProfilo);
-		panel.add(btnLogIn);
+		panel.add(btnRecenti);
 		panel.add(btnLogOut);
 		panel.add(lblNewLabel);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(315, 246, 503, 290);
-		panel_1.setBackground(new Color (220,255,192));
-		contentPane.add(panel_1);
+		panelCards = new JPanel();
+		panelCards.setBounds(286, 154, 575, 439);
+		contentPane.add(panelCards);
+		panelCards.setBackground(new Color (220,255,192));
+		panelCards.setLayout(cl);
+		
+		panelCard1 = new JPanel();
+		panelCard1.setBackground(new Color(220,255,192));
+		panelCards.add(panelCard1, "name_386263633130100");
+		panelCard1.setLayout(null);
+		panelCards.add(panelCard1, "1");
+		
+		JLabel lblNome = new JLabel("NOME");
+		lblNome.setFont(new Font("Segoe Print", Font.PLAIN, 20));
+		lblNome.setBounds(244, 31, 72, 22);
+		panelCard1.add(lblNome);
+		
+		JLabel lblNewLabel_1 = new JLabel("\"\"");
+		lblNewLabel_1.setBounds(212, 64, 130, 28);
+		panelCard1.add(lblNewLabel_1);
+		
+		JLabel lblCognome = new JLabel("COGNOME");
+		lblCognome.setFont(new Font("Segoe Print", Font.PLAIN, 20));
+		lblCognome.setBounds(231, 132, 111, 22);
+		panelCard1.add(lblCognome);
+		
+		panelCard2 = new JPanel();
+		panelCard2.setBackground(new Color(220,255,192));
+		panelCards.add(panelCard2, "2");
 		
 		Component [] components = this.getContentPane().getComponents();
 		for(Component component : components)
