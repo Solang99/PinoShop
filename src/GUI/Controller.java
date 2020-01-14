@@ -15,22 +15,18 @@ import Database.CommessoDAO;
 import Entita.Commesso;
 
 public class Controller {
-	private static RegisterFrame registerFrame;
-	private LoginFrame loginFrame;
-	private static MainFrame mainFrame;
-	private ProfileFrame profileFrame;
-	private static CommessoDAO commessoDao;
-	private Commesso commesso;
+	private static LoginFrame loginFrame;
+	private  RegisterFrame registerFrame;
+	private  MainFrame mainFrame;
+	private UtenteFrame profileFrame;
+	
+	private  CommessoDAO commessoDao;
+	public Commesso commesso;
 	
 	public static void main (String[] args) {
 		Controller controller = new Controller ();
-		
-
-//		mainFrame = new MainFrame(controller);
-//		mainFrame.setVisible(true);
-		registerFrame = new RegisterFrame(controller);
-		registerFrame.setVisible(true);
-
+		loginFrame = new LoginFrame(controller);
+		loginFrame.setVisible(true);
 	}
 	
 	public void GoToLoginFrame() {
@@ -49,8 +45,14 @@ public class Controller {
 	
 	public void GoToProfileFrame(JFrame frame) {
 		frame.dispose();
-		profileFrame= new ProfileFrame(this);
+		profileFrame= new UtenteFrame(this);
 		profileFrame.setVisible(true);
+	}
+	
+	public void GoToMainFrame() {
+		loginFrame.dispose();
+		mainFrame = new MainFrame(this);
+		mainFrame.setVisible(true);
 	}
 	
 	public void CreateUser(String nome,String cognome,String username,String password, 

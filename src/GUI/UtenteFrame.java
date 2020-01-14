@@ -1,15 +1,12 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicButtonUI;
+
 import javax.swing.JLabel;
 import java.awt.Color;
-import java.awt.Component;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -19,18 +16,15 @@ import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.FlowLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.Image;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.CardLayout;
-import javax.swing.JTextField;
 
-public class ProfileFrame extends JFrame {
+
+public class UtenteFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JButton btnRecenti;
@@ -44,12 +38,14 @@ public class ProfileFrame extends JFrame {
 	private CardLayout cardPanel;
 	private JPanel sidePanel;
 	private JLabel logoIcon;
-	private JLabel lblCognome;
 	private JLabel lblNome;
 	private int mouseX;
 	private int mouseY;
+	private JLabel lblUsername;
+	private JLabel lblEmail;
+	private JLabel lblFoto;
 	
-	public ProfileFrame(Controller ctrl) {
+	public UtenteFrame(Controller ctrl) {
 		controller = ctrl;
 		cardPanel = new CardLayout();
 		
@@ -60,8 +56,7 @@ public class ProfileFrame extends JFrame {
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
 
-		topPanel = new TopPanel(controller,this);
-		topPanel.setBounds(0, 0, 897, 133);
+		topPanel = new TopPanel(907,controller,this);
 		topPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -110,7 +105,7 @@ public class ProfileFrame extends JFrame {
 		logoIcon = new JLabel("");
 		logoIcon.setBounds(10, 278, 216, 228);
 		logoIcon.setHorizontalAlignment(SwingConstants.CENTER);
-		logoIcon.setIcon(new ImageIcon(ProfileFrame.class.getResource("/IconProfile/PineIcon+.png")));
+		logoIcon.setIcon(new ImageIcon(UtenteFrame.class.getResource("/IconProfile/PineIcon+.png")));
 		logoIcon.setPreferredSize(new Dimension(232, 100));
 		
 		btnProfilo = new JButton("PROFILO");
@@ -168,7 +163,7 @@ public class ProfileFrame extends JFrame {
 		
 
 		panelCards = new JPanel();
-		panelCards.setBounds(286, 154, 575, 439);
+		panelCards.setBounds(286, 180, 575, 397);
 		contentPane.add(panelCards);
 		panelCards.setBackground(new Color (220,255,192));
 		panelCards.setLayout(cardPanel);
@@ -176,18 +171,66 @@ public class ProfileFrame extends JFrame {
 		profileCard = new JPanel();
 		profileCard.setBackground(new Color(220,255,192));
 		panelCards.add(profileCard, "name_386263633130100");
-		profileCard.setLayout(null);
 		panelCards.add(profileCard, "1");
 		
-		lblNome = new JLabel("NOME");
+		lblNome = new JLabel("Nome: " + controller.commesso.getNome());
+		lblNome.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNome.setFont(new Font("Segoe Print", Font.PLAIN, 20));
-		lblNome.setBounds(244, 31, 72, 22);
-		profileCard.add(lblNome);
 		
-		lblCognome = new JLabel("COGNOME");
+		JLabel lblCognome = new JLabel("Cognome: " + controller.commesso.getCognome() );
+		lblCognome.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCognome.setFont(new Font("Segoe Print", Font.PLAIN, 20));
-		lblCognome.setBounds(231, 132, 111, 22);
-		profileCard.add(lblCognome);
+		
+		lblUsername = new JLabel("Username: " + controller.commesso.getUsername());
+		lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUsername.setFont(new Font("Segoe Print", Font.PLAIN, 20));
+		
+		lblEmail = new JLabel("Email: " + controller.commesso.getMail());
+		lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEmail.setFont(new Font("Segoe Print", Font.PLAIN, 20));
+		
+		lblFoto = new JLabel("");
+		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
+		ImageIcon fotoProfilo = new ImageIcon(new ImageIcon(controller.commesso.getFoto()).getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+		lblFoto.setIcon(fotoProfilo);
+		GroupLayout gl_profileCard = new GroupLayout(profileCard);
+		gl_profileCard.setHorizontalGroup(
+			gl_profileCard.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_profileCard.createSequentialGroup()
+					.addGap(40)
+					.addGroup(gl_profileCard.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_profileCard.createSequentialGroup()
+							.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
+							.addGap(109)
+							.addComponent(lblCognome, GroupLayout.PREFERRED_SIZE, 201, Short.MAX_VALUE))
+						.addGroup(gl_profileCard.createSequentialGroup()
+							.addGap(152)
+							.addComponent(lblFoto, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_profileCard.createSequentialGroup()
+							.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 201, Short.MAX_VALUE)
+							.addGap(109)
+							.addComponent(lblEmail, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)))
+					.addGap(24))
+		);
+		gl_profileCard.setVerticalGroup(
+			gl_profileCard.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_profileCard.createSequentialGroup()
+					.addGap(61)
+					.addGroup(gl_profileCard.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_profileCard.createSequentialGroup()
+							.addGap(127)
+							.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
+						.addGroup(gl_profileCard.createSequentialGroup()
+							.addGap(127)
+							.addComponent(lblCognome, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblFoto, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE))
+					.addGap(21)
+					.addGroup(gl_profileCard.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE))
+					.addGap(32))
+		);
+		profileCard.setLayout(gl_profileCard);
 		
 		recentiCard = new JPanel();
 		recentiCard.setBackground(new Color(220,255,192));

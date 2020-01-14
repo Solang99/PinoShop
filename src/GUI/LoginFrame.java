@@ -189,7 +189,7 @@ public class LoginFrame extends JFrame {
 		try {
 			boolean find = controller.LogIn(textUsername.getText(), passwordField.getPassword());
 			if (find)
-				JOptionPane.showMessageDialog(null, "Login Avvenuto con successo!", "Login", 2);
+				controller.GoToMainFrame();
 			else
 				JOptionPane.showMessageDialog(null, "Coppia Username password non presente", "Errore", 2);
 		} catch (SQLException e1) {

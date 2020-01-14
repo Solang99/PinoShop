@@ -24,7 +24,7 @@ public class TopPanel extends JPanel {
 	private JButton btnCarrello;
 	private JButton btnLogo;
 	private JButton btnClose;
-	private JPanel panel;
+	private JPanel munuPanel;
 	private JMenuBar menuPino;
 	private JMenu mnUomo;
 	private JMenu mnDonna;
@@ -37,12 +37,12 @@ public class TopPanel extends JPanel {
 
 	private Controller controller;
 	
-	public TopPanel(Controller ctrl,JFrame Container) {
+	public TopPanel(int x, Controller ctrl,JFrame Container) {
 		controller = ctrl;
 		setBorder(null);
 		setToolTipText("");
 		
-		setSize(903, 133);
+		setSize(902, 133);
 		setLayout(null);
 		
 
@@ -52,7 +52,7 @@ public class TopPanel extends JPanel {
 		btnLogo.setContentAreaFilled(false);
 		btnLogo.setBorderPainted(false);
 		btnLogo.setBackground(new Color(240, 240, 240));
-		btnLogo.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/logo.png")));
+		btnLogo.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/logo.png")));
 		btnLogo.setBounds(322, 11, 309, 62);
 		add(btnLogo);
 		
@@ -76,8 +76,8 @@ public class TopPanel extends JPanel {
 		});
 		btnUser.setOpaque(false);
 		btnUser.setContentAreaFilled(false);
-		btnUser.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/userIcon.png")));
-		btnUser.setBounds(819, 84, 30, 38);
+		btnUser.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/userIcon.png")));
+		btnUser.setBounds(779, 84, 30, 38);
 		add(btnUser);
 		
 		btnCarrello = new JButton("");
@@ -94,7 +94,7 @@ public class TopPanel extends JPanel {
 				btnCarrello.setSize(30,38);
 			}
 		});
-		btnCarrello.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/icons8_shopping_cart_30px.png")));
+		btnCarrello.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/icons8_shopping_cart_30px.png")));
 		btnCarrello.setBounds(859, 84, 37, 38);
 		add(btnCarrello);
 		
@@ -113,22 +113,22 @@ public class TopPanel extends JPanel {
 		btnClose.setBounds(859, 11, 37, 23);
 		add(btnClose);
 		
-		panel = new JPanel();
-		panel.setForeground(UIManager.getColor("Button.background"));
-		panel.setBackground(UIManager.getColor("Button.background"));
-		panel.setBounds(10, 94, 210, 39);
-		add(panel);
-		panel.setLayout(null);
-		panel.setOpaque(false);
+		munuPanel = new JPanel();
+		munuPanel.setForeground(UIManager.getColor("Button.background"));
+		munuPanel.setBackground(UIManager.getColor("Button.background"));
+		munuPanel.setBounds(10, 94, 210, 39);
+		add(munuPanel);
+		munuPanel.setLayout(null);
+		munuPanel.setOpaque(false);
 		menuPino = new JMenuBar();
 		menuPino.setForeground(UIManager.getColor("Button.background"));
 		menuPino.setBackground(UIManager.getColor("Button.background"));
 		menuPino.setBounds(0, 0, 172, 39);
-		panel.add(menuPino);
+		munuPanel.add(menuPino);
 		
 		mnUomo = new JMenu("UOMO");
 		mnUomo.setOpaque(true);
-		mnUomo.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/pinoIcon.png")));
+		mnUomo.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/pinoIcon.png")));
 		mnUomo.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		
 		mnUomo.setBackground(UIManager.getColor("Button.background"));
@@ -153,7 +153,7 @@ public class TopPanel extends JPanel {
 		
 		mnDonna.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menuPino.add(mnDonna);
-		mnDonna.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/icons8-donna-in-piedi-30.png")));
+		mnDonna.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/icons8-donna-in-piedi-30.png")));
 		mnDonna.setOpaque(true);
 		mnDonna.setBackground(UIManager.getColor("Button.background"));
 		
@@ -171,6 +171,25 @@ public class TopPanel extends JPanel {
 		
 		JMenuItem itemAccessoriDonna = new JMenuItem("ACCESSORI");
 		mnDonna.add(itemAccessoriDonna);
+		
+		JButton btnAdd = new JButton("");
+		
+		btnAdd.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/IconAdd.png")));
+		btnAdd.setOpaque(false);
+		btnAdd.setContentAreaFilled(false);
+		btnAdd.setBorderPainted(false);
+		btnAdd.setBounds(819, 84, 30, 38);
+		btnAdd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnAdd.setSize(45,53);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnAdd.setSize(30,38);
+			}
+		});
+		add(btnAdd);
 		
 	}
 }

@@ -60,8 +60,10 @@ public class CommessoDAO {
 	}
 
 	public boolean LogInUser(String username, String password,Controller controller) throws SQLException, IOException {
-	
-			preparedStatement = connection.prepareStatement("SELECT  * FROM commesso WHERE \"username\" =  ? AND \"password\" = ? ;");
+			String query ="SELECT * "
+							+ "FROM commesso "
+							+ "WHERE \"username\" =  ? AND \"password\" = ? ;";
+			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, username);
 			preparedStatement.setString(2, password);
 
@@ -75,12 +77,12 @@ public class CommessoDAO {
 				String nomeUser = risultato.getString(1);
 				String cognomeUser= risultato.getString(2);
 				String usernameUser = risultato.getString(3);
-				String passwordUser = risultato.getString(4);
-				java.util.Date dataNascitaUser = new java.util.Date (risultato.getDate(5).getTime());
-				
+				String emailUser = risultato.getString(4);
+				String passwordUser = risultato.getString(5);
 				InputStream fotoStream = risultato.getBinaryStream(6);
 				Image fotoUser = ImageIO.read(fotoStream);
-				String emailUser = risultato.getString(7);
+				java.util.Date dataNascitaUser = risultato.getTimestamp(7);
+			
 				controller.CreateUser(nomeUser,cognomeUser,usernameUser,passwordUser,dataNascitaUser,fotoUser,emailUser);
 				
 				preparedStatement.close();
