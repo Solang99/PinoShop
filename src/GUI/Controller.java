@@ -11,7 +11,9 @@ import java.util.Date;
 
 import javax.swing.JFrame;
 
+import Database.ArticoloFemminileDAO;
 import Database.CommessoDAO;
+import Entita.ArticoloFemminile;
 import Entita.Commesso;
 
 public class Controller {
@@ -19,9 +21,10 @@ public class Controller {
 	private  RegisterFrame registerFrame;
 	private  MainFrame mainFrame;
 	private UtenteFrame profileFrame;
-	
+	private ArticoloFemminileDAO articoloFemminileDao; 
 	private  CommessoDAO commessoDao;
 	public Commesso commesso;
+	private ArticoloFemminile articoloFemminile;
 	
 	public static void main (String[] args) {
 		Controller controller = new Controller ();
@@ -76,5 +79,10 @@ public class Controller {
 		commessoDao = new CommessoDAO();
 		String s = String.copyValueOf(password);
 		return commessoDao.LogInUser(username, s,this);
+	}
+	
+	public void AddArticolo(String id, String produttore, String taglia, String colore, String stagione, String collezione, Integer quantita, Integer prezzo, File foto) {
+		articoloFemminileDao = new ArticoloFemminileDAO();
+		articoloFemminileDao.AddArticoloFemminile(id, produttore, taglia, colore, stagione, collezione, quantita, prezzo, foto);
 	}
 }
