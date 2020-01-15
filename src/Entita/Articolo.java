@@ -1,17 +1,34 @@
 package Entita;
 
 import java.awt.Image;
+import java.io.File;
 
-public class ArticoloFemminile {
+public class Articolo {
 		private String id;
 		private String produttore;
 		private String taglia;
 		private String colore;
-		private String stagione;
 		private String collezione;
 		private int quantita;
 		private int prezzo;
-		private Image foto ;
+		private String genere;
+		private File foto;
+		
+		
+		
+		public File getFoto() {
+			return foto;
+		}
+		public void setFoto(File foto) {
+			this.foto = foto;
+		}
+		public String getGenere() {
+			return genere;
+		}
+		public void setGenere(String genere) {
+			this.genere = genere;
+		}
+		
 		
 		public String getId() {
 			return id;
@@ -37,12 +54,7 @@ public class ArticoloFemminile {
 		public void setColore(String colore) {
 			this.colore = colore;
 		}
-		public String getStagione() {
-			return stagione;
-		}
-		public void setStagione(String stagione) {
-			this.stagione = stagione;
-		}
+
 		public String getCollezione() {
 			return collezione;
 		}
@@ -61,13 +73,8 @@ public class ArticoloFemminile {
 		public void setPrezzo(int prezzo) {
 			this.prezzo = prezzo;
 		}
-		public Image getFoto() {
-			return foto;
-		}
-		public void setFoto(Image foto) {
-			this.foto = foto;
-		}
-		
+	
+
 		
 	
 

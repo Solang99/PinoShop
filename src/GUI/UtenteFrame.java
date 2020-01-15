@@ -232,11 +232,6 @@ public class UtenteFrame extends JFrame {
 		);
 		profileCard.setLayout(gl_profileCard);
 		
-		recentiCard = new JPanel();
-		recentiCard.setBackground(new Color(220,255,192));
-		panelCards.add(recentiCard, "2");
-
-
 
 	}
 	

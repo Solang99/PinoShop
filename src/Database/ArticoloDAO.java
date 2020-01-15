@@ -7,29 +7,30 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class ArticoloFemminileDAO {
+import Entita.Articolo;
+
+public class ArticoloDAO {
 	private Connection connection;
 	private PreparedStatement preparedStatement;
 	
-	public ArticoloFemminileDAO() {
+	public ArticoloDAO() {
 		connection = Connessione.getConnection();
 	}
 	
-	public void AddArticoloFemminile(String id, String produttore, String taglia, String colore, String stagione, String collezione, Integer quantita, Integer prezzo, File foto) {
+	public void InserArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo, File foto) {
 		
 			try {
 				preparedStatement = connection.prepareStatement("INSERT INTO articolofemminile (id, produttore, taglia, colore, stagione, collezione, quantita, prezzo, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
 			
-			int idinteger = Integer.parseInt(id);
-		
-			preparedStatement.setInt(1, idinteger);
-			preparedStatement.setString(2, produttore);
+			
+			preparedStatement.setString(1, id);
+			
+			preparedStatement.setString(2,produttore);
 			preparedStatement.setString(3, taglia);
 			preparedStatement.setString(4, colore);
-			preparedStatement.setString(5, stagione);
-			preparedStatement.setString(6, collezione);
-			preparedStatement.setInt(7, quantita);
-			preparedStatement.setInt(8, prezzo);
+			preparedStatement.setString(5,collezione);
+			preparedStatement.setInt(6,quantita);
+			preparedStatement.setFloat(7, prezzo);
 			
 			FileInputStream fotoStream = new FileInputStream(foto);
 			preparedStatement.setBinaryStream(9, fotoStream, (int) foto.length());

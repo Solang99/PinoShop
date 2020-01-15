@@ -62,6 +62,8 @@ public class MainFrame extends JFrame {
 		
 		centralPanel = new CenterPanel();
 		centralPanel.setLayout(new CardLayout(0, 0));
+		
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
