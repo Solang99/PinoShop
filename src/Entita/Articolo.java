@@ -10,11 +10,20 @@ public class Articolo {
 		private String colore;
 		private String collezione;
 		private int quantita;
-		private int prezzo;
+		private float prezzo;
 		private String genere;
 		private File foto;
 		
-		
+		public Articolo(String id, String produttore,String taglia,String colore, String collezione, int quantita,float prezzo,File foto) {
+			setId(id);
+			setProduttore(produttore);
+			setTaglia(taglia);
+			setColore(colore);
+			setCollezione(collezione);
+			setQuantita(quantita);
+			setPrezzo(prezzo);
+			setFoto(foto);
+		}
 		
 		public File getFoto() {
 			return foto;
@@ -67,10 +76,10 @@ public class Articolo {
 		public void setQuantita(int quantita) {
 			this.quantita = quantita;
 		}
-		public int getPrezzo() {
+		public float getPrezzo() {
 			return prezzo;
 		}
-		public void setPrezzo(int prezzo) {
+		public void setPrezzo(float prezzo) {
 			this.prezzo = prezzo;
 		}
 	

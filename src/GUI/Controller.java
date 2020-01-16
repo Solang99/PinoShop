@@ -15,14 +15,15 @@ import Database.ArticoloDAO;
 import Database.CommessoDAO;
 import Entita.Articolo;
 import Entita.Commesso;
-
+//TO-DO FIX CHIUSURA TOTALE
 public class Controller {
 	private static LoginFrame loginFrame;
 	private  RegisterFrame registerFrame;
 	private  MainFrame mainFrame;
 	private UtenteFrame profileFrame;
-	
+	private AddArticoloFrame addArticoloFrame;
 	private ArticoloDAO articoloDao; 
+	
 	private  CommessoDAO commessoDao;
 	public Commesso commesso;
 
@@ -31,8 +32,7 @@ public class Controller {
 		Controller controller = new Controller ();
 		loginFrame = new LoginFrame(controller);
 		loginFrame.setVisible(true);
-		AddArticoloFrame af = new AddArticoloFrame(controller);
-		af.setVisible(true);
+	
 	}
 	
 	public void GoToLoginFrame() {
@@ -61,10 +61,16 @@ public class Controller {
 		mainFrame.setVisible(true);
 	}
 	
+	public void GoToAddArticolo() {
+		addArticoloFrame = new AddArticoloFrame(this);
+		addArticoloFrame.setVisible(true);
+	
+	}
+	
 	public void CreateUser(String nome,String cognome,String username,String password, 
 							Date dataNascita, Image foto,String email) {
 		commesso = new Commesso(nome,cognome,username,password,dataNascita,foto,email);
-		System.out.println(commesso);
+		
 	}
 	
 
@@ -85,8 +91,10 @@ public class Controller {
 	}
 	
 	public void AddArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo, File foto) {
+		Articolo articolo = new Articolo(id, produttore, taglia, colore, collezione, quantita, prezzo, foto);
 		articoloDao = new ArticoloDAO();
-		articoloDao.InserArticolo(id, produttore, taglia, colore, collezione, quantita, prezzo, foto);
+		System.out.println(articolo.getId());
+		articoloDao.InserArticolo(articolo);
 		
 	}
 

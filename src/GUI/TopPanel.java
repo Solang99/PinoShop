@@ -188,6 +188,10 @@ public class TopPanel extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				btnAdd.setSize(30,38);
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.GoToAddArticolo();
+			}
 		});
 		add(btnAdd);
 		

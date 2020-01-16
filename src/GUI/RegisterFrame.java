@@ -201,7 +201,7 @@ public class RegisterFrame extends JFrame {
 								,passwordField.getPassword(),dateChooserCombo.getSelectedDate(), fotoFile,textEmail.getText());
 					VerifyFields();
 				} catch (FileNotFoundException e1) {
-				
+					JOptionPane.showMessageDialog(null, "Foto non trovata", "Errore", 2);
 					e1.printStackTrace();
 				}
 				
