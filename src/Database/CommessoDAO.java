@@ -15,6 +15,7 @@ import java.util.Calendar;
 
 import javax.imageio.ImageIO;
 
+import Entita.Commesso;
 import GUI.Controller;
 
 public class CommessoDAO {
@@ -27,22 +28,23 @@ public class CommessoDAO {
 	}
 	
 	
-	public void AddUser(String nome,String cognome,String username,String password, Calendar date, File fotoFile,String email) throws FileNotFoundException {
+	public void AddUser(Commesso commesso) throws FileNotFoundException {
 		
 		try {
-		
-			preparedStatement = connection.prepareStatement("INSERT INTO commesso VALUES (?,?,?,?,?,?,?)");
-			preparedStatement.setString(1, nome);
-			preparedStatement.setString(2, cognome);
-			preparedStatement.setString(3, username);
-			preparedStatement.setString(4, email);
-			preparedStatement.setString(5, password);
-
-			FileInputStream fotoStream = new FileInputStream(fotoFile);
-			preparedStatement.setBinaryStream(6, fotoStream, (int) fotoFile.length());
+			String query = "INSERT INTO commesso VALUES (?,?,?,?,?,?,?);";
 			
-			java.util.Date dataNascita = date.getTime();
-			long javaTime = dataNascita.getTime();
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, commesso.getNome());
+			preparedStatement.setString(2, commesso.getCognome());
+			preparedStatement.setString(3, commesso.getUsername());
+			preparedStatement.setString(4, commesso.getMail());
+			preparedStatement.setString(5, commesso.getPassword());
+
+			FileInputStream fotoStream = new FileInputStream(commesso.getFoto());
+			preparedStatement.setBinaryStream(6, fotoStream, (int) commesso.getFoto().length());
+			
+			long dataNascita = commesso.getDataNascita().getTime();
+			long javaTime = commesso.getDataNascita().getTime();
 			java.sql.Date dataSql = new java.sql.Date(javaTime);
 			
 			preparedStatement.setDate(7,dataSql);

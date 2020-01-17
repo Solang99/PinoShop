@@ -49,6 +49,7 @@ public class AddArticoloFrame extends JFrame {
 	private Controller controller;
 	private JSpinner spinnerPrezzo;
 	private JSpinner spinnerQuantita;
+	private JComboBox comboBoxGenere;
 	
 	public AddArticoloFrame(Controller ctrl) {
 		
@@ -188,9 +189,9 @@ public class AddArticoloFrame extends JFrame {
 				String selectedTaglia =  comboBoxTaglia.getSelectedItem().toString(); 
 				int selectedQuantita =  Integer.parseInt(modelQuantita.getValue().toString());
 				float selectedPrezzo = Float.parseFloat(modelPrezzo.getValue().toString());
-				
+				String selectedGenere = comboBoxGenere.getSelectedItem().toString();
 				controller.AddArticolo(txtId.getText(), txtProduttore.getText(), selectedTaglia, txtColore.getText(), 
-									 txtCollezione.getText(),selectedQuantita ,selectedPrezzo, fotoFile);
+									 txtCollezione.getText(),selectedQuantita ,selectedPrezzo,selectedGenere, fotoFile);
 			}
 		});
 		btnAggiungi.setBounds(435, 526, 160, 40);
@@ -218,7 +219,7 @@ public class AddArticoloFrame extends JFrame {
 		lblGenere.setBounds(412, 371, 87, 30);
 		panelArticolo.add(lblGenere);
 		
-		JComboBox<String> comboBoxGenere = new JComboBox<String>();
+		comboBoxGenere = new JComboBox<String>();
 		comboBoxGenere.setModel(new DefaultComboBoxModel<String>(new String[] {"MASCHILE","FEMMILE"}));
 		comboBoxGenere.setBackground(new Color(191, 191, 191));
 		comboBoxGenere.setBounds(586, 379, 110, 22);

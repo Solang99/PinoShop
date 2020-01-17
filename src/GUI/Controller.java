@@ -68,8 +68,8 @@ public class Controller {
 	}
 	
 	public void CreateUser(String nome,String cognome,String username,String password, 
-							Date dataNascita, Image foto,String email) {
-		commesso = new Commesso(nome,cognome,username,password,dataNascita,foto,email);
+							Date dataNascita, File fotoFile,String email) {
+		commesso = new Commesso(nome,cognome,username,password,dataNascita,fotoFile,email);
 		
 	}
 	
@@ -78,9 +78,10 @@ public class Controller {
 	
 	//DATABASE
 	public void CreateAccount(String nome,String cognome,String username,char[] password,Calendar date,File fotoFile,String email) throws FileNotFoundException {
-		commessoDao = new CommessoDAO();
+		
+		commessoDao = new CommessoDAO();			
 		String s = String.copyValueOf(password);
-		commessoDao.AddUser(nome, cognome,username, s, date, fotoFile, email);
+		commessoDao.AddUser(commesso);
 	}
 
 	
@@ -90,12 +91,26 @@ public class Controller {
 		return commessoDao.LogInUser(username, s,this);
 	}
 	
-	public void AddArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo, File foto) {
-		Articolo articolo = new Articolo(id, produttore, taglia, colore, collezione, quantita, prezzo, foto);
+	public void AddArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
+		Articolo articolo = new Articolo(id, produttore, taglia, colore, collezione, quantita, prezzo, genere, foto);
 		articoloDao = new ArticoloDAO();
 		System.out.println(articolo.getId());
 		articoloDao.InserArticolo(articolo);
 		
+	}
+	
+	public void EditArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
+		Articolo articolo = new Articolo(id, produttore, taglia, colore, collezione, quantita, prezzo, genere, foto);
+		articoloDao = new ArticoloDAO();
+		System.out.println(articolo.getId());
+		articoloDao.UpdateArticolo(articolo);
+	}
+	
+	public void RemoveArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
+		Articolo articolo = new Articolo(id, produttore, taglia, colore, collezione, quantita, prezzo, genere, foto);
+		articoloDao = new ArticoloDAO();
+		System.out.println(articolo.getId());
+		articoloDao.DeleteArticolo(articolo);
 	}
 
 

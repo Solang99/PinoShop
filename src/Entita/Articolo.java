@@ -14,14 +14,15 @@ public class Articolo {
 		private String genere;
 		private File foto;
 		
-		public Articolo(String id, String produttore,String taglia,String colore, String collezione, int quantita,float prezzo,File foto) {
+		public Articolo(String id, String produttore,String taglia,String colore, String collezione, int quantita,float prezzo,String genere,File foto) {
 			setId(id);
 			setProduttore(produttore);
 			setTaglia(taglia);
 			setColore(colore);
 			setCollezione(collezione);
-			setQuantita(quantita);
+			setQuantita(quantita);			
 			setPrezzo(prezzo);
+			setGenere(genere);
 			setFoto(foto);
 		}
 		
