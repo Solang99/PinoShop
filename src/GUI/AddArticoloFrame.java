@@ -1,7 +1,6 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,11 +14,10 @@ import java.awt.Image;
 
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
+
 
 import java.awt.Color;
 import javax.swing.JSpinner;
-import javax.swing.border.CompoundBorder;
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import javax.swing.JComboBox;
@@ -31,8 +29,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 
@@ -49,7 +49,6 @@ public class AddArticoloFrame extends JFrame {
 	private Controller controller;
 	private JSpinner spinnerPrezzo;
 	private JSpinner spinnerQuantita;
-	private JComboBox comboBoxGenere;
 	
 	public AddArticoloFrame(Controller ctrl) {
 		
@@ -178,20 +177,42 @@ public class AddArticoloFrame extends JFrame {
 		txtColore.setBackground(new Color(191, 191, 191));
 		panelArticolo.add(txtColore);
 		
+		JLabel lblGenere = new JLabel("Genere");
+		lblGenere.setFont(new Font("Segoe Print", Font.BOLD, 22));
+		lblGenere.setBounds(412, 371, 87, 30);
+		panelArticolo.add(lblGenere);
+		
+		JComboBox<String> comboBoxGenere = new JComboBox<String>();
+		comboBoxGenere.setModel(new DefaultComboBoxModel<String>(new String[] {"MASCHILE","FEMMILE"}));
+		comboBoxGenere.setBackground(new Color(191, 191, 191));
+		comboBoxGenere.setBounds(586, 379, 110, 22);
+		panelArticolo.add(comboBoxGenere);
+		
 		JButton btnAggiungi = new JButton("Aggiungi");
 		btnAggiungi.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		btnAggiungi.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				System.out.println(modelQuantita.getValue());
 				
+				String selectedGenere =  comboBoxGenere.getSelectedItem().toString();
 				String selectedTaglia =  comboBoxTaglia.getSelectedItem().toString(); 
 				int selectedQuantita =  Integer.parseInt(modelQuantita.getValue().toString());
 				float selectedPrezzo = Float.parseFloat(modelPrezzo.getValue().toString());
-				String selectedGenere = comboBoxGenere.getSelectedItem().toString();
-				controller.AddArticolo(txtId.getText(), txtProduttore.getText(), selectedTaglia, txtColore.getText(), 
-									 txtCollezione.getText(),selectedQuantita ,selectedPrezzo,selectedGenere, fotoFile);
+				
+				try {
+					controller.AddArticolo(txtId.getText(), txtProduttore.getText(), selectedTaglia, txtColore.getText(), 
+										 txtCollezione.getText(),selectedQuantita ,selectedPrezzo,selectedGenere, fotoFile);
+						JOptionPane.showMessageDialog(null, "Articolo aggiunto correttamentoe", "Errore", JOptionPane.INFORMATION_MESSAGE
+					);
+				} catch (FileNotFoundException e1 ) {
+					JOptionPane.showMessageDialog(null, "File non trovato", "Errore", JOptionPane.ERROR_MESSAGE);
+					e1.printStackTrace();
+				}
+				catch (SQLException sq){
+					JOptionPane.showMessageDialog(null, "Contatta un amministratore", "Errore", JOptionPane.ERROR_MESSAGE);
+					sq.printStackTrace();
+				}
 			}
 		});
 		btnAggiungi.setBounds(435, 526, 160, 40);
@@ -214,16 +235,7 @@ public class AddArticoloFrame extends JFrame {
 	
 		panelArticolo.add(btnCancella);
 		
-		JLabel lblGenere = new JLabel("Genere");
-		lblGenere.setFont(new Font("Segoe Print", Font.BOLD, 22));
-		lblGenere.setBounds(412, 371, 87, 30);
-		panelArticolo.add(lblGenere);
-		
-		comboBoxGenere = new JComboBox<String>();
-		comboBoxGenere.setModel(new DefaultComboBoxModel<String>(new String[] {"MASCHILE","FEMMILE"}));
-		comboBoxGenere.setBackground(new Color(191, 191, 191));
-		comboBoxGenere.setBounds(586, 379, 110, 22);
-		panelArticolo.add(comboBoxGenere);
+
 		
 		JButton btnRimuovi = new JButton("Cancella");
 		btnRimuovi.addActionListener(new ActionListener() {

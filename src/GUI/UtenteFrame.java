@@ -34,7 +34,6 @@ public class UtenteFrame extends JFrame {
 	private TopPanel topPanel;
 	private JPanel panelCards;
 	private JPanel profileCard;
-	private JPanel recentiCard;
 	private CardLayout cardPanel;
 	private JPanel sidePanel;
 	private JLabel logoIcon;

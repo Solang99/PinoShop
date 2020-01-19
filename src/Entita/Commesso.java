@@ -1,8 +1,6 @@
 package Entita;
 
 import java.awt.Image;
-import java.io.File;
-import java.util.Calendar;
 import java.util.Date;
 
 public class Commesso {
@@ -12,9 +10,9 @@ public class Commesso {
 	private String password;
 	private String mail;
 	private Date dataNascita;
-	private File foto;
+	private Image foto;
 	
-	public Commesso(String nome,String cognome,String username,String password,Date dataNascita,File fotoFile,String mail) {
+	public Commesso(String nome,String cognome,String username,String password,Date dataNascita,Image fotoFile,String mail) {
 		setNome(nome);
 		setCognome(cognome);
 		setUsername(username);
@@ -77,10 +75,10 @@ public class Commesso {
 	public void setDataNascita(Date dataDiNascita) {
 		this.dataNascita = dataDiNascita;
 	}
-	public File getFoto() {
+	public Image getFoto() {
 		return foto;
 	}
-	public void setFoto(File foto) {
+	public void setFoto(Image foto) {
 		this.foto = foto;
 	}
 

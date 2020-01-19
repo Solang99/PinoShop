@@ -2,7 +2,7 @@ package GUI;
 
 import java.awt.Image;
 import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -13,23 +13,24 @@ import javax.swing.JFrame;
 
 import Database.ArticoloDAO;
 import Database.CommessoDAO;
-import Entita.Articolo;
 import Entita.Commesso;
-//TO-DO FIX CHIUSURA TOTALE
+
 public class Controller {
 	private static LoginFrame loginFrame;
 	private  RegisterFrame registerFrame;
 	private  MainFrame mainFrame;
 	private UtenteFrame profileFrame;
 	private AddArticoloFrame addArticoloFrame;
-	private ArticoloDAO articoloDao; 
+	private static ArticoloDAO articoloDao; 
 	
-	private  CommessoDAO commessoDao;
+	private static  CommessoDAO commessoDao;
 	public Commesso commesso;
 
 	
 	public static void main (String[] args) {
 		Controller controller = new Controller ();
+		articoloDao = new ArticoloDAO();
+		commessoDao = new CommessoDAO();
 		loginFrame = new LoginFrame(controller);
 		loginFrame.setVisible(true);
 	
@@ -68,50 +69,33 @@ public class Controller {
 	}
 	
 	public void CreateUser(String nome,String cognome,String username,String password, 
-							Date dataNascita, File fotoFile,String email) {
-		commesso = new Commesso(nome,cognome,username,password,dataNascita,fotoFile,email);
+							Date dataNascita, Image foto,String email) {
+		commesso = new Commesso(nome,cognome,username,password,dataNascita,foto,email);
 		
 	}
 	
+	public boolean UsernameAlredyExists(String username) {
+		return commessoDao.CheckUsername(username);
+	}
 
 	
 	
 	//DATABASE
 	public void CreateAccount(String nome,String cognome,String username,char[] password,Calendar date,File fotoFile,String email) throws FileNotFoundException {
-		
-		commessoDao = new CommessoDAO();			
 		String s = String.copyValueOf(password);
-		commessoDao.AddUser(commesso);
+		commessoDao.AddUser(nome, cognome,username, s, date, fotoFile, email);
 	}
 
 	
 	public boolean LogIn(String username, char[] password) throws SQLException, IOException  {
-		commessoDao = new CommessoDAO();
 		String s = String.copyValueOf(password);
 		return commessoDao.LogInUser(username, s,this);
 	}
 	
-	public void AddArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
-		Articolo articolo = new Articolo(id, produttore, taglia, colore, collezione, quantita, prezzo, genere, foto);
-		articoloDao = new ArticoloDAO();
-		System.out.println(articolo.getId());
-		articoloDao.InserArticolo(articolo);
+	public void AddArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) throws FileNotFoundException, SQLException {
+
+		articoloDao.InserArticolo(id, produttore, taglia, colore, collezione, quantita, prezzo, genere,foto);
 		
 	}
-	
-	public void EditArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
-		Articolo articolo = new Articolo(id, produttore, taglia, colore, collezione, quantita, prezzo, genere, foto);
-		articoloDao = new ArticoloDAO();
-		System.out.println(articolo.getId());
-		articoloDao.UpdateArticolo(articolo);
-	}
-	
-	public void RemoveArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
-		Articolo articolo = new Articolo(id, produttore, taglia, colore, collezione, quantita, prezzo, genere, foto);
-		articoloDao = new ArticoloDAO();
-		System.out.println(articolo.getId());
-		articoloDao.DeleteArticolo(articolo);
-	}
-
 
 }

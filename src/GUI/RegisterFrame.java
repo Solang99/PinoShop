@@ -1,14 +1,13 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.EventQueue;
+
 import java.awt.Font;
-import java.awt.Image;
+
 import java.awt.SystemColor;
 
-import javax.imageio.ImageIO;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -22,7 +21,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -181,11 +179,6 @@ public class RegisterFrame extends JFrame {
 		panel.add(passwordField_r);
 		
 		JButton btnlogin = new JButton("");
-		btnlogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
 		btnlogin.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -197,9 +190,15 @@ public class RegisterFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
-					controller.CreateAccount(textNome.getText(),textCognome.getText(),textUsername.getText()
-								,passwordField.getPassword(),dateChooserCombo.getSelectedDate(), fotoFile,textEmail.getText());
-					VerifyFields();
+					boolean UsernameExists = controller.UsernameAlredyExists(textUsername.getText());
+					if (!UsernameExists) {
+						controller.CreateAccount(textNome.getText(),textCognome.getText(),textUsername.getText()
+									,passwordField.getPassword(),dateChooserCombo.getSelectedDate(), fotoFile,textEmail.getText());
+						VerifyFields();
+					}
+					else
+						JOptionPane.showMessageDialog(null, "username non disponibile", "Errore", JOptionPane.ERROR_MESSAGE);
+
 				} catch (FileNotFoundException e1) {
 					JOptionPane.showMessageDialog(null, "Foto non trovata", "Errore", 2);
 					e1.printStackTrace();
