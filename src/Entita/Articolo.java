@@ -12,9 +12,15 @@ public class Articolo {
 		private int quantita;
 		private float prezzo;
 		private String genere;
-		private File foto;
+		private Image foto;
 		
-		public Articolo(String id, String produttore,String taglia,String colore, String collezione, int quantita,float prezzo,String genere,File foto) {
+		public Articolo() {
+			
+		}
+		
+		
+		//OverLoad
+		public Articolo(String id, String produttore,String taglia,String colore, String collezione, int quantita,float prezzo,String genere,Image foto) {
 			setId(id);
 			setProduttore(produttore);
 			setTaglia(taglia);
@@ -26,10 +32,10 @@ public class Articolo {
 			setFoto(foto);
 		}
 		
-		public File getFoto() {
+		public Image getFoto() {
 			return foto;
 		}
-		public void setFoto(File foto) {
+		public void setFoto(Image foto) {
 			this.foto = foto;
 		}
 		public String getGenere() {

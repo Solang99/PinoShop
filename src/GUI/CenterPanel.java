@@ -16,10 +16,18 @@ public class CenterPanel extends JPanel {
 	public CenterPanel() {
 		setBorder(null);
 		setSize(906, 546);
-		setLayout(new GridLayout(0, 1, 0, 0));
+		setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(null);
-		add(scrollPane);
+//		JScrollPane scrollPane = new JScrollPane();
+//		scrollPane.setBorder(null);
+//		add(scrollPane);
+	
+		ComponetArticolo ca = new ComponetArticolo();
+		ca.setBounds(0, 0, 132, 163);
+		add(ca);
+		ComponetArticolo c2 = new ComponetArticolo();
+		c2.setBounds(135, 0, 132, 163);
+		add(c2);
 	}
+	
 }

@@ -162,7 +162,7 @@ public class AddArticoloFrame extends JFrame {
 		
 		JComboBox<String> comboBoxTaglia = new JComboBox<String>();
 		comboBoxTaglia.setBounds(586, 297, 110, 22);
-		comboBoxTaglia.setModel(new DefaultComboBoxModel(new String[] {"NULL", "XS", "S", "M", "L", "XL", "XXL", "XXXL"}));
+		comboBoxTaglia.setModel(new DefaultComboBoxModel(new String[] { "XS", "S", "M", "L", "XL", "XXL", "XXXL"}));
 		comboBoxTaglia.setBackground(new Color(191,191,191));
 		panelArticolo.add(comboBoxTaglia);
 		

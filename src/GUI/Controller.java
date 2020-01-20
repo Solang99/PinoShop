@@ -14,8 +14,10 @@ import javax.swing.JTable;
 
 import Database.ArticoloDAO;
 import Database.CommessoDAO;
+import Database.MagazzinoDAO;
 import Entita.Articolo;
 import Entita.Commesso;
+import Entita.Magazzino;
 
 public class Controller {
 	private static LoginFrame loginFrame;
@@ -25,21 +27,21 @@ public class Controller {
 	private AddArticoloFrame addArticoloFrame;
 	private MagazzinoFrame magazzinoFrame;
 	private static ArticoloDAO articoloDao; 
-	
+	private Magazzino magazzino;
+	private MagazzinoDAO magazzinoDao;
 	private static  CommessoDAO commessoDao;
 	public Commesso commesso;
 
 	
 	public static void main (String[] args) {
 		Controller controller = new Controller ();
+
+		
 		articoloDao = new ArticoloDAO();
 		commessoDao = new CommessoDAO();
 		loginFrame = new LoginFrame(controller);
-		loginFrame.setVisible(false);
-		AddArticoloFrame addf= new AddArticoloFrame(controller);
-		addf.setVisible(false);
-		MagazzinoFrame mag = new MagazzinoFrame(controller);
-		mag.setVisible(true);
+		loginFrame.setVisible(true);
+		
 	}
 	
 	public void GoToLoginFrame() {
@@ -101,6 +103,10 @@ public class Controller {
 	public void AddArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) throws FileNotFoundException, SQLException {
 
 		articoloDao.InserArticolo(id, produttore, taglia, colore, collezione, quantita, prezzo, genere,foto);
+		magazzino = new Magazzino();
+		magazzinoDao = new MagazzinoDAO();
+		magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		
 		
 	}
 	public void EditArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
@@ -113,6 +119,6 @@ public class Controller {
 		articoloDao.DeleteArticolo(id,produttore,taglia,colore,collezione,quantita,prezzo,genere,foto);
 	}
 	public void FillTable(JTable table) {
-		articoloDao.FillJTable(table);
+		//articoloDao.FillJTable(table);
 	}
 }

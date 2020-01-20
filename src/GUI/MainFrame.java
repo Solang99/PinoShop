@@ -24,6 +24,7 @@ import datechooser.beans.DateChooserDialog;
 import java.awt.CardLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class MainFrame extends JFrame {
 
@@ -44,6 +45,7 @@ public class MainFrame extends JFrame {
 		setContentPane(contentPane);
 		
 		topPanel = new TopPanel(this.getWidth(),controller,this);
+		topPanel.setBounds(0, 0, 926, 133);
 		topPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -61,22 +63,10 @@ public class MainFrame extends JFrame {
 		});
 		
 		centralPanel = new CenterPanel();
-		centralPanel.setLayout(new CardLayout(0, 0));
-		
-		
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(topPanel, GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE)
-				.addComponent(centralPanel, GroupLayout.PREFERRED_SIZE, 906, GroupLayout.PREFERRED_SIZE)
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-					.addComponent(centralPanel, GroupLayout.PREFERRED_SIZE, 546, GroupLayout.PREFERRED_SIZE))
-		);
-		contentPane.setLayout(gl_contentPane);
+		centralPanel.setBounds(0, 129, 906, 556);
+		contentPane.setLayout(null);
+		contentPane.add(topPanel);
+		contentPane.add(centralPanel);
 
 	}
 	
