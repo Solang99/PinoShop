@@ -10,9 +10,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JFrame;
+import javax.swing.JTable;
 
 import Database.ArticoloDAO;
 import Database.CommessoDAO;
+import Entita.Articolo;
 import Entita.Commesso;
 
 public class Controller {
@@ -21,6 +23,7 @@ public class Controller {
 	private  MainFrame mainFrame;
 	private UtenteFrame profileFrame;
 	private AddArticoloFrame addArticoloFrame;
+	private MagazzinoFrame magazzinoFrame;
 	private static ArticoloDAO articoloDao; 
 	
 	private static  CommessoDAO commessoDao;
@@ -32,8 +35,11 @@ public class Controller {
 		articoloDao = new ArticoloDAO();
 		commessoDao = new CommessoDAO();
 		loginFrame = new LoginFrame(controller);
-		loginFrame.setVisible(true);
-	
+		loginFrame.setVisible(false);
+		AddArticoloFrame addf= new AddArticoloFrame(controller);
+		addf.setVisible(false);
+		MagazzinoFrame mag = new MagazzinoFrame(controller);
+		mag.setVisible(true);
 	}
 	
 	public void GoToLoginFrame() {
@@ -97,5 +103,16 @@ public class Controller {
 		articoloDao.InserArticolo(id, produttore, taglia, colore, collezione, quantita, prezzo, genere,foto);
 		
 	}
+	public void EditArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
+		
+		articoloDao.UpdateArticolo(id,produttore,taglia,colore,collezione,quantita,prezzo,genere,foto);
+	}
 
+	public void RemoveArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
+		
+		articoloDao.DeleteArticolo(id,produttore,taglia,colore,collezione,quantita,prezzo,genere,foto);
+	}
+	public void FillTable(JTable table) {
+		articoloDao.FillJTable(table);
+	}
 }

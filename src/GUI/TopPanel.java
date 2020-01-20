@@ -173,6 +173,10 @@ public class TopPanel extends JPanel {
 		mnDonna.add(itemAccessoriDonna);
 		
 		JButton btnAdd = new JButton("");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		
 		btnAdd.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/IconAdd.png")));
 		btnAdd.setOpaque(false);
