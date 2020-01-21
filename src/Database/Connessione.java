@@ -10,7 +10,7 @@ public class Connessione {
 	private static Properties props;
 	
 	private static String url = "jdbc:postgresql://localhost/pinoshop";
-	private static String user = "amdextvy";
+	private static String user = "postgres";
 	private static String driverName ="org.postgresql.Driver";
 	
 	

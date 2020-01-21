@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.File;
 
 public class Articolo {
+		private String nome;
 		private String id;
 		private String produttore;
 		private String taglia;
@@ -20,7 +21,8 @@ public class Articolo {
 		
 		
 		//OverLoad
-		public Articolo(String id, String produttore,String taglia,String colore, String collezione, int quantita,float prezzo,String genere,Image foto) {
+		public Articolo(String nome,String id, String produttore,String taglia,String colore, String collezione, int quantita,float prezzo,String genere,Image foto) {
+			setNome(nome);
 			setId(id);
 			setProduttore(produttore);
 			setTaglia(taglia);
@@ -88,6 +90,16 @@ public class Articolo {
 		}
 		public void setPrezzo(float prezzo) {
 			this.prezzo = prezzo;
+		}
+
+
+		public String getNome() {
+			return nome;
+		}
+
+
+		public void setNome(String nome) {
+			this.nome = nome;
 		}
 	
 

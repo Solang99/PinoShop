@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -100,25 +101,29 @@ public class Controller {
 		return commessoDao.LogInUser(username, s,this);
 	}
 	
-	public void AddArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) throws FileNotFoundException, SQLException {
+	public void AddArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) throws FileNotFoundException, SQLException {
 
-		articoloDao.InserArticolo(id, produttore, taglia, colore, collezione, quantita, prezzo, genere,foto);
+		articoloDao.InserArticolo(nome,id, produttore, taglia, colore, collezione, quantita, prezzo, genere,foto);
 		magazzino = new Magazzino();
 		magazzinoDao = new MagazzinoDAO();
 		magazzinoDao.fillMagazzino(magazzino.getArticolo());
 		
 		
 	}
-	public void EditArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
+	public void EditArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
 		
-		articoloDao.UpdateArticolo(id,produttore,taglia,colore,collezione,quantita,prezzo,genere,foto);
+		articoloDao.UpdateArticolo(nome,id,produttore,taglia,colore,collezione,quantita,prezzo,genere,foto);
 	}
 
-	public void RemoveArticolo(String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
+	public void RemoveArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
 		
-		articoloDao.DeleteArticolo(id,produttore,taglia,colore,collezione,quantita,prezzo,genere,foto);
+		articoloDao.DeleteArticolo(nome,id,produttore,taglia,colore,collezione,quantita,prezzo,genere,foto);
 	}
-	public void FillTable(JTable table) {
-		//articoloDao.FillJTable(table);
+	public void  FillTabella(ArrayList<Articolo> articoloList) {
+		magazzino = new Magazzino();
+		magazzinoDao = new MagazzinoDAO();
+		magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		
 	}
+	
 }

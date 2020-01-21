@@ -190,31 +190,31 @@ public class AddArticoloFrame extends JFrame {
 		
 		JButton btnAggiungi = new JButton("Aggiungi");
 		btnAggiungi.setFont(new Font("Segoe Print", Font.BOLD, 22));
-		btnAggiungi.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		//btnAggiungi.addMouseListener(new MouseAdapter() {
+	//		@Override
+		//	public void mouseClicked(MouseEvent e) {
 				
 				
-				String selectedGenere =  comboBoxGenere.getSelectedItem().toString();
-				String selectedTaglia =  comboBoxTaglia.getSelectedItem().toString(); 
-				int selectedQuantita =  Integer.parseInt(modelQuantita.getValue().toString());
-				float selectedPrezzo = Float.parseFloat(modelPrezzo.getValue().toString());
-				
-				try {
-					controller.AddArticolo(txtId.getText(), txtProduttore.getText(), selectedTaglia, txtColore.getText(), 
-										 txtCollezione.getText(),selectedQuantita ,selectedPrezzo,selectedGenere, fotoFile);
-						JOptionPane.showMessageDialog(null, "Articolo aggiunto correttamentoe", "Errore", JOptionPane.INFORMATION_MESSAGE
-					);
-				} catch (FileNotFoundException e1 ) {
-					JOptionPane.showMessageDialog(null, "File non trovato", "Errore", JOptionPane.ERROR_MESSAGE);
-					e1.printStackTrace();
-				}
-				catch (SQLException sq){
-					JOptionPane.showMessageDialog(null, "Contatta un amministratore", "Errore", JOptionPane.ERROR_MESSAGE);
-					sq.printStackTrace();
-				}
-			}
-		});
+//				String selectedGenere =  comboBoxGenere.getSelectedItem().toString();
+//				String selectedTaglia =  comboBoxTaglia.getSelectedItem().toString(); 
+//				int selectedQuantita =  Integer.parseInt(modelQuantita.getValue().toString());
+//				float selectedPrezzo = Float.parseFloat(modelPrezzo.getValue().toString());
+//				
+//				try {
+//				controller.AddArticolo(txtId.getText(), txtProduttore.getText(), selectedTaglia, txtColore.getText(), 
+//										 txtCollezione.getText(),selectedQuantita ,selectedPrezzo,selectedGenere, fotoFile);				manca txt nome, non  l'ho messo perchè non ci serve
+//						JOptionPane.showMessageDialog(null, "Articolo aggiunto correttamentoe", "Errore", JOptionPane.INFORMATION_MESSAGE
+//					);
+//				} catch (FileNotFoundException e1 ) {
+//					JOptionPane.showMessageDialog(null, "File non trovato", "Errore", JOptionPane.ERROR_MESSAGE);
+//					e1.printStackTrace();
+//				}
+//				catch (SQLException sq){
+//					JOptionPane.showMessageDialog(null, "Contatta un amministratore", "Errore", JOptionPane.ERROR_MESSAGE);
+//					sq.printStackTrace();
+//				}
+//			}
+//		});
 		btnAggiungi.setBounds(435, 526, 160, 40);
 		panelArticolo.add(btnAggiungi);
 		
@@ -278,6 +278,7 @@ public class AddArticoloFrame extends JFrame {
 	}
 	
 	private void ResetValori() {
+		
 		txtId.setText(" ");
 		txtProduttore.setText(" ");
 		txtCollezione.setText(" ");
@@ -286,4 +287,4 @@ public class AddArticoloFrame extends JFrame {
 		spinnerPrezzo.setValue(0);
 		spinnerQuantita.setValue(0);
 	}	
-}
+		}

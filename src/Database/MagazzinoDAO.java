@@ -54,17 +54,18 @@ public class MagazzinoDAO {
 		}
 		
 		
-		private Articolo CreateArticolo(ResultSet risultato) throws SQLException, IOException {
-			Articolo articolo = new Articolo();
-			articolo.setId(risultato.getString(1));
-			articolo.setProduttore(risultato.getString(2));
-			articolo.setTaglia(risultato.getString(3));
-			articolo.setColore(risultato.getString(4));
-			articolo.setCollezione(risultato.getString(5));
-			articolo.setQuantita(risultato.getInt(6));
-			articolo.setPrezzo(risultato.getFloat(7));
-			articolo.setGenere(risultato.getString(8));
-			InputStream fotoStream = risultato.getBinaryStream(9);
+		private Articolo CreateArticolo(ResultSet risultato) throws SQLException, IOException {			// la funzione non  so se è giusta nel caso si potrebbe fare anche cosi
+			Articolo articolo = new Articolo();															// Object rowData[]	 = new Object [9];		
+			articolo.setNome(risultato.getString(1));													//	for (int i = 0; i<articoloList.size();i++)
+			articolo.setId(risultato.getString(2));														//	{ rowData[0] = aticoloList.get[i].nome;
+			articolo.setProduttore(risultato.getString(3));												// rowData[1] = articoloList.get(i).id; e cosi via alla fine scrivere model.addRow(rowData);
+			articolo.setTaglia(risultato.getString(4));
+			articolo.setColore(risultato.getString(5));
+			articolo.setCollezione(risultato.getString(6));
+			articolo.setQuantita(risultato.getInt(7));
+			articolo.setPrezzo(risultato.getFloat(8));
+			articolo.setGenere(risultato.getString(9));
+			InputStream fotoStream = risultato.getBinaryStream(10);
 			Image fotoUser = ImageIO.read(fotoStream);
 			articolo.setFoto(fotoUser);
 
