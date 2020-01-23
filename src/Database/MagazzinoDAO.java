@@ -44,6 +44,7 @@ public class MagazzinoDAO {
 				preparedStatement.execute();
 				preparedStatement.close();
 				
+				magazzino = new Magazzino();
 				magazzino.setArticolo(articoloList);
 
 			} catch (SQLException | IOException e) {

@@ -37,7 +37,7 @@ public class TopPanel extends JPanel {
 
 	private Controller controller;
 	
-	public TopPanel(int x, Controller ctrl,JFrame Container) {
+	public TopPanel(int x, Controller ctrl,JFrame container) {
 		controller = ctrl;
 		setBorder(null);
 		setToolTipText("");
@@ -48,6 +48,12 @@ public class TopPanel extends JPanel {
 
 		
 		btnLogo = new JButton("");
+		btnLogo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.GoToMainFrame(container);
+			}
+		});
 		btnLogo.setOpaque(false);
 		btnLogo.setContentAreaFilled(false);
 		btnLogo.setBorderPainted(false);
@@ -71,7 +77,7 @@ public class TopPanel extends JPanel {
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.GoToProfileFrame(Container);
+				controller.GoToProfileFrame(container);
 			}
 		});
 		btnUser.setOpaque(false);

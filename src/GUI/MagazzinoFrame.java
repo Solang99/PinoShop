@@ -40,17 +40,17 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Dialog.ModalExclusionType;
+import java.awt.FlowLayout;
 
 public class MagazzinoFrame extends JFrame {
 
 	private JPanel contentPane;
-	private final JScrollPane scrollPane = new JScrollPane();
-	private static JTable table;
 	private Controller controller;
 	private JButton btnImmagine;
 	private JComboBox comboBoxTaglia;
@@ -65,78 +65,40 @@ public class MagazzinoFrame extends JFrame {
 	private JSpinner spinnerQuantita;
 	private JSpinner spinnerPrezzo;
 	private JButton btnFoto;
+	
+	private JScrollPane scroll;
+	private JTable table;
+	private DefaultTableModel model;
+
 	public MagazzinoFrame(Controller ctrl) {
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		controller = ctrl;
+
+		URL url = getClass().getResource("/IconRegister/notfound.png");
+		File fotoFile = new File(url.getPath());
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1196, 668);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		scrollPane.setBounds(323, 74, 847, 435);
-		contentPane.add(scrollPane);
-		
-		
-		
-	
-		
-	
-		
-		
-		table = new JTable();
-		table.addKeyListener(new KeyAdapter() {
-			
-			int rowIndex;
-			public void keyReleased(KeyEvent e) {
-				 rowIndex = table.getSelectedRow();
-					DefaultTableModel model = (DefaultTableModel) table.getModel();
-					if(e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN)
-					{
-						 txtCodice.setText(model.getValueAt(rowIndex, 1).toString());
-						 txtProduttore.setText(model.getValueAt(rowIndex, 2).toString());
-						 comboBoxTaglia.getSelectedItem(); // errore
-						 txtColore.setText(model.getValueAt(rowIndex, 4).toString());
-						 txtCollezione.setText(model.getValueAt(rowIndex, 5).toString());
-					     spinnerQuantita .setValue(Integer.valueOf(table.getValueAt(rowIndex, 6).toString()));
-						 spinnerPrezzo.setValue(Integer.valueOf(table.getValueAt(rowIndex, 7).toString()));
-						 comboBoxGenere.getSelectedItem(); //errore
-						 btnImmagine.getSelectedIcon();// errore
-			}
-			}
-		});
-		table.addMouseListener(new MouseAdapter() {
-			int rowIndex;
-			public void mouseClicked(MouseEvent e) {
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				 rowIndex = table.getSelectedRow();
-				 txtCodice.setText(model.getValueAt(rowIndex, 1).toString());
-				 txtProduttore.setText(model.getValueAt(rowIndex, 2).toString());
-				 comboBoxTaglia.getSelectedItem(); // errore
-				 txtColore.setText(model.getValueAt(rowIndex, 4).toString());
-				 txtCollezione.setText(model.getValueAt(rowIndex, 5).toString());
-				 spinnerQuantita.setValue(Integer.valueOf(table.getValueAt(rowIndex, 6).toString()));
-				 spinnerPrezzo.setValue(Integer.valueOf(table.getValueAt(rowIndex, 7).toString()));
-				 comboBoxGenere.getSelectedItem().toString(); //errore
-				 btnImmagine.getSelectedIcon();// errore
-			}
-		});
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Nome","Codice", "Produttore", "Taglia", "Colore", "Collezione", "Quantita", "Prezzo", "Genere"
-			}
-		));
-		FillTable();
-		scrollPane.setViewportView(table);
+	    model = controller.FillTableModel();
+	    contentPane.setLayout(null);
+	    table = new JTable();
+	    table.setModel(model);
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBackground(new Color(191, 191, 191));
-		textField_1.setBounds(604, 11, 210, 40);
-		contentPane.add(textField_1);
-		
-		JLabel lblCerca = new JLabel("Cerca");
+	    scroll = new JScrollPane(table);
+	    scroll.setBounds(328, 10, 842, 531);
+	    table.setFillsViewportHeight(true);
+
+	    contentPane.add(scroll);
+	    
+	    
+	    
+	    
+	    
+	    
+	    JLabel lblCerca = new JLabel("Cerca");
 		lblCerca.setFont(new Font("Segoe Print", Font.BOLD, 39));
 		lblCerca.setBounds(466, 11, 116, 40);
 		contentPane.add(lblCerca);
@@ -207,6 +169,7 @@ public class MagazzinoFrame extends JFrame {
 		contentPane.add(lblTaglia);
 		
 		JComboBox<String> comboBoxTaglia = new JComboBox<String>();
+		comboBoxTaglia.setModel(new DefaultComboBoxModel(new String[] {"XS", "S", "M", "L", "XL", "XXL"}));
 		comboBoxTaglia.setBackground(new Color(191, 191, 191));
 		comboBoxTaglia.setBounds(142, 459, 110, 22);
 		contentPane.add(comboBoxTaglia);
@@ -226,7 +189,7 @@ public class MagazzinoFrame extends JFrame {
 		JButton btnFoto = new JButton("");
 		btnFoto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CaricaFoto();
+				
 			}
 		});
 		btnFoto.setOpaque(false);
@@ -252,6 +215,7 @@ public class MagazzinoFrame extends JFrame {
 		contentPane.add(btnCancellaFoto);
 		
 		JComboBox<String> comboBoxGenere = new JComboBox<String>();
+		comboBoxGenere.setModel(new DefaultComboBoxModel(new String[] {"MASCHILE", "FEMMINILE"}));
 		comboBoxGenere.setBackground(new Color(191, 191, 191));
 		comboBoxGenere.setBounds(142, 492, 110, 22);
 		contentPane.add(comboBoxGenere);
@@ -262,8 +226,12 @@ public class MagazzinoFrame extends JFrame {
 		contentPane.add(lblGenere);
 		
 		JButton btnModifica = new JButton("Modifica");
+		btnModifica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnModifica.setFont(new Font("Segoe Print", Font.BOLD, 22));
-		btnModifica.setBounds(685, 545, 126, 40);
+		btnModifica.setBounds(686, 567, 126, 40);
 		contentPane.add(btnModifica);
 		
 		JButton btnAggiungi = new JButton("Aggiungi");
@@ -293,12 +261,16 @@ public class MagazzinoFrame extends JFrame {
 			}
 		});
 		btnAggiungi.setFont(new Font("Segoe Print", Font.BOLD, 22));
-		btnAggiungi.setBounds(875, 545, 137, 40);
+		btnAggiungi.setBounds(876, 567, 137, 40);
 		contentPane.add(btnAggiungi);
 		
 		JButton btnCancella = new JButton("Cancella");
+		btnCancella.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnCancella.setFont(new Font("Segoe Print", Font.BOLD, 22));
-		btnCancella.setBounds(481, 545, 126, 40);
+		btnCancella.setBounds(482, 567, 126, 40);
 		contentPane.add(btnCancella);
 		
 		JLabel lblPrezzo = new JLabel("Prezzo:");
@@ -309,67 +281,13 @@ public class MagazzinoFrame extends JFrame {
 	
 		
 	}
-	private void ResetValori() {
-		txtCodice.setText(" ");
-		txtProduttore.setText(" ");
-		txtCollezione.setText(" ");
-		txtColore.setText(" ");
-		btnImmagine.setIcon(new ImageIcon(AddArticoloFrame.class.getResource("/IconRegister/notfound.png")));
-		spinnerPrezzo.setValue(0);
-		spinnerQuantita.setValue(0);
-	}	
-	private boolean VerifyText() {
-		if(txtCodice.getText().equals("") || txtProduttore.getText().equals("") || txtCollezione.getText().equals("") || txtColore.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "Uno o più campi vuoti");
-			return false;
-		}else {
-			return true;
-		}
-	}
-	private void CaricaFoto() {
-		JFileChooser fileChooser = new JFileChooser();
-		FileNameExtensionFilter fileExtensionFilter = new FileNameExtensionFilter("jpg","png");
-		fileChooser.setFileFilter(fileExtensionFilter);
-		int returnValue = fileChooser.showOpenDialog(null);
-		if (returnValue == JFileChooser.APPROVE_OPTION) {
-			fotoFile = fileChooser.getSelectedFile();
-			Image fotoImage;
-			try {
-				fotoImage = ImageIO.read(fotoFile);
-				ImageIcon fotoIcon = new ImageIcon(fotoImage);
-				btnFoto.setIcon(fotoIcon);
-			} catch (IOException e) {
 
-				JOptionPane.showMessageDialog(null, "Foto non valida", "Errore", 2);
-				e.printStackTrace();
-			}
 
-		}
-	}
+		
 	
-	private void FillTable()
-	{
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		ArrayList<Articolo> articoloList = new ArrayList<Articolo>();
-		controller.FillTabella(articoloList);
-		Object [][] rows = new Object[articoloList.size()][9];
-		String [] column = {"Nome","Codice", "Produttore", "Taglia", "Colore", "Collezione", "Quantita", "Prezzo", "Genere"};
-		for(int i = 0; i< articoloList.size();i++) {
-			rows[i][0] = articoloList.get(i).getNome();
-			rows[i][1] = articoloList.get(i).getId();
-			rows[i][2] = articoloList.get(i).getProduttore();
-			rows[i][3] = articoloList.get(i).getTaglia();
-			rows[i][4] = articoloList.get(i).getColore();
-			rows[i][5] = articoloList.get(i).getCollezione();
-			rows[i][6] = articoloList.get(i).getQuantita();
-			rows[i][7] = articoloList.get(i).getPrezzo();
-			rows[i][8] = articoloList.get(i).getGenere(); 
-			model.addRow(rows);
-		}
-	}
+		
 	
-	
-	
+
 }
 			
 	

@@ -34,6 +34,14 @@ public class Articolo {
 			setFoto(foto);
 		}
 		
+		@Override
+		public String toString() {
+			return "Articolo [nome=" + nome + ", id=" + id + ", produttore=" + produttore + ", taglia=" + taglia
+					+ ", colore=" + colore + ", collezione=" + collezione + ", quantita=" + quantita + ", prezzo="
+					+ prezzo + ", genere=" + genere + ", foto=" + foto + "]";
+		}
+
+
 		public Image getFoto() {
 			return foto;
 		}

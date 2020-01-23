@@ -28,7 +28,7 @@ public class ArticoloDAO {
 	public void InserArticolo(String nome,String id,String produttore,String taglia,String colore, String collezione,int quantita, float prezzo,
 							String genere, File fotoFile) throws SQLException, FileNotFoundException {
 		
-			String query = "INSERT INTO articolo VALUES (?,?,?::taglia_type,?,?,?,?,?::genere_type,?);";
+			String query = "INSERT INTO articolo VALUES (?,?,?,?::taglia_type,?,?,?,?,?::genere_type,?);";
 			preparedStatement = connection.prepareStatement(query);
 			
 			preparedStatement.setString(1, nome);
