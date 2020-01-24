@@ -106,7 +106,7 @@ public class Controller {
 			System.out.println(a);
 	
 	    for (int i = 0 ; i< articoli.size();i++) {
-	    	System.out.println(articoli.size());
+	    	;
 	    	tableModel.addRow(new Object[] {articoli.get(i).getNome() ,
 	    									articoli.get(i).getId(),
 	    									articoli.get(i).getProduttore(),
