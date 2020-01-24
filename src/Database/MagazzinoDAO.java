@@ -55,11 +55,11 @@ public class MagazzinoDAO {
 		}
 		
 		
-		private Articolo CreateArticolo(ResultSet risultato) throws SQLException, IOException {			// la funzione non  so se è giusta nel caso si potrebbe fare anche cosi
-			Articolo articolo = new Articolo();															// Object rowData[]	 = new Object [9];		
-			articolo.setNome(risultato.getString(1));													//	for (int i = 0; i<articoloList.size();i++)
-			articolo.setId(risultato.getString(2));														//	{ rowData[0] = aticoloList.get[i].nome;
-			articolo.setProduttore(risultato.getString(3));												// rowData[1] = articoloList.get(i).id; e cosi via alla fine scrivere model.addRow(rowData);
+		private Articolo CreateArticolo(ResultSet risultato) throws SQLException, IOException {			
+			Articolo articolo = new Articolo();																
+			articolo.setNome(risultato.getString(1));													
+			articolo.setId(risultato.getString(2));														
+			articolo.setProduttore(risultato.getString(3));												
 			articolo.setTaglia(risultato.getString(4));
 			articolo.setColore(risultato.getString(5));
 			articolo.setCollezione(risultato.getString(6));

@@ -82,11 +82,50 @@ public class MagazzinoFrame extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-	    model = controller.FillTableModel();
+		model = controller.FillTableModel();
 	    contentPane.setLayout(null);
 	    table = new JTable();
+	    table.addKeyListener(new KeyAdapter() {
+	    		int rowIndex;
+	    	public void keyReleased(KeyEvent e) {
+	    		 rowIndex = table.getSelectedRow();
+					DefaultTableModel model = (DefaultTableModel) table.getModel();
+					if(e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN)
+					{
+						txtNome.setText(model.getValueAt(rowIndex, 1).toString());
+			    		txtCodice.setText(model.getValueAt(rowIndex, 2).toString());
+			    		txtProduttore.setText(model.getValueAt(rowIndex, 3).toString());
+			    		comboBoxTaglia.setSelectedItem(model.getValueAt(rowIndex, 4).toString());
+			    		txtColore.setText(model.getValueAt(rowIndex, 5).toString());
+			    		txtCollezione.setText(model.getValueAt(rowIndex, 6).toString());
+			    		spinnerQuantita.setValue(Integer.valueOf(model.getValueAt(rowIndex, 7).toString()));
+			    		spinnerPrezzo.setValue(Integer.valueOf(model.getValueAt(rowIndex, 8).toString()));
+			    		comboBoxGenere.setSelectedItem(model.getValueAt(rowIndex, 9).toString());
+					}
+	    	}
+	    });
+	    table.addMouseListener(new MouseAdapter() {
+	    	int rowIndex;
+	    	public void mouseClicked(MouseEvent e) {
+	    		DefaultTableModel model = (DefaultTableModel) table.getModel();
+	    		rowIndex = table.getSelectedRow();
+	    		txtNome.setText(model.getValueAt(rowIndex, 1).toString());
+	    		txtCodice.setText(model.getValueAt(rowIndex, 2).toString());
+	    		txtProduttore.setText(model.getValueAt(rowIndex, 3).toString());
+	    		comboBoxTaglia.setSelectedItem(model.getValueAt(rowIndex, 4).toString());
+	    		txtColore.setText(model.getValueAt(rowIndex, 5).toString());
+	    		txtCollezione.setText(model.getValueAt(rowIndex, 6).toString());
+	    		spinnerQuantita.setValue(Integer.valueOf(model.getValueAt(rowIndex, 7).toString()));
+	    		spinnerPrezzo.setValue(Integer.valueOf(model.getValueAt(rowIndex, 8).toString()));
+	    		comboBoxGenere.setSelectedItem(model.getValueAt(rowIndex, 9).toString());
+	    		
+	    		
+	    		
+	    		
+	    	}
+	    });
 	    table.setModel(model);
-
+	    
 	    scroll = new JScrollPane(table);
 	    scroll.setBounds(328, 10, 842, 531);
 	    table.setFillsViewportHeight(true);
@@ -189,7 +228,7 @@ public class MagazzinoFrame extends JFrame {
 		JButton btnFoto = new JButton("");
 		btnFoto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				CaricaFoto();
 			}
 		});
 		btnFoto.setOpaque(false);
@@ -229,6 +268,7 @@ public class MagazzinoFrame extends JFrame {
 		btnModifica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
+			
 		});
 		btnModifica.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		btnModifica.setBounds(686, 567, 126, 40);
@@ -280,6 +320,27 @@ public class MagazzinoFrame extends JFrame {
 		
 	
 		
+	}
+	private void CaricaFoto() {
+		JFileChooser fileChooser = new JFileChooser();
+		FileNameExtensionFilter fileExtensionFilter = new FileNameExtensionFilter("jpg","png");
+		fileChooser.setFileFilter(fileExtensionFilter);
+		int returnValue = fileChooser.showOpenDialog(null);
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			fotoFile = fileChooser.getSelectedFile();
+			Image fotoImage;
+			try {
+				fotoImage = ImageIO.read(fotoFile);
+				ImageIcon fotoIcon = new ImageIcon(fotoImage);
+				btnFoto.setIcon(fotoIcon);
+			} catch (IOException e) {
+
+				JOptionPane.showMessageDialog(null, "Foto non valida", "Errore", 2);
+				e.printStackTrace();
+			}
+
+		}
+			
 	}
 
 
