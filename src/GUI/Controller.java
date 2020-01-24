@@ -47,7 +47,8 @@ public class Controller {
 		magazzinoDao = new MagazzinoDAO();
 		magazzinoDao.fillMagazzino(magazzino.getArticolo()); 
 	    articoli = magazzino.getArticolo();
-
+	    loginFrame = new LoginFrame(controller);
+	    loginFrame.setVisible(false);
 
 		
 	}
