@@ -24,7 +24,7 @@ public class Connessione {
 		}
     	props= new Properties();
 		props.setProperty("user","postgres");
-		props.setProperty("password","laka");
+		props.setProperty("password","soli");
     	
 		try {
 			con = DriverManager.getConnection(url, props);
