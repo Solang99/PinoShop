@@ -18,6 +18,7 @@ import Database.ArticoloDAO;
 import Database.CommessoDAO;
 import Database.MagazzinoDAO;
 import Entita.Articolo;
+import Entita.Cassa;
 import Entita.Commesso;
 import Entita.Magazzino;
 
@@ -26,7 +27,7 @@ public class Controller {
 	private  RegisterFrame registerFrame;
 	private static  MainFrame mainFrame;
 	private UtenteFrame profileFrame;
-
+	public Cassa cassa;
 	private MagazzinoFrame magazzinoFrame;
 	private static ArticoloDAO articoloDao; 
 	private static Magazzino magazzino;
