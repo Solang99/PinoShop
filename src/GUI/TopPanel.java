@@ -99,6 +99,10 @@ public class TopPanel extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				btnCarrello.setSize(30,38);
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.GoToCassaFrame();
+			}
 		});
 		btnCarrello.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/icons8_shopping_cart_30px.png")));
 		btnCarrello.setBounds(859, 84, 37, 38);

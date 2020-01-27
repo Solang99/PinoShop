@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +30,7 @@ public class Controller {
 	private UtenteFrame profileFrame;
 	public Cassa cassa;
 	private MagazzinoFrame magazzinoFrame;
+	private CassaFrame cassaFrame;
 	private static ArticoloDAO articoloDao; 
 	private static Magazzino magazzino;
 	private static MagazzinoDAO magazzinoDao;
@@ -84,6 +86,11 @@ public class Controller {
 		magazzinoFrame = new MagazzinoFrame(this);
 		magazzinoFrame.setVisible(true);
 	
+	}
+	
+	public void GoToCassaFrame() {
+		cassaFrame = new CassaFrame(this);
+		cassaFrame.setVisible(true);
 	}
 	
 	public void CreateUser(String nome,String cognome,String username,String password, 
@@ -159,5 +166,12 @@ public class Controller {
 		articoloDao.DeleteArticolo(nome,id,produttore,taglia,colore,collezione,quantita,prezzo,genere,foto);
 	}
 	
-	
+//	public DefaultListModel fillJlist() {
+//		DefaultListModel model = new DefaultListModel();
+//		for(Articolo a : articoli) {
+//			model.addElement(a.toString());
+//		}
+//		return model;
+//	}
+
 }

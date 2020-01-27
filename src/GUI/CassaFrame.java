@@ -18,6 +18,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.JList;
 
 public class CassaFrame extends JFrame {
 
@@ -80,8 +81,8 @@ public class CassaFrame extends JFrame {
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lblTotale = new JLabel("Totale:" + controller.cassa.getPagamentoDovuto());
-		lblTotale.setBounds(10, 11, 72, 20);
+		JLabel lblTotale = new JLabel("Totale:");
+		lblTotale.setBounds(10, 11, 88, 20);
 		panel_2.add(lblTotale);
 		lblTotale.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		
@@ -106,13 +107,14 @@ public class CassaFrame extends JFrame {
 		JLabel lblGetResto = new JLabel("New label");
 		lblGetResto.setBounds(89, 167, 76, 14);
 		panel_2.add(lblGetResto);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 478, 281, -416);
-		panel.add(scrollPane);
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(ckCartadiCredito);
 		bg.add(ckContanti);
+		
+		JList list = new JList();
+		list.setBounds(20, 478, 271, -410);
+		panel.add(list);
+		//list.setModel(controller.fillJlist());
 		
 	
 	}

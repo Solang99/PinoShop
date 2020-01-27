@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Cassa {
 	private String pagamentoType;
-	private int resto;
-	private int pagamentoDovuto;
-	private int pagamentoVersato;
+	private float resto;
+	private float pagamentoDovuto;
+	private float pagamentoVersato;
 	private ArrayList<Articolo> carrello;
 	
 	public ArrayList<Articolo> getArticolo() {
@@ -24,26 +24,26 @@ public class Cassa {
 	public void setPagamentoType(String pagamentoType) {
 		this.pagamentoType = pagamentoType;
 	}
-	public int getResto() {
+	public float getResto() {
 		return resto;
 	}
-	public void setResto(int resto) {
+	public void setResto(float resto) {
 		this.resto = resto;
 	}
-	public int getPagamentoDovuto() {
+	public float getPagamentoDovuto() {
 		
 		return pagamentoDovuto;
 	}
-	public void setPagamentoDovuto(int pagamentoDovuto) {
+	public void setPagamentoDovuto(float pagamentoDovuto) {
 		for (Articolo a : carrello) {
 			pagamentoDovuto +=( a.getPrezzo() * a.getQuantita());
 		}
 		this.pagamentoDovuto = pagamentoDovuto;
 	}
-	public int getPagamentoVersato() {
+	public float getPagamentoVersato() {
 		return pagamentoVersato;
 	}
-	public void setPagamentoVersato(int pagamentoVersato) {
+	public void setPagamentoVersato(float pagamentoVersato) {
 		
 		this.pagamentoVersato = pagamentoVersato;
 	}
