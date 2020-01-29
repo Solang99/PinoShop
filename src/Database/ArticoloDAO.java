@@ -49,51 +49,17 @@ public class ArticoloDAO {
 
 	
 	}
-	
-	public void UpdateArticolo(String nome,String id,String produttore,String taglia,String colore, String collezione,int quantita, float prezzo,
-			String genere, File fotoFile) {
+
+
+	public void DeleteArticolo(String id) {
 
 		try {
-			String query = "UPDATE articolo SET id = ?, produttore = ?, taglia = ?::taglia_type, colore = ?, collezione = ?, quantita = ?, prezzo = ?,genere ?::genere_type, foto = ? WHERE id = ?;";
-			preparedStatement = connection.prepareStatement(query);
-			
-			preparedStatement.setString(1, nome);
-			preparedStatement.setString(2, id);
-
-			preparedStatement.setString(3,produttore);
-			preparedStatement.setString(4, taglia);
-			preparedStatement.setString(5, colore);
-			preparedStatement.setString(6,collezione);
-			preparedStatement.setInt(7,quantita);
-			preparedStatement.setFloat(8, prezzo);
-			preparedStatement.setString(9, genere);
-			FileInputStream fotoStream = new FileInputStream(fotoFile);
-			preparedStatement.setBinaryStream(10, fotoStream, (int) fotoFile.length());
-
-			if(preparedStatement.executeUpdate() > 0) {
-				JOptionPane.showMessageDialog(null, "Articolo Aggiornato");
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public void DeleteArticolo(String nome,String id,String produttore,String taglia,String colore, String collezione,int quantita, float prezzo,
-			String genere, File fotoFile) {
-
-		try {
-			String query = "DELETE FROM articolo WHERE id = ?;";
+			String query = "DELETE FROM articolo WHERE id_articolo = ?;";
 			preparedStatement = connection.prepareStatement(query);
 
-			preparedStatement.setString(2, id);
+			preparedStatement.setString(1, id);
 
-			if(preparedStatement.executeUpdate() > 0) {
-				JOptionPane.showMessageDialog(null, "Articolo Eliminato");
-			}
+			preparedStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

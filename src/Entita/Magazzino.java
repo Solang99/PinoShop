@@ -15,6 +15,7 @@ public class Magazzino {
 
 		articolo = new ArrayList<Articolo>();
 	}
+	
 	public ArrayList<Articolo> getArticolo() {
 
 		return articolo;

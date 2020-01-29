@@ -11,7 +11,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,29 +34,44 @@ public class Controller {
 	public Cassa cassa;
 	private MagazzinoFrame magazzinoFrame;
 	private CassaFrame cassaFrame;
-	private static ArticoloDAO articoloDao; 
-	private static Magazzino magazzino;
-	private static MagazzinoDAO magazzinoDao;
-	private static  CommessoDAO commessoDao;
+	private  ArticoloDAO articoloDao; 
+	private   Magazzino magazzino;
+	private   MagazzinoDAO magazzinoDao;
+	private  CommessoDAO commessoDao;
 	public Commesso commesso;
-	static ArrayList<Articolo> articoli;
+    private ArrayList<Articolo> articoli;
+	
+	static DefaultTableModel tableModel;
+	
+	
+	
 	public static void main (String[] args) {
 		Controller controller = new Controller ();
 
-		articoloDao = new ArticoloDAO();
-		commessoDao = new CommessoDAO();
+
 		
 		mainFrame = new MainFrame(controller);
 		mainFrame.setVisible(true);
 		
-		magazzino = new Magazzino();
-		magazzinoDao = new MagazzinoDAO();
-		magazzinoDao.fillMagazzino(magazzino.getArticolo()); 
-	    articoli = magazzino.getArticolo();
-	    loginFrame = new LoginFrame(controller);
+
+		
+		loginFrame = new LoginFrame(controller);
 	    loginFrame.setVisible(false);
 
 		
+	}
+	
+	public Controller() {
+		articoli = new ArrayList<Articolo>();
+		
+		articoloDao = new ArticoloDAO();
+		commessoDao = new CommessoDAO();
+		
+		magazzino = new Magazzino();
+		magazzinoDao = new MagazzinoDAO();
+		
+		
+		tableModel = new DefaultTableModel();
 	}
 	
 	public void GoToLoginFrame() {
@@ -105,17 +123,23 @@ public class Controller {
 	}
 
 	public DefaultTableModel FillTableModel() {
-		magazzino = new Magazzino();
-		String headers[] = {"Nome","id","Produttore","Taglia","Colore","Collezione","Disponibili","Prezzo","genere"};
-		DefaultTableModel tableModel = new DefaultTableModel();
-	    tableModel.setColumnIdentifiers(headers);
-	    
+		tableModel.setRowCount(0);
+		articoli.clear();
+		magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		
+		String headers[] = {"Nome","id","Produttore","Taglia","Colore","Collezione","Disponibili","Prezzo","Genere","Foto"};
+		
 
-		for (Articolo a :articoli)
-			System.out.println(a);
-	
+		tableModel.setColumnIdentifiers(headers);
+		
+		
+		
+		for (Articolo a : magazzino.getArticolo())
+			articoli.add(a);
+		
 	    for (int i = 0 ; i< articoli.size();i++) {
-	    	;
+	    	JLabel lbl = new JLabel ();
+	    	lbl.setIcon(new ImageIcon (articoli.get(i).getFoto()));
 	    	tableModel.addRow(new Object[] {articoli.get(i).getNome() ,
 	    									articoli.get(i).getId(),
 	    									articoli.get(i).getProduttore(),
@@ -124,10 +148,13 @@ public class Controller {
 	    									articoli.get(i).getCollezione(),
 	    									articoli.get(i).getQuantita(),
 	    									articoli.get(i).getPrezzo(),
-	    									articoli.get(i).getGenere()
+	    									articoli.get(i).getGenere(),
+	    									lbl
 	    									});
 	    }
+	   
 	    return tableModel;
+	    
 	}
 	
 	//DATABASE
@@ -145,33 +172,23 @@ public class Controller {
 		return commessoDao.LogInUser(username, s,this);
 	}
 	
-	public void AddArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) throws FileNotFoundException, SQLException {
-
+	public DefaultTableModel  AddArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) throws FileNotFoundException, SQLException {
+		
 		articoloDao.InserArticolo(nome,id, produttore, taglia, colore, collezione, quantita, prezzo, genere,foto);
-		magazzino = new Magazzino();
-		magazzinoDao = new MagazzinoDAO();
-		magazzinoDao.fillMagazzino(magazzino.getArticolo());
-		
+		tableModel = FillTableModel();
+		return tableModel;
 		
 	}
 	
-	public void EditArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
-		
-		articoloDao.UpdateArticolo(nome,id,produttore,taglia,colore,collezione,quantita,prezzo,genere,foto);
-	}
 
-	
-	public void RemoveArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) {
+	public DefaultTableModel RemoveArticolo(String id) {
 		
-		articoloDao.DeleteArticolo(nome,id,produttore,taglia,colore,collezione,quantita,prezzo,genere,foto);
+		articoloDao.DeleteArticolo(id);
+	
+		tableModel = FillTableModel();
+		return tableModel;
 	}
 	
-//	public DefaultListModel fillJlist() {
-//		DefaultListModel model = new DefaultListModel();
-//		for(Articolo a : articoli) {
-//			model.addElement(a.toString());
-//		}
-//		return model;
-//	}
+
 
 }

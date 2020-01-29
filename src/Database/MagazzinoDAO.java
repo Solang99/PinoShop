@@ -28,12 +28,12 @@ public class MagazzinoDAO {
 		}
 		
 		public void fillMagazzino (ArrayList<Articolo> articoloList) {
-
 			String query = "SELECT * FROM articolo;";
 			try {
 				preparedStatement = connection.prepareStatement(query);
 				ResultSet risultato = preparedStatement.executeQuery();
-				
+				articoloList.clear();
+
 				while (risultato.next()) {
 					Articolo a = CreateArticolo(risultato);
 					articoloList.add(a);
