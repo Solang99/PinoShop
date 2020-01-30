@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,6 +11,7 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -35,7 +37,7 @@ public class MainFrame extends JFrame {
 	private Controller controller;
 	private int mouseX,mouseY;
 	
-	public MainFrame(Controller ctrl) {
+	public MainFrame(Controller ctrl, ArrayList<Image> foto , ArrayList<String> nomi) {
 		controller = ctrl;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
@@ -62,8 +64,9 @@ public class MainFrame extends JFrame {
 			}
 		});
 		
-		centralPanel = new CenterPanel();
-		centralPanel.setBounds(0, 129, 906, 556);
+		centralPanel = new CenterPanel(foto, nomi);
+
+		centralPanel.setBounds(0, 144, 906, 541);
 		contentPane.setLayout(null);
 		contentPane.add(topPanel);
 		contentPane.add(centralPanel);

@@ -40,6 +40,8 @@ public class Controller {
 	private  CommessoDAO commessoDao;
 	public Commesso commesso;
     private ArrayList<Articolo> articoli;
+    private ArrayList<String> nomi ;
+	private ArrayList<Image> foto;
 	
 	static DefaultTableModel tableModel;
 	
@@ -50,13 +52,13 @@ public class Controller {
 
 
 		
-		mainFrame = new MainFrame(controller);
-		mainFrame.setVisible(true);
+//		mainFrame = new MainFrame(controller);
+//		mainFrame.setVisible(true);
 		
 
 		
 		loginFrame = new LoginFrame(controller);
-	    loginFrame.setVisible(false);
+	    loginFrame.setVisible(true);
 
 		
 	}
@@ -71,7 +73,7 @@ public class Controller {
 		magazzinoDao = new MagazzinoDAO();
 		
 		
-		tableModel = new DefaultTableModel();
+		tableModel = new DefaultTableModel( );
 	}
 	
 	public void GoToLoginFrame() {
@@ -96,7 +98,10 @@ public class Controller {
 	
 	public void GoToMainFrame(JFrame frame) {
 		frame.dispose();
-		mainFrame = new MainFrame(this);
+		nomi = new ArrayList<String>();
+		foto = new ArrayList<Image>();
+		fillArrayList();
+		mainFrame = new MainFrame(this,foto, nomi);
 		mainFrame.setVisible(true);
 	}
 	
@@ -139,7 +144,7 @@ public class Controller {
 		
 	    for (int i = 0 ; i< articoli.size();i++) {
 	    	JLabel lbl = new JLabel ();
-	    	lbl.setIcon(new ImageIcon (articoli.get(i).getFoto()));
+	    	lbl.setIcon(new ImageIcon (articoli.get(i).getFoto().getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH)));
 	    	tableModel.addRow(new Object[] {articoli.get(i).getNome() ,
 	    									articoli.get(i).getId(),
 	    									articoli.get(i).getProduttore(),
@@ -189,6 +194,16 @@ public class Controller {
 		return tableModel;
 	}
 	
+	
+	private void fillArrayList() {
+		magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		for (Articolo a : magazzino.getArticolo()) {
+			nomi.add(a.getNome());
+			foto.add(a.getFoto());
+			
+		}
+
+	}
 
 
 }

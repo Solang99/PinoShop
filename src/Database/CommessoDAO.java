@@ -38,13 +38,13 @@ public class CommessoDAO {
 			preparedStatement.setString(5, password);
 
 			FileInputStream fotoStream = new FileInputStream(fotoFile);
-			preparedStatement.setBinaryStream(6, fotoStream, (int) fotoFile.length());
+			preparedStatement.setBinaryStream(7, fotoStream, (int) fotoFile.length());
 			
 			java.util.Date dataNascita = date.getTime();
 			long javaTime = dataNascita.getTime();
 			java.sql.Date dataSql = new java.sql.Date(javaTime);
 			
-			preparedStatement.setDate(7,dataSql);
+			preparedStatement.setDate(6,dataSql);
 	
 			
 			
@@ -62,7 +62,7 @@ public class CommessoDAO {
 			
 			String query ="SELECT * "
 							+ "FROM commesso "
-							+ "WHERE \"username\" =  ? AND \"password\" = ? ;";
+							+ "WHERE \"username\" =  ? AND chiave= ? ;";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, username);
 			preparedStatement.setString(2, password);
@@ -79,9 +79,10 @@ public class CommessoDAO {
 				String usernameUser = risultato.getString(3);
 				String emailUser = risultato.getString(4);
 				String passwordUser = risultato.getString(5);
-				InputStream fotoStream = risultato.getBinaryStream(6);
+				java.util.Date dataNascitaUser = risultato.getTimestamp(6);
+				InputStream fotoStream = risultato.getBinaryStream(7);
 				Image fotoUser = ImageIO.read(fotoStream);
-				java.util.Date dataNascitaUser = risultato.getTimestamp(7);
+			
 			
 				controller.CreateUser(nomeUser,cognomeUser,usernameUser,passwordUser,dataNascitaUser,fotoUser,emailUser);
 				
