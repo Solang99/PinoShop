@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -127,19 +128,19 @@ public class Controller {
 		return commessoDao.CheckUsername(username);
 	}
 
-	public DefaultTableModel FillTableModel() {
+	public DefaultTableModel FillTableModel(String id) {
 		tableModel.setRowCount(0);
 		articoli.clear();
-		magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		//magazzinoDao.fillMagazzino(magazzino.getArticolo());
 		
-		String headers[] = {"Nome","id","Produttore","Taglia","Colore","Collezione","Disponibili","Prezzo","Genere","Foto"};
+		String headers[] = {"Nome","id","Produttore","Taglia","Colore","Collezione","Disponibili","Prezzo","Genere","Categoria","Foto"};
 		
 
 		tableModel.setColumnIdentifiers(headers);
 		
 		
 		
-		for (Articolo a : magazzino.getArticolo())
+		for (Articolo a : magazzinoDao.SearchByID(id))
 			articoli.add(a);
 		
 	    for (int i = 0 ; i< articoli.size();i++) {
@@ -154,6 +155,7 @@ public class Controller {
 	    									articoli.get(i).getQuantita(),
 	    									articoli.get(i).getPrezzo(),
 	    									articoli.get(i).getGenere(),
+	    									articoli.get(i).getCategoria(),
 	    									lbl
 	    									});
 	    }
@@ -177,10 +179,10 @@ public class Controller {
 		return commessoDao.LogInUser(username, s,this);
 	}
 	
-	public DefaultTableModel  AddArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,File foto) throws FileNotFoundException, SQLException {
+	public DefaultTableModel  AddArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,String categoria,File foto) throws FileNotFoundException, SQLException {
 		
-		articoloDao.InserArticolo(nome,id, produttore, taglia, colore, collezione, quantita, prezzo, genere,foto);
-		tableModel = FillTableModel();
+		articoloDao.InserArticolo(nome,id, produttore, taglia, colore, collezione, quantita, prezzo, genere,categoria,foto);
+		tableModel = FillTableModel("all");
 		return tableModel;
 		
 	}
@@ -190,10 +192,13 @@ public class Controller {
 		
 		articoloDao.DeleteArticolo(id);
 	
-		tableModel = FillTableModel();
+		tableModel = FillTableModel("all");
 		return tableModel;
 	}
 	
+	public void FiltrByID(String id) {
+		magazzinoDao.SearchByID(id);
+	}
 	
 	private void fillArrayList() {
 		magazzinoDao.fillMagazzino(magazzino.getArticolo());

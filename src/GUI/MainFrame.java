@@ -18,6 +18,8 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.JPopupMenu;
 import java.awt.Component;
+import java.awt.Dimension;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;

@@ -14,6 +14,7 @@ public class Articolo {
 		private float prezzo;
 		private String genere;
 		private Image foto;
+		private String categoria;
 		
 		public Articolo() {
 			
@@ -21,7 +22,7 @@ public class Articolo {
 		
 		
 		//OverLoad
-		public Articolo(String nome,String id, String produttore,String taglia,String colore, String collezione, int quantita,float prezzo,String genere,Image foto) {
+		public Articolo(String nome,String id, String produttore,String taglia,String colore, String collezione, int quantita,float prezzo,String genere,Image foto,String categoria) {
 			setNome(nome);
 			setId(id);
 			setProduttore(produttore);
@@ -32,11 +33,24 @@ public class Articolo {
 			setPrezzo(prezzo);
 			setGenere(genere);
 			setFoto(foto);
+			setCategoria(categoria);
 		}
 		
 		@Override
 		public String toString() {
 			return "Articolo"  + id ;
+		}
+
+
+		
+		
+		public String getCategoria() {
+			return categoria;
+		}
+
+
+		public void setCategoria(String categoria) {
+			this.categoria = categoria;
 		}
 
 

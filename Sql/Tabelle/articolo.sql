@@ -2,8 +2,9 @@ DROP TABLE IF EXISTS articolo cascade;
 DROP TYPE IF EXISTS taglia_type;
 DROP TYPE IF EXISTS genere_type;
 
-CREATE TYPE taglia_type as ENUM ('XS','S,''M','L','XL','XXL');
+CREATE TYPE taglia_type as ENUM ('XS','S','M','L','XL','XXL');
 CREATE TYPE genere_type as ENUM ('MASCHILE' , 'FEMMINILE');
+--CREATE TYPE genere_type as ENUM ('Maglieria' , 'Pantaloni','Soprabiti','Scarpe','Accessori');
 
 CREATE TABLE articolo (
     nome VARCHAR(20) ,
@@ -15,7 +16,8 @@ CREATE TABLE articolo (
     quantita INTEGER,
     prezzo REAL,
     genere genere_type NOT NULL,
-    foto bytea
+    foto bytea,
+    tipo VARCHAR(20)
 );
 
 

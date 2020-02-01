@@ -54,6 +54,43 @@ public class MagazzinoDAO {
 
 		}
 		
+		public ArrayList<Articolo> SearchByID(String id){
+			String query;
+
+			ArrayList<Articolo> itemFilter = new ArrayList<Articolo>();
+			
+			try {
+				if (id.equals("all")) {
+					query = "SELECT * FROM articolo;";
+					preparedStatement = connection.prepareStatement(query);
+				}
+				else {
+					query = "SELECT * FROM articolo WHERE coda = ?;";		
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, id);
+			}
+				ResultSet risultato = preparedStatement.executeQuery();
+				itemFilter.clear();
+
+				while (risultato.next()) {
+					Articolo a = CreateArticolo(risultato);
+					itemFilter.add(a);
+
+				}
+				
+				preparedStatement.execute();
+				preparedStatement.close();
+			} catch (SQLException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+			
+	
+			return itemFilter;
+		}
+		
 		
 		private Articolo CreateArticolo(ResultSet risultato) throws SQLException, IOException {			
 			Articolo articolo = new Articolo();																
@@ -69,7 +106,10 @@ public class MagazzinoDAO {
 			InputStream fotoStream = risultato.getBinaryStream(10);
 			Image fotoUser = ImageIO.read(fotoStream);
 			articolo.setFoto(fotoUser);
+			articolo.setCategoria(risultato.getString(11));
 
 			return articolo;
 		}
+		
+	
 }

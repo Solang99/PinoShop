@@ -22,10 +22,9 @@ public class ComponetArticolo extends JPanel {
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBounds(21, 11, 89, 56);
-		ImageIcon iconIndumento=  new ImageIcon(CassaFrame.class.getResource("/IconRegister/notfound.png"));
-		Image imageIndumentoScaled = iconIndumento.getImage().getScaledInstance(label.getWidth(), label.getHeight(),   java.awt.Image.SCALE_SMOOTH);
-
-		label.setIcon(new ImageIcon(imageIndumentoScaled));
+		
+	
+		label.setIcon(new ImageIcon(foto.getScaledInstance(label.getWidth(), label.getHeight(),   java.awt.Image.SCALE_SMOOTH)));
 		add(label);
 		
 		JButton btnAggiungi = new JButton("Aggiungi");

@@ -56,7 +56,6 @@ public class CenterPanel extends JPanel {
 	
 
         
-        
 		for (int i = 0;i< nomi.size(); i++) {
 			
 

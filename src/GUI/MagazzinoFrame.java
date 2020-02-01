@@ -62,6 +62,7 @@ public class MagazzinoFrame extends JFrame {
 	private JButton btnFoto;
 	private JComboBox<String> comboBoxTaglia;
 	private JComboBox<String> comboBoxGenere;
+	private JComboBox<String> comboBoxCategoria;
 	private File fotoFile;
 	private JTextField textField_1;
 	private JTextField txtCollezione;
@@ -79,8 +80,10 @@ public class MagazzinoFrame extends JFrame {
 	private DefaultTableModel model;
 	private DefaultComboBoxModel<String> tagliaModel;
 	private DefaultComboBoxModel<String> genereModel;
+	private DefaultComboBoxModel<String> tipoModel;
 	private SpinnerNumberModel modelQuantita;
 	private SpinnerNumberModel modelPrezzo;
+	private JButton btnCerca;
 	
 	public MagazzinoFrame(Controller ctrl) {
 		
@@ -95,8 +98,8 @@ public class MagazzinoFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-	  
-	    model = controller.FillTableModel();
+
+	    model = controller.FillTableModel("all");
 	    table = new JTable(){
 
 			@Override
@@ -120,6 +123,7 @@ public class MagazzinoFrame extends JFrame {
 	    table.setModel(model);
 	    model.fireTableDataChanged();
 	    scroll = new JScrollPane(table);
+	    scroll.setBounds(328, 10, 842, 531);
 	    table.setFillsViewportHeight(true);
 	   
 	    DefaultTableCellRenderer  centerRenderer = new DefaultTableCellRenderer();
@@ -135,47 +139,60 @@ public class MagazzinoFrame extends JFrame {
 	    
 	    
 		txtCollezione = new JTextField();
+		txtCollezione.setBounds(151, 326, 151, 20);
 		txtCollezione.setColumns(10);
 		txtCollezione.setBackground(new Color(191, 191, 191));
 		
 		txtColore = new JTextField();
+		txtColore.setBounds(151, 292, 151, 20);
 		txtColore.setColumns(10);
 		txtColore.setBackground(new Color(191, 191, 191));
 		
 		txtProduttore = new JTextField();
+		txtProduttore.setBounds(151, 256, 151, 20);
 		txtProduttore.setColumns(10);
 		txtProduttore.setBackground(new Color(191, 191, 191));
 		
 		txtCodice = new JTextField();
+		txtCodice.setBounds(151, 222, 151, 20);
 		txtCodice.setColumns(10);
 		txtCodice.setBackground(new Color(191, 191, 191));
 		
 		txtNome = new JTextField();
+		txtNome.setBounds(151, 186, 151, 20);
 		txtNome.setColumns(10);
 		txtNome.setBackground(new Color(191, 191, 191));
 		
 		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setBounds(15, 181, 87, 23);
 		lblNome.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblCodice = new JLabel("Codice:");
+		lblCodice.setBounds(15, 217, 87, 23);
 		lblCodice.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblProduttore = new JLabel("Produttore: ");
+		lblProduttore.setBounds(15, 253, 160, 23);
 		lblProduttore.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblColore = new JLabel("Colore:");
+		lblColore.setBounds(15, 287, 126, 23);
 		lblColore.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblCollezione = new JLabel("Collezione:");
+		lblCollezione.setBounds(15, 323, 126, 23);
 		lblCollezione.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblQuantita = new JLabel("Quantit\u00E0:");
+		lblQuantita.setBounds(15, 357, 126, 23);
 		lblQuantita.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblTaglia = new JLabel("Taglia:");
+		lblTaglia.setBounds(15, 426, 87, 30);
 		lblTaglia.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		comboBoxTaglia = new JComboBox<String>();
+		comboBoxTaglia.setBounds(147, 434, 110, 22);
 		tagliaModel = new DefaultComboBoxModel<String>(new String[] {"XS", "S", "M", "L", "XL", "XXL"});
 		comboBoxTaglia.setModel(tagliaModel);
 		comboBoxTaglia.setBackground(new Color(191, 191, 191));
@@ -183,14 +200,17 @@ public class MagazzinoFrame extends JFrame {
 		
 		modelQuantita = new SpinnerNumberModel(0, 0, 300, 1);
 		JSpinner spinnerQuantita = new JSpinner(modelQuantita);
+		spinnerQuantita.setBounds(151, 359, 75, 24);
 		spinnerQuantita.setForeground(Color.WHITE);
 		spinnerQuantita.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		spinnerQuantita.setBackground(new Color(191, 191, 191));
 		
 		JLabel lblImmagine = new JLabel("Immagine:");
+		lblImmagine.setBounds(15, 63, 126, 30);
 		lblImmagine.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		btnFoto = new JButton("");
+		btnFoto.setBounds(151, 10, 160, 132);
 		
 		btnFoto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -205,23 +225,33 @@ public class MagazzinoFrame extends JFrame {
 		
 		modelPrezzo = new SpinnerNumberModel(0.0, 0.0, 1000.0, 0.5);
 		JSpinner spinnerPrezzo = new JSpinner(modelPrezzo);
+		spinnerPrezzo.setBounds(151, 394, 75, 24);
 		spinnerPrezzo.setForeground(Color.WHITE);
 		spinnerPrezzo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		spinnerPrezzo.setBackground(new Color(191, 191, 191));
 		
 		JButton btnCancellaFoto = new JButton("Cancella");
+		btnCancellaFoto.setBounds(164, 147, 116, 23);
 		btnCancellaFoto.setForeground(Color.RED);
 		btnCancellaFoto.setFont(new Font("Segoe Print", Font.BOLD, 16));
 		
 		comboBoxGenere = new JComboBox<String>();
+		comboBoxGenere.setBounds(147, 467, 110, 22);
 		genereModel = new DefaultComboBoxModel<String>(new String[] {"MASCHILE", "FEMMINILE"});
 		comboBoxGenere.setModel(genereModel);
 		comboBoxGenere.setBackground(new Color(191, 191, 191));
 		
 		JLabel lblGenere = new JLabel("Genere:");
+		lblGenere.setBounds(15, 467, 87, 30);
 		lblGenere.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JButton btnAggiungi = new JButton("Aggiungi");
+		btnAggiungi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+	
+		btnAggiungi.setBounds(876, 567, 137, 40);
 
 		btnAggiungi.addMouseListener(new MouseAdapter() {
 			@Override
@@ -235,6 +265,7 @@ public class MagazzinoFrame extends JFrame {
 		btnAggiungi.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JButton btnCancella = new JButton("Cancella");
+		btnCancella.setBounds(482, 567, 126, 40);
 		btnCancella.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -256,149 +287,58 @@ public class MagazzinoFrame extends JFrame {
 		btnCancella.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblPrezzo = new JLabel("Prezzo:");
+		lblPrezzo.setBounds(10, 391, 87, 30);
 		lblPrezzo.setFont(new Font("Segoe Print", Font.BOLD, 22));
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(5)
-							.addComponent(lblImmagine, GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-							.addGap(10)
-							.addComponent(btnFoto, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(154)
-							.addComponent(btnCancellaFoto, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(5)
-							.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-							.addGap(49)
-							.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(5)
-							.addComponent(lblCodice, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-							.addGap(49)
-							.addComponent(txtCodice, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(5)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(136)
-									.addComponent(txtProduttore, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
-								.addComponent(lblProduttore, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(5)
-							.addComponent(lblColore, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(txtColore, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(5)
-							.addComponent(lblCollezione, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(txtCollezione, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(5)
-							.addComponent(lblQuantita, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(spinnerQuantita, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblPrezzo, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-							.addGap(54)
-							.addComponent(spinnerPrezzo, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(5)
-							.addComponent(lblTaglia, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-							.addGap(45)
-							.addComponent(comboBoxTaglia, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(5)
-							.addComponent(lblGenere, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-							.addGap(45)
-							.addComponent(comboBoxGenere, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)))
-					.addGap(22)
-					.addComponent(scroll, GroupLayout.DEFAULT_SIZE, 842, Short.MAX_VALUE)
-					.addGap(5))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(477)
-					.addComponent(btnCancella, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-					.addGap(268)
-					.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(5)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(25)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(53)
-									.addComponent(lblImmagine, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-								.addComponent(btnFoto, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
-							.addGap(5)
-							.addComponent(btnCancellaFoto, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-							.addGap(11)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(5)
-									.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-							.addGap(11)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblCodice, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(5)
-									.addComponent(txtCodice, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-							.addGap(11)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(3)
-									.addComponent(txtProduttore, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-								.addComponent(lblProduttore, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-							.addGap(11)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblColore, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(5)
-									.addComponent(txtColore, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-							.addGap(11)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblCollezione, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(3)
-									.addComponent(txtCollezione, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-							.addGap(11)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblQuantita, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(2)
-									.addComponent(spinnerQuantita, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-							.addGap(8)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblPrezzo, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(3)
-									.addComponent(spinnerPrezzo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-							.addGap(5)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblTaglia, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(8)
-									.addComponent(comboBoxTaglia, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
-							.addGap(11)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblGenere, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-								.addComponent(comboBoxGenere, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(scroll, GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE))
-					.addGap(26)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnCancella, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-					.addGap(17))
-		);
-		contentPane.setLayout(gl_contentPane);
+		
+		btnCerca = new JButton("Cerca");
+		btnCerca.setBounds(79, 567, 126, 40);
+		btnCerca.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				model = controller.FillTableModel(txtCodice.getText());
+			}
+		});
+		btnCerca.setFont(new Font("Segoe Print", Font.BOLD, 22));
+		contentPane.setLayout(null);
+		contentPane.add(lblImmagine);
+		contentPane.add(btnFoto);
+		contentPane.add(btnCancellaFoto);
+		contentPane.add(lblNome);
+		contentPane.add(txtNome);
+		contentPane.add(lblCodice);
+		contentPane.add(txtCodice);
+		contentPane.add(txtProduttore);
+		contentPane.add(lblProduttore);
+		contentPane.add(lblColore);
+		contentPane.add(txtColore);
+		contentPane.add(lblCollezione);
+		contentPane.add(txtCollezione);
+		contentPane.add(lblQuantita);
+		contentPane.add(spinnerQuantita);
+		contentPane.add(lblPrezzo);
+		contentPane.add(spinnerPrezzo);
+		contentPane.add(lblTaglia);
+		contentPane.add(comboBoxTaglia);
+		contentPane.add(lblGenere);
+		contentPane.add(comboBoxGenere);
+		contentPane.add(scroll);
+		contentPane.add(btnCerca);
+		contentPane.add(btnCancella);
+		contentPane.add(btnAggiungi);
+		
+		JLabel lblTipo = new JLabel("Tipo:");
+		lblTipo.setFont(new Font("Segoe Print", Font.BOLD, 22));
+		lblTipo.setBounds(15, 508, 87, 30);
+		contentPane.add(lblTipo);
+		
+		comboBoxCategoria = new JComboBox<String>();
+		tipoModel = new DefaultComboBoxModel<String>(new String[] {"Maglieria" , "Pantaloni","Soprabiti","Scarpe","Accessori'"});
+		comboBoxCategoria.setModel(tipoModel);
+		comboBoxCategoria.setBackground(new Color(191, 191, 191));
+		comboBoxCategoria.setBounds(147, 508, 110, 22);
+		contentPane.add(comboBoxCategoria);
+		
+		
 		
 		
 	}
@@ -453,19 +393,23 @@ public class MagazzinoFrame extends JFrame {
 		String selectedGenere = table.getValueAt(selectedRow, 8).toString();
 		genereModel.setSelectedItem(selectedGenere);
 		
+		String selectedTipo = table.getValueAt(selectedRow, 9).toString();
+		tipoModel.setSelectedItem(selectedTipo);
+		
 	}
 	
 	private void AggiungiArticolo() {
 		
 		String selectedGenere =  comboBoxGenere.getSelectedItem().toString();
-		String selectedTaglia =  comboBoxTaglia.getSelectedItem().toString(); 
+		String selectedTaglia =  comboBoxTaglia.getSelectedItem().toString();
+		String selectedCategoira = comboBoxCategoria.getSelectedItem().toString();
 		int selectedQuantita =  Integer.parseInt(modelQuantita.getValue().toString());
 		float selectedPrezzo = Float.parseFloat(modelPrezzo.getValue().toString());
 		
 		try {
 			
 			model = controller.AddArticolo(txtNome.getText(),txtCodice.getText(), txtProduttore.getText(), selectedTaglia, txtColore.getText(), 
-								 txtCollezione.getText(),selectedQuantita ,selectedPrezzo,selectedGenere, fotoFile);
+								 txtCollezione.getText(),selectedQuantita ,selectedPrezzo,selectedGenere,selectedCategoira, fotoFile);
 		
 				JOptionPane.showMessageDialog(null, "Articolo aggiunto correttamentoe", "Errore", JOptionPane.INFORMATION_MESSAGE
 			);
@@ -478,13 +422,6 @@ public class MagazzinoFrame extends JFrame {
 			sq.printStackTrace();
 		}
 	}
-
-
-		
-
-		
-	
-
 }
 
 class FotoCellRenderer implements TableCellRenderer{

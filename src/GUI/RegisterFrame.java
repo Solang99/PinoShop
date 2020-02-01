@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Cursor;
 
 import java.awt.Font;
-
+import java.awt.Image;
 import java.awt.SystemColor;
 
-
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -32,11 +32,13 @@ import java.net.URL;
 
 import datechooser.beans.DateChooserCombo;
 import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class RegisterFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel panel;
+	private JButton btnAddPhoto;
 	private JTextField textEmail;
 	private JTextField textNome;
 	private JPasswordField passwordField;	
@@ -55,7 +57,7 @@ public class RegisterFrame extends JFrame {
 	public RegisterFrame(Controller ctrl) {
 
 		URL url = getClass().getResource("/IconRegister/notfound.png");
-		File fotoFile = new File(url.getPath());
+		fotoFile = new File(url.getPath());
 	
 
 		controller = ctrl;
@@ -273,7 +275,8 @@ public class RegisterFrame extends JFrame {
 		lblFoto.setBounds(194, 466, 66, 29);
 		panel.add(lblFoto);
 		
-		JButton btnAddPhoto = new JButton("");
+		btnAddPhoto = new JButton("");
+
 		btnAddPhoto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -328,8 +331,18 @@ public class RegisterFrame extends JFrame {
 		FileNameExtensionFilter fileExtensionFilter = new FileNameExtensionFilter("jpg","png");
 		fileChooser.setFileFilter(fileExtensionFilter);
 		int returnValue = fileChooser.showOpenDialog(null);
-		if (returnValue == JFileChooser.APPROVE_OPTION) 
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
 					fotoFile = fileChooser.getSelectedFile();
+					Image fotoImage;
+					try {
+						fotoImage = ImageIO.read(fotoFile);
+						btnAddPhoto.setIcon(new ImageIcon(fotoImage.getScaledInstance(btnAddPhoto.getWidth(), btnAddPhoto.getHeight(), Image.SCALE_SMOOTH)));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+		}
 			
 		
 	}

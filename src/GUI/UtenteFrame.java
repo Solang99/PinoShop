@@ -190,8 +190,10 @@ public class UtenteFrame extends JFrame {
 		
 		lblFoto = new JLabel("");
 		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
-		ImageIcon fotoProfilo = new ImageIcon(new ImageIcon(controller.commesso.getFoto()).getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+	
+		ImageIcon fotoProfilo = new ImageIcon(controller.commesso.getFoto());
 		lblFoto.setIcon(fotoProfilo);
+		
 		GroupLayout gl_profileCard = new GroupLayout(profileCard);
 		gl_profileCard.setHorizontalGroup(
 			gl_profileCard.createParallelGroup(Alignment.LEADING)
