@@ -2,6 +2,7 @@ package GUI;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Dimension;
 import java.awt.Image;
@@ -9,11 +10,13 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ComponetArticolo extends JPanel {
 
-
-	public ComponetArticolo(Image foto , String nome,String id,float prezzo) {
+	
+	public ComponetArticolo(Image foto , String nome,String id,float prezzo,Controller controller,int tipo) {
 		setLayout(null);
 		
 		this.setPreferredSize(new Dimension(125, 174));
@@ -25,10 +28,32 @@ public class ComponetArticolo extends JPanel {
 		label.setIcon(new ImageIcon(foto.getScaledInstance(label.getWidth(), label.getHeight(),   java.awt.Image.SCALE_SMOOTH)));
 		add(label);
 		
-		JButton btnAggiungi = new JButton("Aggiungi");
-		btnAggiungi.setBounds(21, 140, 89, 23);
-		add(btnAggiungi);
 		
+		if (tipo == 0) {
+			JButton btnAggiungi = new JButton("Aggiungi");
+			btnAggiungi.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					JOptionPane.showMessageDialog(null, "Articolo Aggiunto");
+					controller.SetCarrello(id);
+				}
+			});
+			btnAggiungi.setBounds(21, 140, 89, 23);
+			add(btnAggiungi);
+		}
+		else
+		{
+			JButton btnRimuovi = new JButton("Rimuovi");
+			btnRimuovi.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					controller.SetCarrello(id);
+					
+				}
+			});
+			btnRimuovi.setBounds(21, 140, 89, 23);
+			add(btnRimuovi);
+		}
 		JLabel lblNome = new JLabel("");
 		lblNome.setText(nome);
 		lblNome.setHorizontalAlignment(SwingConstants.CENTER);

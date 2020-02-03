@@ -45,6 +45,11 @@ public class Controller {
     private ArrayList<String> idList ;
     private ArrayList<Float> prezzoList ;
 	private ArrayList<Image> fotoList;
+  
+    private ArrayList<String> nomiCassa ;
+    private ArrayList<String> idCassa ;
+    private ArrayList<Float> prezzoCassa ;
+	private ArrayList<Image> fotoCassa;
 	private String selectItem ;
 	static DefaultTableModel tableModel;
 	
@@ -78,6 +83,11 @@ public class Controller {
 		
 		
 		tableModel = new DefaultTableModel( );
+		
+		nomiCassa = new ArrayList<String>();
+		fotoCassa = new ArrayList<Image>();
+		idCassa = new ArrayList<String>();
+		prezzoCassa = new ArrayList<Float>();	
 	}
 	
 	public void GoToLoginFrame() {
@@ -114,12 +124,10 @@ public class Controller {
 	public void Search(String id) {
 		mainFrame.dispose();
 		selectItem=id;
-		fillArrayList(selectItem);
 		nomiList = new ArrayList<String>();
 		fotoList = new ArrayList<Image>();
 		idList = new ArrayList<String>();
-		prezzoList = new ArrayList<Float>();
-		fillArrayList(selectItem);
+		prezzoList = new ArrayList<Float>();	
 		mainFrame = new MainFrame(this,fotoList, nomiList,idList,prezzoList);
 		mainFrame.setVisible(true);
 
@@ -132,7 +140,11 @@ public class Controller {
 	}
 	
 	public void GoToCassaFrame() {
-		cassaFrame = new CassaFrame(this);
+	
+		
+		System.out.println(nomiList);
+		
+		cassaFrame = new CassaFrame(this,fotoCassa, nomiCassa,idCassa,prezzoCassa);
 		cassaFrame.setVisible(true);
 	}
 	
@@ -231,6 +243,25 @@ public class Controller {
 		}
 
 	}
+	public void SetCarrello(String id) {
 
+
+		magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		
+		for (Articolo a : magazzino.getArticolo()) {
+			if(a.getId().equals(id)) {
+				nomiCassa.add(a.getNome());
+				prezzoCassa.add(a.getPrezzo());
+				idCassa.add(a.getId());
+				fotoCassa.add(a.getFoto());
+				
+			}
+		}
+	
+	}
+	
+	public void GetCarrello() {
+		
+	}
 
 }
