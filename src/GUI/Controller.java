@@ -41,9 +41,11 @@ public class Controller {
 	private  CommessoDAO commessoDao;
 	public Commesso commesso;
     private ArrayList<Articolo> articoli;
-    private ArrayList<String> nomi ;
-	private ArrayList<Image> foto;
-	
+    private ArrayList<String> nomiList ;
+    private ArrayList<String> idList ;
+    private ArrayList<Float> prezzoList ;
+	private ArrayList<Image> fotoList;
+	private String selectItem ;
 	static DefaultTableModel tableModel;
 	
 	
@@ -65,6 +67,7 @@ public class Controller {
 	}
 	
 	public Controller() {
+		selectItem = "all";
 		articoli = new ArrayList<Articolo>();
 		
 		articoloDao = new ArticoloDAO();
@@ -99,11 +102,27 @@ public class Controller {
 	
 	public void GoToMainFrame(JFrame frame) {
 		frame.dispose();
-		nomi = new ArrayList<String>();
-		foto = new ArrayList<Image>();
-		fillArrayList();
-		mainFrame = new MainFrame(this,foto, nomi);
+		nomiList = new ArrayList<String>();
+		fotoList = new ArrayList<Image>();
+		idList = new ArrayList<String>();
+		prezzoList = new ArrayList<Float>();
+		fillArrayList(selectItem);
+		mainFrame = new MainFrame(this,fotoList, nomiList,idList,prezzoList);
 		mainFrame.setVisible(true);
+	}
+	
+	public void Search(String id) {
+		mainFrame.dispose();
+		selectItem=id;
+		fillArrayList(selectItem);
+		nomiList = new ArrayList<String>();
+		fotoList = new ArrayList<Image>();
+		idList = new ArrayList<String>();
+		prezzoList = new ArrayList<Float>();
+		fillArrayList(selectItem);
+		mainFrame = new MainFrame(this,fotoList, nomiList,idList,prezzoList);
+		mainFrame.setVisible(true);
+
 	}
 	
 	public void GoToAddArticolo() {
@@ -182,7 +201,7 @@ public class Controller {
 	public DefaultTableModel  AddArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,String categoria,File foto) throws FileNotFoundException, SQLException {
 		
 		articoloDao.InserArticolo(nome,id, produttore, taglia, colore, collezione, quantita, prezzo, genere,categoria,foto);
-		tableModel = FillTableModel("all");
+		tableModel = FillTableModel(selectItem);
 		return tableModel;
 		
 	}
@@ -192,7 +211,7 @@ public class Controller {
 		
 		articoloDao.DeleteArticolo(id);
 	
-		tableModel = FillTableModel("all");
+		tableModel = FillTableModel(selectItem);
 		return tableModel;
 	}
 	
@@ -200,11 +219,14 @@ public class Controller {
 		magazzinoDao.SearchByID(id);
 	}
 	
-	private void fillArrayList() {
-		magazzinoDao.fillMagazzino(magazzino.getArticolo());
-		for (Articolo a : magazzino.getArticolo()) {
-			nomi.add(a.getNome());
-			foto.add(a.getFoto());
+	private void fillArrayList(String id) {
+	
+	
+		for (Articolo a : magazzinoDao.SearchByID(id)) {
+			nomiList.add(a.getNome());
+			fotoList.add(a.getFoto());
+			idList.add(a.getId());
+			prezzoList.add(a.getPrezzo());
 			
 		}
 

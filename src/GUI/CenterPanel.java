@@ -33,7 +33,7 @@ public class CenterPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CenterPanel(ArrayList<Image> foto , ArrayList<String> nomi) {
+	public CenterPanel(ArrayList<Image> foto , ArrayList<String> nomi,ArrayList<String> id,ArrayList<Float> prezzo) {
 		setBorder(null);
 		setSize(514, 298);
 		setBounds(0, 144, 906, 541);
@@ -48,19 +48,13 @@ public class CenterPanel extends JPanel {
         innerConstraints.weighty = 0.0;
         innerConstraints.gridy = 0;
 		
-//		for (int i = 0; i< nomi.size() ; i++) {
-//				ComponetArticolo component = new ComponetArticolo(foto.get(i), nomi.get(i));
-//				scrollPane.add(component);
-//				System.out.println(i);
-//		}
-	
 
         
 		for (int i = 0;i< nomi.size(); i++) {
 			
 
       
-			ComponetArticolo component = new ComponetArticolo(foto.get(i), nomi.get(i));
+			ComponetArticolo component = new ComponetArticolo(foto.get(i), nomi.get(i),id.get(i),prezzo.get(i));
 			
 			//JLabel component = new JLabel("s");
 
@@ -69,7 +63,7 @@ public class CenterPanel extends JPanel {
             innerConstraints.fill = GridBagConstraints.HORIZONTAL;
             innerConstraints.anchor = GridBagConstraints.NORTHWEST;
             //innerConstraints.gridy = i + 1;
-            if(i%5 == 0)
+            if( i%5 == 0)
             	 innerConstraints.gridy = i + 1;
             innerConstraints.gridx = GridBagConstraints.RELATIVE;
            

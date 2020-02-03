@@ -34,8 +34,9 @@ public class CommessoDAO {
 			preparedStatement.setString(1, nome);
 			preparedStatement.setString(2, cognome);
 			preparedStatement.setString(3, username);
-			preparedStatement.setString(4, email);
-			preparedStatement.setString(5, password);
+			preparedStatement.setString(4, password);
+			preparedStatement.setString(5, email);
+			
 
 			FileInputStream fotoStream = new FileInputStream(fotoFile);
 			preparedStatement.setBinaryStream(7, fotoStream, (int) fotoFile.length());

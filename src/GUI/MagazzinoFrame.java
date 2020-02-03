@@ -256,8 +256,8 @@ public class MagazzinoFrame extends JFrame {
 		btnAggiungi.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				table.getColumn("Foto").setCellRenderer(new FotoCellRenderer());
 				AggiungiArticolo();
+				table.getColumn("Foto").setCellRenderer(new FotoCellRenderer());
 					
 			
 			}
@@ -291,7 +291,7 @@ public class MagazzinoFrame extends JFrame {
 		lblPrezzo.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		btnCerca = new JButton("Cerca");
-		btnCerca.setBounds(79, 567, 126, 40);
+		btnCerca.setBounds(85, 567, 126, 40);
 		btnCerca.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

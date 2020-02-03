@@ -26,9 +26,15 @@ import javax.swing.JMenuItem;
 import datechooser.beans.DateChooserCombo;
 import datechooser.beans.DateChooserDialog;
 import java.awt.CardLayout;
+import java.awt.Color;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JTextField;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainFrame extends JFrame {
 
@@ -38,8 +44,9 @@ public class MainFrame extends JFrame {
 	private TopPanel topPanel;
 	private Controller controller;
 	private int mouseX,mouseY;
+	private JTextField txtCerca;
 	
-	public MainFrame(Controller ctrl, ArrayList<Image> foto , ArrayList<String> nomi) {
+	public MainFrame(Controller ctrl, ArrayList<Image> foto , ArrayList<String> nomi,ArrayList<String> id,ArrayList<Float>prezzo) {
 		controller = ctrl;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
@@ -66,15 +73,39 @@ public class MainFrame extends JFrame {
 			}
 		});
 		
-		centralPanel = new CenterPanel(foto, nomi);
+		centralPanel = new CenterPanel(foto, nomi,id, prezzo);
 
 		centralPanel.setBounds(0, 144, 906, 541);
 		contentPane.setLayout(null);
 		contentPane.add(topPanel);
+		topPanel.setLayout(null);
+		
+		txtCerca = new JTextField();
+		txtCerca.setBounds(437, 103, 172, 30);
+		topPanel.add(txtCerca);
+		txtCerca.setColumns(10);
+		
+		JLabel lblCerca = new JLabel("Cerca:");
+		lblCerca.setBounds(326, 88, 101, 47);
+		lblCerca.setFont(new Font("Segoe Print", Font.BOLD, 30));
+		topPanel.add(lblCerca);
+		JButton btnSearch = new JButton("");
+		
+		btnSearch.setIcon(new ImageIcon("C:\\Users\\angel\\Desktop\\progetto oo\\Group 1.png"));
+		btnSearch.setOpaque(false);
+		btnSearch.setContentAreaFilled(false);
+		btnSearch.setBorderPainted(false);
+		btnSearch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.Search( txtCerca.getText());
+			}
+		});
+	
+		btnSearch.setBounds(619, 94, 50, 41);
+		topPanel.add(btnSearch);
 		contentPane.add(centralPanel);
 
 	}
-	
-
 }
 

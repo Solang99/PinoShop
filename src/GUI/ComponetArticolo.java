@@ -12,13 +12,11 @@ import javax.swing.SwingConstants;
 
 public class ComponetArticolo extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
-	public ComponetArticolo(Image foto , String nome) {
+
+	public ComponetArticolo(Image foto , String nome,String id,float prezzo) {
 		setLayout(null);
 		
-		this.setPreferredSize(new Dimension(125,172));
+		this.setPreferredSize(new Dimension(125, 174));
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBounds(21, 11, 89, 56);
@@ -28,18 +26,29 @@ public class ComponetArticolo extends JPanel {
 		add(label);
 		
 		JButton btnAggiungi = new JButton("Aggiungi");
-		btnAggiungi.setBounds(21, 104, 89, 23);
+		btnAggiungi.setBounds(21, 140, 89, 23);
 		add(btnAggiungi);
 		
-		JButton btnEdit = new JButton("Edita");
-		btnEdit.setBounds(21, 138, 89, 23);
-		add(btnEdit);
+		JLabel lblNome = new JLabel("");
+		lblNome.setText(nome);
+		lblNome.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNome.setBounds(21, 74, 89, 23);
+		add(lblNome);
 		
-		JLabel label_1 = new JLabel("");
-		label_1.setText(nome);
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setBounds(21, 74, 89, 23);
-		add(label_1);
+		JLabel lblId = new JLabel("");
+		lblId.setText(id);
+		lblId.setHorizontalAlignment(SwingConstants.CENTER);
+		lblId.setBounds(21, 96, 89, 23);
+		add(lblId);
+		
+		JLabel lblPrezzo = new JLabel("");
+		lblPrezzo.setHorizontalAlignment(SwingConstants.CENTER);
+		Float p = prezzo;
+		lblPrezzo.setText(p.toString());
+		lblPrezzo.setBounds(21, 118, 89, 23);
+		add(lblPrezzo);
+		
+		
 		
 		setVisible(true);
 
