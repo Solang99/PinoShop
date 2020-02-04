@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -21,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 public class CassaFrame extends JFrame {
 	
@@ -151,22 +153,42 @@ public class CassaFrame extends JFrame {
         panelDati.add(spinnerPagamento);
         
 		
-		
-	       JButton btnNewButton = new JButton("Paga");
-	        btnNewButton.addMouseListener(new MouseAdapter() {
-	        	@Override
-	        	public void mouseClicked(MouseEvent e) {
-	        		tipoPagamento();
-	        		
-	        	}
-	        });
-	        btnNewButton.setBounds(146, 152, 89, 23);
-	        panelTipoPagamento.add(btnNewButton);
+
 		
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(checkBoxCarta);
 		bg.add(checkBoxContanti);
 		
+		
+	    JButton btnNewButton = new JButton("Paga");
+	        btnNewButton.addMouseListener(new MouseAdapter() {
+	        	@Override
+	        	public void mouseClicked(MouseEvent e) {
+	    
+	        		
+	        		try {
+	            		String pagamentoType= " ";
+		        		if (checkBoxCarta.isSelected())
+		        			pagamentoType = "Carta";
+		        		else if (checkBoxContanti.isSelected())
+		        			pagamentoType = "Contanti";
+		        			float tot = Float.parseFloat(setTotale(prezzo));
+		        			float rest = Float.parseFloat(setResto());
+		        			
+						controller.aggiungiOrdine(pagamentoType,tot, pagamentoVersato,rest );
+						setResto();
+						JOptionPane.showMessageDialog(null, "Pagamento effetuato");
+						dispose();
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(null, "Tipo pagamento non valido", "Errore", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					}
+	        		//tipoPagamento();
+	        		
+	        	}
+	        });
+	        btnNewButton.setBounds(146, 152, 89, 23);
+	        panelTipoPagamento.add(btnNewButton);
 	}
 		private String setTotale(ArrayList<Float> prezzo) {
 			totale = 0;

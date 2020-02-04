@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Database.ArticoloDAO;
+import Database.CassaDAO;
 import Database.CommessoDAO;
 import Database.MagazzinoDAO;
 import Entita.Articolo;
@@ -39,6 +40,7 @@ public class Controller {
 	private   Magazzino magazzino;
 	private   MagazzinoDAO magazzinoDao;
 	private  CommessoDAO commessoDao;
+	private CassaDAO cassaDao;
 	public Commesso commesso;
     private ArrayList<Articolo> articoli;
     private ArrayList<String> nomiList ;
@@ -80,6 +82,7 @@ public class Controller {
 		
 		magazzino = new Magazzino();
 		magazzinoDao = new MagazzinoDAO();
+		cassaDao = new CassaDAO();
 		
 		
 		tableModel = new DefaultTableModel( );
@@ -212,7 +215,7 @@ public class Controller {
 	
 	public DefaultTableModel  AddArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,String categoria,File foto) throws FileNotFoundException, SQLException {
 		
-		articoloDao.InserArticolo(nome,id, produttore, taglia, colore, collezione, quantita, prezzo, genere,categoria,foto);
+		articoloDao.InsertArticolo(nome,id, produttore, taglia, colore, collezione, quantita, prezzo, genere,categoria,foto);
 		tableModel = FillTableModel(selectItem);
 		return tableModel;
 		
@@ -225,6 +228,11 @@ public class Controller {
 	
 		tableModel = FillTableModel(selectItem);
 		return tableModel;
+	}
+	
+	public void aggiungiOrdine(String pagamentoType, float pagamentoDovuto, float pagamentoVersato,float resto) throws SQLException {
+		cassaDao.insertOrdine(pagamentoType, pagamentoDovuto, pagamentoVersato, resto);
+		
 	}
 	
 	public void FiltrByID(String id) {
@@ -260,8 +268,16 @@ public class Controller {
 	
 	}
 	
-	public void GetCarrello() {
-		
-	}
+	public void rimuoviFromCassa() {
+			for(int i = 0;i <magazzino.getArticolo().size();i++) {
+			
+				nomiCassa.remove(i);
+				prezzoCassa.remove(i);
+				idCassa.remove(i);
+				fotoCassa.remove(i);
+				i--;
+			}
+				  
+			}
+		}
 
-}

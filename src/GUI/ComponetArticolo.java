@@ -47,7 +47,8 @@ public class ComponetArticolo extends JPanel {
 			btnRimuovi.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					controller.SetCarrello(id);
+					JOptionPane.showMessageDialog(null, "Articolo Rimosso");
+					controller.rimuoviFromCassa();
 					
 				}
 			});
