@@ -60,15 +60,11 @@ public class MagazzinoDAO {
 			ArrayList<Articolo> itemFilter = new ArrayList<Articolo>();
 			
 			try {
-				if (id.equals("all")) {
-					query = "SELECT * FROM articolo;";
-					preparedStatement = connection.prepareStatement(query);
-				}
-				else {
-					query = "SELECT * FROM articolo WHERE coda = ?;";		
+				
+					query = "select * FROM selectAllOrFilter (?);";		
 					preparedStatement = connection.prepareStatement(query);
 					preparedStatement.setString(1, id);
-			}
+			
 				ResultSet risultato = preparedStatement.executeQuery();
 				itemFilter.clear();
 

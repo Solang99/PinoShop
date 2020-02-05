@@ -81,12 +81,12 @@ public class MainFrame extends JFrame {
 		topPanel.setLayout(null);
 		
 		txtCerca = new JTextField();
-		txtCerca.setBounds(437, 103, 172, 30);
+		txtCerca.setBounds(405, 103, 172, 30);
 		topPanel.add(txtCerca);
 		txtCerca.setColumns(10);
 		
 		JLabel lblCerca = new JLabel("Cerca:");
-		lblCerca.setBounds(326, 88, 101, 47);
+		lblCerca.setBounds(303, 88, 101, 47);
 		lblCerca.setFont(new Font("Segoe Print", Font.BOLD, 30));
 		topPanel.add(lblCerca);
 		JButton btnSearch = new JButton("");
@@ -102,7 +102,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 	
-		btnSearch.setBounds(619, 94, 50, 41);
+		btnSearch.setBounds(587, 82, 50, 47);
 		topPanel.add(btnSearch);
 		contentPane.add(centralPanel);
 

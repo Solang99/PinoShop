@@ -1,0 +1,26 @@
+--DROP FUNCTION selectallorfilter();
+
+DROP FUNCTION selectallorfilter(text);
+
+CREATE OR REPLACE FUNCTION selectallorfilter(idart text)
+RETURNS SETOF articolo AS 
+$$ -- here start procedural part
+   DECLARE r articolo%rowtype;
+   BEGIN
+   if (idart = 'all')	then
+		for r in select * from articolo
+		loop
+			return NEXT r;
+		end loop;
+	else
+		for r in select * from articolo where coda = idart
+		loop
+			return NEXT r;
+		end loop;
+	end if;
+	
+   END;
+$$ -- here finish procedural part
+LANGUAGE plpgsql;
+
+	select * FROM selectAllOrFilter ('as');
