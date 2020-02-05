@@ -73,7 +73,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		
-		centralPanel = new CenterPanel(foto, nomi,id, prezzo);
+		centralPanel = new CenterPanel(foto, nomi,id, prezzo,controller,0);
 
 		centralPanel.setBounds(0, 144, 906, 541);
 		contentPane.setLayout(null);

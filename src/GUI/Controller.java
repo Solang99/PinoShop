@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Database.ArticoloDAO;
+import Database.CassaDAO;
 import Database.CommessoDAO;
 import Database.MagazzinoDAO;
 import Entita.Articolo;
@@ -39,12 +40,18 @@ public class Controller {
 	private   Magazzino magazzino;
 	private   MagazzinoDAO magazzinoDao;
 	private  CommessoDAO commessoDao;
+	private CassaDAO cassaDao;
 	public Commesso commesso;
     private ArrayList<Articolo> articoli;
     private ArrayList<String> nomiList ;
     private ArrayList<String> idList ;
     private ArrayList<Float> prezzoList ;
 	private ArrayList<Image> fotoList;
+  
+    private ArrayList<String> nomiCassa ;
+    private ArrayList<String> idCassa ;
+    private ArrayList<Float> prezzoCassa ;
+	private ArrayList<Image> fotoCassa;
 	private String selectItem ;
 	static DefaultTableModel tableModel;
 	
@@ -75,9 +82,15 @@ public class Controller {
 		
 		magazzino = new Magazzino();
 		magazzinoDao = new MagazzinoDAO();
+		cassaDao = new CassaDAO();
 		
 		
 		tableModel = new DefaultTableModel( );
+		
+		nomiCassa = new ArrayList<String>();
+		fotoCassa = new ArrayList<Image>();
+		idCassa = new ArrayList<String>();
+		prezzoCassa = new ArrayList<Float>();	
 	}
 	
 	public void GoToLoginFrame() {
@@ -114,12 +127,10 @@ public class Controller {
 	public void Search(String id) {
 		mainFrame.dispose();
 		selectItem=id;
-		fillArrayList(selectItem);
 		nomiList = new ArrayList<String>();
 		fotoList = new ArrayList<Image>();
 		idList = new ArrayList<String>();
-		prezzoList = new ArrayList<Float>();
-		fillArrayList(selectItem);
+		prezzoList = new ArrayList<Float>();	
 		mainFrame = new MainFrame(this,fotoList, nomiList,idList,prezzoList);
 		mainFrame.setVisible(true);
 
@@ -132,7 +143,11 @@ public class Controller {
 	}
 	
 	public void GoToCassaFrame() {
-		cassaFrame = new CassaFrame(this);
+	
+		
+		System.out.println(nomiList);
+		
+		cassaFrame = new CassaFrame(this,fotoCassa, nomiCassa,idCassa,prezzoCassa);
 		cassaFrame.setVisible(true);
 	}
 	
@@ -200,7 +215,7 @@ public class Controller {
 	
 	public DefaultTableModel  AddArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,String categoria,File foto) throws FileNotFoundException, SQLException {
 		
-		articoloDao.InserArticolo(nome,id, produttore, taglia, colore, collezione, quantita, prezzo, genere,categoria,foto);
+		articoloDao.InsertArticolo(nome,id, produttore, taglia, colore, collezione, quantita, prezzo, genere,categoria,foto);
 		tableModel = FillTableModel(selectItem);
 		return tableModel;
 		
@@ -213,6 +228,11 @@ public class Controller {
 	
 		tableModel = FillTableModel(selectItem);
 		return tableModel;
+	}
+	
+	public void aggiungiOrdine(String pagamentoType, float pagamentoDovuto, float pagamentoVersato,float resto) throws SQLException {
+		cassaDao.insertOrdine(pagamentoType, pagamentoDovuto, pagamentoVersato, resto);
+		
 	}
 	
 	public void FiltrByID(String id) {
@@ -231,6 +251,33 @@ public class Controller {
 		}
 
 	}
+	public void SetCarrello(String id) {
 
 
-}
+		magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		
+		for (Articolo a : magazzino.getArticolo()) {
+			if(a.getId().equals(id)) {
+				nomiCassa.add(a.getNome());
+				prezzoCassa.add(a.getPrezzo());
+				idCassa.add(a.getId());
+				fotoCassa.add(a.getFoto());
+				
+			}
+		}
+	
+	}
+	
+	public void rimuoviFromCassa() {
+			for(int i = 0;i <magazzino.getArticolo().size();i++) {
+			
+				nomiCassa.remove(i);
+				prezzoCassa.remove(i);
+				idCassa.remove(i);
+				fotoCassa.remove(i);
+				i--;
+			}
+				  
+			}
+		}
+

@@ -24,7 +24,7 @@ import javax.swing.JComboBox;
 import java.awt.GridBagConstraints;
 import javax.swing.JCheckBox;
 import java.awt.Button;
-import com.atticlabs.zonelayout.swing.ZoneLayoutDebugPanel;
+
 
 public class CenterPanel extends JPanel {
 
@@ -33,7 +33,7 @@ public class CenterPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CenterPanel(ArrayList<Image> foto , ArrayList<String> nomi,ArrayList<String> id,ArrayList<Float> prezzo) {
+	public CenterPanel(ArrayList<Image> foto , ArrayList<String> nomi,ArrayList<String> id,ArrayList<Float> prezzo,Controller controller,int tipo) {
 		setBorder(null);
 		setSize(514, 298);
 		setBounds(0, 144, 906, 541);
@@ -54,7 +54,7 @@ public class CenterPanel extends JPanel {
 			
 
       
-			ComponetArticolo component = new ComponetArticolo(foto.get(i), nomi.get(i),id.get(i),prezzo.get(i));
+			ComponetArticolo component = new ComponetArticolo(foto.get(i), nomi.get(i),id.get(i),prezzo.get(i),controller,tipo);
 			
 			//JLabel component = new JLabel("s");
 
