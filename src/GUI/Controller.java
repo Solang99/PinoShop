@@ -62,13 +62,12 @@ public class Controller {
 
 
 		
-//		mainFrame = new MainFrame(controller);
-//		mainFrame.setVisible(true);
+		
 		
 
-		
-		loginFrame = new LoginFrame(controller);
-	    loginFrame.setVisible(true);
+//		
+		loginFrame = new LoginFrame(controller);	
+		loginFrame.setVisible(true);
 
 		
 	}
@@ -267,16 +266,20 @@ public class Controller {
 		}
 	
 	}
-	
+
 	public void rimuoviFromCassa() {
-			for(int i = 0;i <magazzino.getArticolo().size();i++) {
-			
-				nomiCassa.remove(i);
-				prezzoCassa.remove(i);
-				idCassa.remove(i);
-				fotoCassa.remove(i);
-				i--;
+			for(int i = magazzino.getArticolo().size()-1;i >= 0 ;i--) {
+				
+				if (magazzino.getArticolo().get(i).getId().equals(idCassa.toString())) {
+					nomiCassa.remove(i);
+					prezzoCassa.remove(i);
+					idCassa.remove(i);
+					fotoCassa.remove(i);
+				}
+				//System.out.println(magazzino.getArticolo().get(i).getId());
+				
 			}
+		
 				  
 			}
 		}
