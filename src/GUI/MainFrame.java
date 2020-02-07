@@ -46,7 +46,7 @@ public class MainFrame extends JFrame {
 	private int mouseX,mouseY;
 	private JTextField txtCerca;
 	
-	public MainFrame(Controller ctrl, ArrayList<Image> foto , ArrayList<String> nomi,ArrayList<String> id,ArrayList<Float>prezzo) {
+	public MainFrame(Controller ctrl) {
 		controller = ctrl;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
@@ -73,7 +73,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		
-		centralPanel = new CenterPanel(foto, nomi,id, prezzo,controller,0);
+		centralPanel = new CenterPanel(controller);
 
 		centralPanel.setBounds(0, 144, 906, 541);
 		contentPane.setLayout(null);
@@ -89,9 +89,8 @@ public class MainFrame extends JFrame {
 		lblCerca.setBounds(303, 88, 101, 47);
 		lblCerca.setFont(new Font("Segoe Print", Font.BOLD, 30));
 		topPanel.add(lblCerca);
-		JButton btnSearch = new JButton("");
 		
-		btnSearch.setIcon(new ImageIcon("C:\\Users\\angel\\Desktop\\progetto oo\\Group 1.png"));
+		JButton btnSearch = new JButton("");
 		btnSearch.setOpaque(false);
 		btnSearch.setContentAreaFilled(false);
 		btnSearch.setBorderPainted(false);

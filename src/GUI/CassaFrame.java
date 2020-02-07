@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -35,9 +36,12 @@ public class CassaFrame extends JFrame {
 	private JCheckBox checkBoxCarta;
 	private JCheckBox checkBoxContanti;
 	private JLabel lblResto;
+	private Controller controller;
 	
-	
-	public CassaFrame(Controller controller,ArrayList<Image> foto , ArrayList<String> nomi,ArrayList<String> id,ArrayList<Float> prezzo) {
+	public CassaFrame(Controller ctrl) {
+
+		controller = ctrl;
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 742, 603);
 		contentPane = new JPanel();
@@ -53,31 +57,29 @@ public class CassaFrame extends JFrame {
         innerConstraints.weighty = 0.0;
         innerConstraints.gridy = 0;
 		
-
-        
-		for (int i = 0;i< nomi.size(); i++) {
+    
+       
+        int i = 0;
+		for (ComponetArticolo ca : controller.cassaList){
 			
 
-      
-			ComponetArticolo component = new ComponetArticolo(foto.get(i), nomi.get(i),id.get(i),prezzo.get(i),controller,1);
-			
-			//JLabel component = new JLabel("s");
-
-            innerConstraints.weightx = 50;
-            innerConstraints.weighty = 50;
-            innerConstraints.fill = GridBagConstraints.HORIZONTAL;
-            innerConstraints.anchor = GridBagConstraints.NORTHWEST;
+           // innerConstraints.weightx = 0.5;
+          //  innerConstraints.weighty = 0.2;
+          //  innerConstraints.fill = GridBagConstraints.HORIZONTAL;
+			innerConstraints.gridwidth =4;
             //innerConstraints.gridy = i + 1;
-            if( i%2 == 0)
-            	 innerConstraints.gridy = i + 1;
+		
+			
+         	innerConstraints.gridy = i++;
             innerConstraints.gridx = GridBagConstraints.RELATIVE;
            
-            innerLayout.setConstraints(component, innerConstraints);
-            innerPanel.add(component);
+            innerLayout.setConstraints(ca, innerConstraints);
+            innerPanel.add(ca);
             
             
 	    
 		}
+		
         contentPane.setLayout(null);
         contentPane.setLayout(null);
 		
@@ -132,7 +134,7 @@ public class CassaFrame extends JFrame {
         panelDati.setBounds(57, 71, 396, 200);
         panel.add(panelDati);
         
-        JLabel lblTotale = new JLabel("Totale:  " +  setTotale(prezzo));
+        JLabel lblTotale = new JLabel("Totale:  " +  setTotale());
         lblTotale.setFont(new Font("Segoe Print", Font.PLAIN, 20));
         lblTotale.setBounds(10, 11, 206, 20);
         panelDati.add(lblTotale);
@@ -172,13 +174,14 @@ public class CassaFrame extends JFrame {
 		        			pagamentoType = "Carta";
 		        		else if (checkBoxContanti.isSelected())
 		        			pagamentoType = "Contanti";
-		        			float tot = Float.parseFloat(setTotale(prezzo));
+		        			float tot = Float.parseFloat(setTotale());
 		        			float rest = Float.parseFloat(setResto());
 		        			
 						controller.aggiungiOrdine(pagamentoType,tot, pagamentoVersato,rest );
 						setResto();
 						JOptionPane.showMessageDialog(null, "Pagamento effetuato");
 						dispose();
+						
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "Tipo pagamento non valido", "Errore", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
@@ -190,14 +193,16 @@ public class CassaFrame extends JFrame {
 	        btnNewButton.setBounds(146, 152, 89, 23);
 	        panelTipoPagamento.add(btnNewButton);
 	}
-		private String setTotale(ArrayList<Float> prezzo) {
-			totale = 0;
-			for(float f : prezzo) 
-				totale += f;
+	
+	
+	
+		private String setTotale() {
+			totale = controller.TotaleCassa();
 			Float totaleWrapper = totale;
-			return  totaleWrapper.toString();
-			
+			return totaleWrapper.toString();
 		}
+		
+		
 		
 		private String setResto() {
 			pagamentoVersato =  Float.parseFloat(modelPagamento.getValue().toString());

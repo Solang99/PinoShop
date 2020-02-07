@@ -10,8 +10,7 @@ public class Connessione {
 	private static Properties props;
 	
 	private static String url = "jdbc:postgresql://localhost/pinoshop";
-	private static String user = "postgres";
-	private static String driverName ="org.postgresql.Driver";
+
 	
 	
 	
@@ -24,7 +23,7 @@ public class Connessione {
 		}
     	props= new Properties();
 		props.setProperty("user","postgres");
-		props.setProperty("password","laka");
+		props.setProperty("password","soli");
     	
 		try {
 			con = DriverManager.getConnection(url, props);

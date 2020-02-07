@@ -7,6 +7,7 @@ import javax.swing.JTable;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.JLabel;
@@ -24,6 +25,7 @@ import javax.swing.JComboBox;
 import java.awt.GridBagConstraints;
 import javax.swing.JCheckBox;
 import java.awt.Button;
+import java.awt.Color;
 
 
 public class CenterPanel extends JPanel {
@@ -33,7 +35,7 @@ public class CenterPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CenterPanel(ArrayList<Image> foto , ArrayList<String> nomi,ArrayList<String> id,ArrayList<Float> prezzo,Controller controller,int tipo) {
+	public CenterPanel(Controller controller) {
 		setBorder(null);
 		setSize(514, 298);
 		setBounds(0, 144, 906, 541);
@@ -48,31 +50,27 @@ public class CenterPanel extends JPanel {
         innerConstraints.weighty = 0.0;
         innerConstraints.gridy = 0;
 		
-
-        
-		for (int i = 0;i< nomi.size(); i++) {
+        ArrayList<ComponetArticolo> component = controller.FillComponentList();
+        int i = 0;
+		for (ComponetArticolo ca : component){
 			
 
-      
-			ComponetArticolo component = new ComponetArticolo(foto.get(i), nomi.get(i),id.get(i),prezzo.get(i),controller,tipo);
-			
-			//JLabel component = new JLabel("s");
-
-            innerConstraints.weightx = 50;
-            innerConstraints.weighty = 50;
+            innerConstraints.weightx = 0.5;
+            innerConstraints.weighty = 0.2;
             innerConstraints.fill = GridBagConstraints.HORIZONTAL;
-            innerConstraints.anchor = GridBagConstraints.NORTHWEST;
+			innerConstraints.gridwidth =4;
             //innerConstraints.gridy = i + 1;
-            if( i%5 == 0)
-            	 innerConstraints.gridy = i + 1;
+			if( i%3 == 0)
+            	 innerConstraints.gridy = i++;
             innerConstraints.gridx = GridBagConstraints.RELATIVE;
            
-            innerLayout.setConstraints(component, innerConstraints);
-            innerPanel.add(component);
+            innerLayout.setConstraints(ca, innerConstraints);
+            innerPanel.add(ca);
             
             
 	    
 		}
+		
 		
         JScrollPane scrollPanel = new JScrollPane(innerPanel);
         add(scrollPanel, BorderLayout.CENTER);

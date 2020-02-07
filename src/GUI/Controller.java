@@ -27,6 +27,7 @@ import Entita.Articolo;
 import Entita.Cassa;
 import Entita.Commesso;
 import Entita.Magazzino;
+import GUI.ComponetArticolo;
 
 public class Controller {
 	private static LoginFrame loginFrame;
@@ -43,15 +44,9 @@ public class Controller {
 	private CassaDAO cassaDao;
 	public Commesso commesso;
     private ArrayList<Articolo> articoli;
-    private ArrayList<String> nomiList ;
-    private ArrayList<String> idList ;
-    private ArrayList<Float> prezzoList ;
-	private ArrayList<Image> fotoList;
-  
-    private ArrayList<String> nomiCassa ;
-    private ArrayList<String> idCassa ;
-    private ArrayList<Float> prezzoCassa ;
-	private ArrayList<Image> fotoCassa;
+
+	public ArrayList<ComponetArticolo> componetList;
+	public ArrayList<ComponetArticolo> cassaList;
 	private String selectItem ;
 	static DefaultTableModel tableModel;
 	
@@ -75,7 +70,8 @@ public class Controller {
 	public Controller() {
 		selectItem = "all";
 		articoli = new ArrayList<Articolo>();
-		
+		componetList = new ArrayList<ComponetArticolo>();
+		cassaList = new ArrayList<ComponetArticolo>();
 		articoloDao = new ArticoloDAO();
 		commessoDao = new CommessoDAO();
 		
@@ -86,10 +82,7 @@ public class Controller {
 		
 		tableModel = new DefaultTableModel( );
 		
-		nomiCassa = new ArrayList<String>();
-		fotoCassa = new ArrayList<Image>();
-		idCassa = new ArrayList<String>();
-		prezzoCassa = new ArrayList<Float>();	
+
 	}
 	
 	public void GoToLoginFrame() {
@@ -114,23 +107,17 @@ public class Controller {
 	
 	public void GoToMainFrame(JFrame frame) {
 		frame.dispose();
-		nomiList = new ArrayList<String>();
-		fotoList = new ArrayList<Image>();
-		idList = new ArrayList<String>();
-		prezzoList = new ArrayList<Float>();
-		fillArrayList(selectItem);
-		mainFrame = new MainFrame(this,fotoList, nomiList,idList,prezzoList);
+	
+	
+		mainFrame = new MainFrame(this);
 		mainFrame.setVisible(true);
 	}
 	
 	public void Search(String id) {
 		mainFrame.dispose();
 		selectItem=id;
-		nomiList = new ArrayList<String>();
-		fotoList = new ArrayList<Image>();
-		idList = new ArrayList<String>();
-		prezzoList = new ArrayList<Float>();	
-		mainFrame = new MainFrame(this,fotoList, nomiList,idList,prezzoList);
+	
+	//	mainFrame = new MainFrame(this,fotoList, nomiList,idList,prezzoList);
 		mainFrame.setVisible(true);
 
 	}
@@ -144,9 +131,7 @@ public class Controller {
 	public void GoToCassaFrame() {
 	
 		
-		System.out.println(nomiList);
-		
-		cassaFrame = new CassaFrame(this,fotoCassa, nomiCassa,idCassa,prezzoCassa);
+		cassaFrame = new CassaFrame(this);
 		cassaFrame.setVisible(true);
 	}
 	
@@ -164,7 +149,7 @@ public class Controller {
 	public DefaultTableModel FillTableModel(String id) {
 		tableModel.setRowCount(0);
 		articoli.clear();
-		//magazzinoDao.fillMagazzino(magazzino.getArticolo());
+	
 		
 		String headers[] = {"Nome","id","Produttore","Taglia","Colore","Collezione","Disponibili","Prezzo","Genere","Categoria","Foto"};
 		
@@ -238,49 +223,58 @@ public class Controller {
 		magazzinoDao.SearchByID(id);
 	}
 	
-	private void fillArrayList(String id) {
+
+
+
+	public void RemoveFromCassa(String id) {
+		
 	
-	
-		for (Articolo a : magazzinoDao.SearchByID(id)) {
-			nomiList.add(a.getNome());
-			fotoList.add(a.getFoto());
-			idList.add(a.getId());
-			prezzoList.add(a.getPrezzo());
+		 magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		
+		 for (int i = 0 ;  i<cassaList.size() ; i++) {
 			
-		}
-
+			 if (cassaList.get(i).getId().equals(id)) 
+			 	cassaList.remove(i);
+			
+			 
+		 }
+		 
+		cassaFrame.dispose();
+		cassaFrame = new CassaFrame(this);
+		cassaFrame.setVisible(true);
 	}
-	public void SetCarrello(String id) {
-
-
-		magazzinoDao.fillMagazzino(magazzino.getArticolo());
-		
-		for (Articolo a : magazzino.getArticolo()) {
-			if(a.getId().equals(id)) {
-				nomiCassa.add(a.getNome());
-				prezzoCassa.add(a.getPrezzo());
-				idCassa.add(a.getId());
-				fotoCassa.add(a.getFoto());
-				
-			}
-		}
 	
+	public ArrayList<ComponetArticolo> FillComponentList(){
+		 magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		 for (Articolo a : magazzino.getArticolo())
+			 componetList.add(new ComponetArticolo(a.getFoto(),a.getNome(),a.getId(),a.getPrezzo(),0,this,0));
+		 return componetList;
+	}
+	
+	public ArrayList<ComponetArticolo> FillCassaList(String id , int quantia){
+		 magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		 for (Articolo a : magazzino.getArticolo()) {
+			 if (a.getId().equals(id))
+			 	cassaList.add(new ComponetArticolo(a.getFoto(),a.getNome(),a.getId(),a.getPrezzo(),quantia,this,1));
+		 }
+
+		 
+		 return cassaList;
+	}
+	
+
+	
+	public float TotaleCassa() {
+		float totale = 0;
+		
+		 for (ComponetArticolo c : cassaList) {
+			totale+=c.getPrezzo();
+		}
+		return totale;
 	}
 
-	public void rimuoviFromCassa() {
-			for(int i = magazzino.getArticolo().size()-1;i >= 0 ;i--) {
-				
-				if (magazzino.getArticolo().get(i).getId().equals(idCassa.toString())) {
-					nomiCassa.remove(i);
-					prezzoCassa.remove(i);
-					idCassa.remove(i);
-					fotoCassa.remove(i);
-				}
-				//System.out.println(magazzino.getArticolo().get(i).getId());
-				
-			}
-		
-				  
-			}
-		}
+	
+
+
+}
 
