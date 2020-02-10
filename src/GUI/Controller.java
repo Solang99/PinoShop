@@ -44,7 +44,7 @@ public class Controller {
 	private CassaDAO cassaDao;
 	public Commesso commesso;
     private ArrayList<Articolo> articoli;
-
+    private int position = -1;
 	public ArrayList<ComponetArticolo> componetList;
 	public ArrayList<ComponetArticolo> cassaList;
 	private String selectItem ;
@@ -80,7 +80,15 @@ public class Controller {
 		cassaDao = new CassaDAO();
 		
 		
-		tableModel = new DefaultTableModel( );
+		tableModel = new DefaultTableModel( ) {
+			@Override
+			public Class<?> getColumnClass (int column){
+				switch (column) {
+				case 10 : return ImageIcon.class;
+				default : return String.class;
+				}
+			}
+		};
 		
 
 	}
@@ -162,8 +170,9 @@ public class Controller {
 			articoli.add(a);
 		
 	    for (int i = 0 ; i< articoli.size();i++) {
-	    	JLabel lbl = new JLabel ();
-	    	lbl.setIcon(new ImageIcon (articoli.get(i).getFoto().getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH)));
+	  
+	    
+	    	ImageIcon img = new ImageIcon (articoli.get(i).getFoto().getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH));
 	    	tableModel.addRow(new Object[] {articoli.get(i).getNome() ,
 	    									articoli.get(i).getId(),
 	    									articoli.get(i).getProduttore(),
@@ -174,7 +183,8 @@ public class Controller {
 	    									articoli.get(i).getPrezzo(),
 	    									articoli.get(i).getGenere(),
 	    									articoli.get(i).getCategoria(),
-	    									lbl
+	    									
+	    									img
 	    									});
 	    }
 	   
@@ -226,15 +236,22 @@ public class Controller {
 
 
 
-	public void RemoveFromCassa(String id) {
+	public void RemoveFromCassa(String id,int quantita) {
 		
 	
 		 magazzinoDao.fillMagazzino(magazzino.getArticolo());
 		
 		 for (int i = 0 ;  i<cassaList.size() ; i++) {
+
+			 if (cassaList.get(i).getId().equals(id)) {
+				 if (cassaList.get(i).getQuantita() == quantita)
+					 cassaList.remove(i);
+				 else {
+					 cassaList.get(i).setQuantita( cassaList.get(i).getQuantita()-quantita);
+					 
+				 }
+			 }
 			
-			 if (cassaList.get(i).getId().equals(id)) 
-			 	cassaList.remove(i);
 			
 			 
 		 }
@@ -245,17 +262,29 @@ public class Controller {
 	}
 	
 	public ArrayList<ComponetArticolo> FillComponentList(){
+		 componetList.clear();
 		 magazzinoDao.fillMagazzino(magazzino.getArticolo());
+
 		 for (Articolo a : magazzino.getArticolo())
 			 componetList.add(new ComponetArticolo(a.getFoto(),a.getNome(),a.getId(),a.getPrezzo(),0,this,0));
 		 return componetList;
 	}
 	
+	
+	
+	
 	public ArrayList<ComponetArticolo> FillCassaList(String id , int quantia){
 		 magazzinoDao.fillMagazzino(magazzino.getArticolo());
-		 for (Articolo a : magazzino.getArticolo()) {
-			 if (a.getId().equals(id))
-			 	cassaList.add(new ComponetArticolo(a.getFoto(),a.getNome(),a.getId(),a.getPrezzo(),quantia,this,1));
+		 for (int i = 0; i<magazzino.getArticolo().size();i++) {
+			 if (magazzino.getArticolo().get(i).getId().equals(id)) {
+			 	cassaList.add(new ComponetArticolo(magazzino.getArticolo().get(i).getFoto(),
+			 			magazzino.getArticolo().get(i).getNome(),magazzino.getArticolo().get(i).getId(),
+			 			magazzino.getArticolo().get(i).getPrezzo(),quantia,this,1));
+			 	
+			 	magazzino.getArticolo().get(i).setQuantita(magazzino.getArticolo().get(i).getQuantita()-quantia);
+			 	
+			 	
+			 }
 		 }
 
 		 
@@ -268,11 +297,25 @@ public class Controller {
 		float totale = 0;
 		
 		 for (ComponetArticolo c : cassaList) {
-			totale+=c.getPrezzo();
+			totale+=c.getPrezzo()*c.getQuantita();
 		}
 		return totale;
 	}
-
+	
+	
+	
+	
+	
+	
+	private void FindInMagazzino(String id) {
+		
+		 magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		 for (int i = magazzino.getArticolo().size()-1; i>0;i--) {
+			 if (magazzino.getArticolo().get(i).getId().equals(id))
+			 	position = i;
+		 }
+		
+	}
 	
 
 

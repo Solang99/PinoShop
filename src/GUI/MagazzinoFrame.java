@@ -64,7 +64,7 @@ public class MagazzinoFrame extends JFrame {
 	private JComboBox<String> comboBoxGenere;
 	private JComboBox<String> comboBoxCategoria;
 	private File fotoFile;
-	private JTextField textField_1;
+
 	private JTextField txtCollezione;
 	private JTextField txtColore;
 	private JTextField txtProduttore;
@@ -126,12 +126,11 @@ public class MagazzinoFrame extends JFrame {
 	    scroll.setBounds(328, 10, 842, 531);
 	    table.setFillsViewportHeight(true);
 	   
-	    DefaultTableCellRenderer  centerRenderer = new DefaultTableCellRenderer();
-	    centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-	    for (int  i = 0 ; i< table.getColumnCount(); i++)
-	    	table.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+
 	    
-	    table.getColumn("Foto").setCellRenderer(new FotoCellRenderer());
+	    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+	    centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+	    table.setDefaultRenderer(String.class, centerRenderer);
 
 	    table.setRowHeight(80);
 		
@@ -198,7 +197,7 @@ public class MagazzinoFrame extends JFrame {
 		comboBoxTaglia.setBackground(new Color(191, 191, 191));
 	
 		
-		modelQuantita = new SpinnerNumberModel(0, 0, 300, 1);
+		modelQuantita = new SpinnerNumberModel(1, 1, 300, 1);
 		JSpinner spinnerQuantita = new JSpinner(modelQuantita);
 		spinnerQuantita.setBounds(151, 359, 75, 24);
 		spinnerQuantita.setForeground(Color.WHITE);
@@ -246,10 +245,7 @@ public class MagazzinoFrame extends JFrame {
 		lblGenere.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JButton btnAggiungi = new JButton("Aggiungi");
-		btnAggiungi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+	
 	
 		btnAggiungi.setBounds(876, 567, 137, 40);
 
@@ -257,7 +253,6 @@ public class MagazzinoFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				AggiungiArticolo();
-				table.getColumn("Foto").setCellRenderer(new FotoCellRenderer());
 					
 			
 			}
@@ -266,10 +261,6 @@ public class MagazzinoFrame extends JFrame {
 		
 		JButton btnCancella = new JButton("Cancella");
 		btnCancella.setBounds(482, 567, 126, 40);
-		btnCancella.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnCancella.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

@@ -32,25 +32,25 @@ public class ComponetArticolo extends JPanel {
 	private String id;
 	private String nome;
 	private int tipo;
-	
-	
+	private int quantita;
+	private int selectedQuantia;
+	private SpinnerNumberModel modelQuantita;
 	public ComponetArticolo(Image foto , String nome,String id, float prezzo ,int quantia,Controller controller,int tipo) {
 		
 		this.prezzo = prezzo;
 		this.id= id;
 		this.tipo=tipo;
 		this.nome= nome;
-		
-		
+		this.quantita = quantia;
 		setBorder(new LineBorder(new Color(44, 85, 69), 1, true));
 		setLayout(null);
-		this.setPreferredSize(new Dimension(211, 174));
+		setPreferredSize(new Dimension(211, 174));
 		JLabel lblIcon = new JLabel("");
 		lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIcon.setBounds(15, 9, 89, 123);
 		
 	
-		lblIcon.setIcon(new ImageIcon(foto.getScaledInstance(lblIcon.getWidth(), lblIcon.getHeight(),   java.awt.Image.SCALE_SMOOTH)));
+		lblIcon.setIcon(new ImageIcon(foto.getScaledInstance(lblIcon.getWidth(), lblIcon.getHeight(), java.awt.Image.SCALE_SMOOTH)));
 		add(lblIcon);
 		
 		
@@ -87,24 +87,27 @@ public class ComponetArticolo extends JPanel {
 		lblQuantita.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQuantita.setBounds(124, 110, 23, 23);
 		add(lblQuantita);
-		
-		SpinnerNumberModel modelQuantita = new SpinnerNumberModel(0, 0, 300, 1);
-		JSpinner spinnerQuantita = new JSpinner(modelQuantita);
-		spinnerQuantita.setForeground(Color.WHITE);
-		spinnerQuantita.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		spinnerQuantita.setBackground(new Color(191, 191, 191));
-		
-		spinnerQuantita.setBounds(147, 108, 50, 24);
-		add(spinnerQuantita);
+
 		
 		
 		if (tipo == 0) {
+			
+			modelQuantita = new SpinnerNumberModel(0, 0, 300, 1);
+			JSpinner spinnerQuantita = new JSpinner(modelQuantita);
+			spinnerQuantita.setForeground(Color.WHITE);
+			spinnerQuantita.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			spinnerQuantita.setBackground(new Color(191, 191, 191));
+			spinnerQuantita.setValue(quantita);
+			
+			spinnerQuantita.setBounds(147, 108, 50, 24);
+			add(spinnerQuantita);
+			
 			JButton btnAggiungi = new JButton("");
 			btnAggiungi.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JOptionPane.showMessageDialog(null, "Articolo Aggiunto");
-					int selectedQuantia = Integer.parseInt(spinnerQuantita.getValue().toString());
+					selectedQuantia = Integer.parseInt(spinnerQuantita.getValue().toString());
 					controller.FillCassaList(id,selectedQuantia);
 				}
 		
@@ -115,16 +118,33 @@ public class ComponetArticolo extends JPanel {
 			btnAggiungi.setBounds(168, 143, 33, 23);
 			btnAggiungi.setIcon(new ImageIcon(ComponetArticolo.class.getResource("/IconComponentArticolo/25pxadd.png")));
 			add(btnAggiungi);
+		
+			
+
 		}
 		else
 		{
-			spinnerQuantita.setValue(quantia);
+			
+			modelQuantita = new SpinnerNumberModel(0, 0, quantita, 1);
+			JSpinner spinnerQuantita = new JSpinner(modelQuantita);
+			spinnerQuantita.setForeground(Color.WHITE);
+			spinnerQuantita.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			spinnerQuantita.setBackground(new Color(191, 191, 191));
+			spinnerQuantita.setValue(quantita);
+			
+			spinnerQuantita.setBounds(147, 108, 50, 24);
+			add(spinnerQuantita);
+			
+			
 			JButton btnRimuovi = new JButton("");
 			btnRimuovi.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JOptionPane.showMessageDialog(null, "Articolo Rimosso");
-					controller.RemoveFromCassa(id);
+					selectedQuantia = Integer.parseInt(spinnerQuantita.getValue().toString());
+				//modelQuantita = new SpinnerNumberModel(0, 0, quantia, 1);
+					controller.RemoveFromCassa(id,selectedQuantia);
+					spinnerQuantita.setValue(quantita);
 				}
 		
 			});
@@ -159,9 +179,16 @@ public class ComponetArticolo extends JPanel {
 		return nome;
 	}
 
+	public int getQuantita() {
+		return quantita;
+	}
 
 
 	public int getTipo() {
 		return tipo;
+	}
+	
+	public void setQuantita (int quantita) {
+		this.quantita -=quantita; 
 	}
 }

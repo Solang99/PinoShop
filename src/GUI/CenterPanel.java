@@ -51,21 +51,19 @@ public class CenterPanel extends JPanel {
         innerConstraints.gridy = 0;
 		
         ArrayList<ComponetArticolo> component = controller.FillComponentList();
-        int i = 0;
-		for (ComponetArticolo ca : component){
-			
-
+        
+		for (int i = component.size()-1; i >= 0;i--) {
             innerConstraints.weightx = 0.5;
             innerConstraints.weighty = 0.2;
             innerConstraints.fill = GridBagConstraints.HORIZONTAL;
 			innerConstraints.gridwidth =4;
             //innerConstraints.gridy = i + 1;
 			if( i%3 == 0)
-            	 innerConstraints.gridy = i++;
+            	 innerConstraints.gridy =i;
             innerConstraints.gridx = GridBagConstraints.RELATIVE;
-           
-            innerLayout.setConstraints(ca, innerConstraints);
-            innerPanel.add(ca);
+          
+            innerLayout.setConstraints(component.get(i), innerConstraints);
+            innerPanel.add(component.get(i));
             
             
 	    

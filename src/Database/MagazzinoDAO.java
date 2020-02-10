@@ -55,13 +55,13 @@ public class MagazzinoDAO {
 		}
 		
 		public ArrayList<Articolo> SearchByID(String id){
-			String query;
+			String query = "select * FROM selectAllOrFilter (?);";	
 
 			ArrayList<Articolo> itemFilter = new ArrayList<Articolo>();
 			
 			try {
 				
-					query = "select * FROM selectAllOrFilter (?);";		
+						
 					preparedStatement = connection.prepareStatement(query);
 					preparedStatement.setString(1, id);
 			
@@ -86,6 +86,36 @@ public class MagazzinoDAO {
 	
 			return itemFilter;
 		}
+		
+		public void RemoveFromMagazzino(String id, int quantita) {
+			String query = "UPDATE magazzino SET quantita = quantita - ? WHERE codA = ?";	
+
+				
+			try {
+				
+						
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setInt(1, quantita);
+				
+				ResultSet risultato = preparedStatement.executeQuery();
+			
+
+				while (risultato.next()) {
+				
+
+				}
+				
+				preparedStatement.execute();
+				preparedStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		
+		
+		
 		
 		
 		private Articolo CreateArticolo(ResultSet risultato) throws SQLException, IOException {			

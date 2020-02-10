@@ -7,9 +7,9 @@ import Database.MagazzinoDAO;
 
 public class Magazzino {
 	private ArrayList<Articolo> articolo ;
-	private String reparti;
+	private String reparto;
 	private int capacita;
-	private MagazzinoDAO magazzino;
+	
 	
 	public Magazzino() {
 
@@ -25,10 +25,10 @@ public class Magazzino {
 		this.articolo = articolo;
 	}
 	public String getReparti() {
-		return reparti;
+		return reparto;
 	}
 	public void setReparti(String reparti) {
-		this.reparti = reparti;
+		this.reparto = reparti;
 	}
 	public int getCapacita() {
 		return capacita;
