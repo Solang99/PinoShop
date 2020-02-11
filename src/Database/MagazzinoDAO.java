@@ -59,6 +59,7 @@ public class MagazzinoDAO {
 
 			ArrayList<Articolo> itemFilter = new ArrayList<Articolo>();
 			
+			
 			try {
 				
 						
@@ -66,11 +67,12 @@ public class MagazzinoDAO {
 					preparedStatement.setString(1, id);
 			
 				ResultSet risultato = preparedStatement.executeQuery();
-				itemFilter.clear();
+				
 
 				while (risultato.next()) {
 					Articolo a = CreateArticolo(risultato);
 					itemFilter.add(a);
+				
 
 				}
 				
@@ -83,28 +85,24 @@ public class MagazzinoDAO {
 
 			
 			
-	
+			
 			return itemFilter;
 		}
 		
 		public void RemoveFromMagazzino(String id, int quantita) {
-			String query = "UPDATE magazzino SET quantita = quantita - ? WHERE codA = ?";	
-
-				
+			String query = "UPDATE articolo SET quantita = quantita - ? WHERE codA = ?";	
+			
 			try {
 				
 						
 				preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setInt(1, quantita);
+				preparedStatement.setString(2, id);
 				
-				ResultSet risultato = preparedStatement.executeQuery();
+			
 			
 
-				while (risultato.next()) {
-				
-
-				}
-				
+		
 				preparedStatement.execute();
 				preparedStatement.close();
 			} catch (SQLException e) {
@@ -115,6 +113,28 @@ public class MagazzinoDAO {
 		}
 		
 		
+		public void AddToMagazzino(String id, int quantita) {
+			String query = "UPDATE articolo SET quantita = quantita + ? WHERE codA = ?";	
+			
+			try {
+				
+						
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setInt(1, quantita);
+				preparedStatement.setString(2, id);
+				
+			
+			
+
+		
+				preparedStatement.execute();
+				preparedStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 		
 		
 		
@@ -133,7 +153,7 @@ public class MagazzinoDAO {
 			Image fotoUser = ImageIO.read(fotoStream);
 			articolo.setFoto(fotoUser);
 			articolo.setCategoria(risultato.getString(11));
-
+			
 			return articolo;
 		}
 		

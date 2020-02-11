@@ -4,7 +4,8 @@ package GUI;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JLabel;
 import java.awt.Color;
 
@@ -13,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -34,7 +37,6 @@ public class UtenteFrame extends JFrame {
 	private TopPanel topPanel;
 	private JPanel panelCards;
 	private JPanel profileCard;
-	private CardLayout cardPanel;
 	private JPanel sidePanel;
 	private JLabel logoIcon;
 	private JLabel lblNome;
@@ -43,10 +45,13 @@ public class UtenteFrame extends JFrame {
 	private JLabel lblUsername;
 	private JLabel lblEmail;
 	private JLabel lblFoto;
+	private DefaultTableModel model;
+	private JTable table;
+	private JScrollPane scroll;
+	private CardLayout cardLayout;
 	
 	public UtenteFrame(Controller ctrl) {
 		controller = ctrl;
-		cardPanel = new CardLayout();
 		
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,6 +61,7 @@ public class UtenteFrame extends JFrame {
 		setContentPane(contentPane);
 
 		topPanel = new TopPanel(907,controller,this);
+		topPanel.setBounds(0, 0, 902, 133);
 		topPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -79,6 +85,8 @@ public class UtenteFrame extends JFrame {
 		
 		
 		 btnRecenti = new JButton("RECENTI");
+		
+	
 		 btnRecenti.setForeground(Color.BLACK);
 		 btnRecenti.setBounds(0, 119, 242, 65);
 		 btnRecenti.addMouseListener(new MouseAdapter() {
@@ -87,17 +95,14 @@ public class UtenteFrame extends JFrame {
 		 		SetColor(btnRecenti);
 		 		ResetColor(btnProfilo);
 		 		ResetColor(btnLogOut);
+		 		cardLayout.show(panelCards, "recenti");
 		 	}
 		 });
 		btnRecenti.setBackground(new Color(155, 220, 193));
 	
 		btnRecenti.setBorderPainted(false);
-		btnRecenti.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cardPanel.show(panelCards, "2");
-			}
-		});
-				btnRecenti.setPreferredSize(new Dimension(232, 40));
+	
+		btnRecenti.setPreferredSize(new Dimension(232, 40));
 		btnRecenti.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnRecenti.setFont(new Font("Segoe Print", Font.BOLD, 20));
 		
@@ -108,6 +113,7 @@ public class UtenteFrame extends JFrame {
 		logoIcon.setPreferredSize(new Dimension(232, 100));
 		
 		btnProfilo = new JButton("PROFILO");
+	
 		btnProfilo.setBounds(0, 69, 242, 65);
 		btnProfilo.setForeground(Color.BLACK);
 		btnProfilo.addMouseListener(new MouseAdapter() {
@@ -116,15 +122,11 @@ public class UtenteFrame extends JFrame {
 				SetColor(btnProfilo);
 				ResetColor(btnRecenti);
 				ResetColor(btnLogOut);
+				cardLayout.show(panelCards, "profile");
 				
 			}
 		});
-		btnProfilo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cardPanel.show(panelCards, "1");
-			}
-			
-		});
+
 		btnProfilo.setPreferredSize(new Dimension(232, 40));
 		btnProfilo.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnProfilo.setFont(new Font("Segoe Print", Font.BOLD, 20));
@@ -134,8 +136,10 @@ public class UtenteFrame extends JFrame {
 		btnLogOut = new JButton("LOG OUT");
 		btnLogOut.setForeground(Color.BLACK);
 		btnLogOut.setBounds(0, 181, 242, 65);
+		JFrame frame = this;
 		btnLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controller.GoToLoginFrame(frame);
 			}
 		});
 		btnLogOut.addMouseListener(new MouseAdapter() {
@@ -160,79 +164,89 @@ public class UtenteFrame extends JFrame {
 		sidePanel.add(btnLogOut);
 		sidePanel.add(logoIcon);
 		
-
-		panelCards = new JPanel();
-		panelCards.setBounds(286, 180, 575, 397);
-		contentPane.add(panelCards);
-		panelCards.setBackground(new Color (220,255,192));
-		panelCards.setLayout(cardPanel);
 		
-		profileCard = new JPanel();
+		
+
+
+		
+		JPanel recentiCard = new JPanel();
+		
+		
+
+		
+		model = controller.FillTableRecentiModel();
+	    table = new JTable(){
+
+			@Override
+	        public boolean isCellEditable(int row, int column) {
+	           return false;
+	        }
+	    };
+	    table.setFillsViewportHeight(true);
+	    
+
+	    
+	    table.setModel(model);
+	    model.fireTableDataChanged();
+	    scroll = new JScrollPane(table);
+	    scroll.setBounds(328, 10, 200, 531);
+	    recentiCard.add(scroll);
+
+	    
+	    profileCard = new JPanel();
 		profileCard.setBackground(new Color(220,255,192));
-		panelCards.add(profileCard, "name_386263633130100");
-		panelCards.add(profileCard, "1");
+
+	
+		
+		
+		
+		
 		
 		lblNome = new JLabel("Nome: " + controller.commesso.getNome());
+		lblNome.setBounds(40, 188, 201, 84);
 		lblNome.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNome.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		
 		JLabel lblCognome = new JLabel("Cognome: " + controller.commesso.getCognome() );
+		lblCognome.setBounds(350, 188, 201, 72);
 		lblCognome.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCognome.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		
 		lblUsername = new JLabel("Username: " + controller.commesso.getUsername());
+		lblUsername.setBounds(40, 293, 201, 72);
 		lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUsername.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		
 		lblEmail = new JLabel("Email: " + controller.commesso.getMail());
+		lblEmail.setBounds(350, 293, 201, 72);
 		lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEmail.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		
 		lblFoto = new JLabel("");
+		lblFoto.setBounds(192, 61, 201, 134);
 		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
 	
 		ImageIcon fotoProfilo = new ImageIcon(controller.commesso.getFoto());
 		lblFoto.setIcon(fotoProfilo);
+	
+		profileCard.setLayout(null);
+		profileCard.add(lblNome);
+		profileCard.add(lblCognome);
+		profileCard.add(lblFoto);
+		profileCard.add(lblUsername);
+		profileCard.add(lblEmail);
 		
-		GroupLayout gl_profileCard = new GroupLayout(profileCard);
-		gl_profileCard.setHorizontalGroup(
-			gl_profileCard.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_profileCard.createSequentialGroup()
-					.addGap(40)
-					.addGroup(gl_profileCard.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_profileCard.createSequentialGroup()
-							.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
-							.addGap(109)
-							.addComponent(lblCognome, GroupLayout.PREFERRED_SIZE, 201, Short.MAX_VALUE))
-						.addGroup(gl_profileCard.createSequentialGroup()
-							.addGap(152)
-							.addComponent(lblFoto, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_profileCard.createSequentialGroup()
-							.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 201, Short.MAX_VALUE)
-							.addGap(109)
-							.addComponent(lblEmail, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)))
-					.addGap(24))
-		);
-		gl_profileCard.setVerticalGroup(
-			gl_profileCard.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_profileCard.createSequentialGroup()
-					.addGap(61)
-					.addGroup(gl_profileCard.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_profileCard.createSequentialGroup()
-							.addGap(127)
-							.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
-						.addGroup(gl_profileCard.createSequentialGroup()
-							.addGap(127)
-							.addComponent(lblCognome, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblFoto, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE))
-					.addGap(21)
-					.addGroup(gl_profileCard.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE))
-					.addGap(32))
-		);
-		profileCard.setLayout(gl_profileCard);
-		
+	    
+		cardLayout = new CardLayout ();
+		panelCards = new JPanel();
+		panelCards.setLayout(cardLayout);
+		panelCards.setBounds(253, 146, 637, 481);
+		panelCards.setBackground(new Color (220,255,192));
+		panelCards.add(profileCard,"profile");
+		panelCards.add(recentiCard ,"recenti");
+		cardLayout.show(panelCards, "profile");
+		contentPane.add(panelCards);
+	    
 
 	}
 	

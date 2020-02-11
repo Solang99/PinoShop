@@ -35,7 +35,12 @@ public class ComponetArticolo extends JPanel {
 	private int quantita;
 	private int selectedQuantia;
 	private SpinnerNumberModel modelQuantita;
-	public ComponetArticolo(Image foto , String nome,String id, float prezzo ,int quantia,Controller controller,int tipo) {
+	private Controller controller;
+	private JSpinner spinnerQuantita;
+	
+	public ComponetArticolo(Image foto , String nome,String id, float prezzo ,int quantia,Controller ctrl,int tipo) {
+		
+		controller = ctrl; 
 		
 		this.prezzo = prezzo;
 		this.id= id;
@@ -92,32 +97,19 @@ public class ComponetArticolo extends JPanel {
 		
 		if (tipo == 0) {
 			
-			modelQuantita = new SpinnerNumberModel(0, 0, 300, 1);
-			JSpinner spinnerQuantita = new JSpinner(modelQuantita);
+			CheckPresenza(quantia);
+			
+			spinnerQuantita = new JSpinner(modelQuantita);
 			spinnerQuantita.setForeground(Color.WHITE);
 			spinnerQuantita.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			spinnerQuantita.setBackground(new Color(191, 191, 191));
+			
 			spinnerQuantita.setValue(quantita);
 			
 			spinnerQuantita.setBounds(147, 108, 50, 24);
 			add(spinnerQuantita);
 			
-			JButton btnAggiungi = new JButton("");
-			btnAggiungi.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					JOptionPane.showMessageDialog(null, "Articolo Aggiunto");
-					selectedQuantia = Integer.parseInt(spinnerQuantita.getValue().toString());
-					controller.FillCassaList(id,selectedQuantia);
-				}
-		
-			});
-			btnAggiungi.setOpaque(false);
-			btnAggiungi.setContentAreaFilled(false);
-			btnAggiungi.setBorderPainted(false);
-			btnAggiungi.setBounds(168, 143, 33, 23);
-			btnAggiungi.setIcon(new ImageIcon(ComponetArticolo.class.getResource("/IconComponentArticolo/25pxadd.png")));
-			add(btnAggiungi);
+
 		
 			
 
@@ -125,13 +117,12 @@ public class ComponetArticolo extends JPanel {
 		else
 		{
 			
-			modelQuantita = new SpinnerNumberModel(0, 0, quantita, 1);
-			JSpinner spinnerQuantita = new JSpinner(modelQuantita);
+			modelQuantita = new SpinnerNumberModel(1,1, quantita, 1);
+			spinnerQuantita = new JSpinner(modelQuantita);
 			spinnerQuantita.setForeground(Color.WHITE);
 			spinnerQuantita.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			spinnerQuantita.setBackground(new Color(191, 191, 191));
 			spinnerQuantita.setValue(quantita);
-			
 			spinnerQuantita.setBounds(147, 108, 50, 24);
 			add(spinnerQuantita);
 			
@@ -142,7 +133,7 @@ public class ComponetArticolo extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					JOptionPane.showMessageDialog(null, "Articolo Rimosso");
 					selectedQuantia = Integer.parseInt(spinnerQuantita.getValue().toString());
-				//modelQuantita = new SpinnerNumberModel(0, 0, quantia, 1);
+				
 					controller.RemoveFromCassa(id,selectedQuantia);
 					spinnerQuantita.setValue(quantita);
 				}
@@ -160,6 +151,32 @@ public class ComponetArticolo extends JPanel {
 
 	}
 
+	private void CheckPresenza(int quantita ) {
+	
+		if (quantita < 1) {
+			setBackground(new Color(255,160,122));
+			modelQuantita = new SpinnerNumberModel(0,0, 0, 1);
+		}else {
+			modelQuantita = new SpinnerNumberModel(quantita,1, quantita, 1);
+			
+			JButton btnAggiungi = new JButton("");
+			btnAggiungi.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					JOptionPane.showMessageDialog(null, "Articolo Aggiunto");
+					selectedQuantia = Integer.parseInt(spinnerQuantita.getValue().toString());
+					controller.FillCassaList(id,selectedQuantia);
+				}
+		
+			});
+			btnAggiungi.setOpaque(false);
+			btnAggiungi.setContentAreaFilled(false);
+			btnAggiungi.setBorderPainted(false);
+			btnAggiungi.setBounds(168, 143, 33, 23);
+			btnAggiungi.setIcon(new ImageIcon(ComponetArticolo.class.getResource("/IconComponentArticolo/25pxadd.png")));
+			add(btnAggiungi);
+		}
+	}
 
 
 
@@ -189,6 +206,16 @@ public class ComponetArticolo extends JPanel {
 	}
 	
 	public void setQuantita (int quantita) {
-		this.quantita -=quantita; 
+		this.quantita =quantita;
+		System.out.println(quantita);
+		spinnerQuantita.setValue(quantita);
+		modelQuantita.setMaximum(quantita);
+		
+
+		
+
+	
 	}
+	
+
 }

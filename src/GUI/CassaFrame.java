@@ -220,4 +220,6 @@ public class CassaFrame extends JFrame {
 				lblResto.setText("Resto: "+ 0);
 			}
 		}
+		
+	
 }

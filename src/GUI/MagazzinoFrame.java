@@ -70,8 +70,7 @@ public class MagazzinoFrame extends JFrame {
 	private JTextField txtProduttore;
 	private JTextField txtCodice;
 	private JTextField txtNome;
-	private JSpinner spinnerQuantita;
-	private JSpinner spinnerPrezzo;
+
 	
 	
 	
@@ -99,7 +98,7 @@ public class MagazzinoFrame extends JFrame {
 		setContentPane(contentPane);
 		
 
-	    model = controller.FillTableModel("all");
+	    model = controller.FillTableMagazzinoModel("all");
 	    table = new JTable(){
 
 			@Override
@@ -209,6 +208,7 @@ public class MagazzinoFrame extends JFrame {
 		lblImmagine.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		btnFoto = new JButton("");
+		btnFoto.setIcon(new ImageIcon(MagazzinoFrame.class.getResource("/IconRegister/addFoto.png")));
 		btnFoto.setBounds(151, 10, 160, 132);
 		
 		btnFoto.addActionListener(new ActionListener() {
@@ -230,6 +230,11 @@ public class MagazzinoFrame extends JFrame {
 		spinnerPrezzo.setBackground(new Color(191, 191, 191));
 		
 		JButton btnCancellaFoto = new JButton("Cancella");
+		btnCancellaFoto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnFoto.setIcon(new ImageIcon(MagazzinoFrame.class.getResource("/IconRegister/addFoto.png")));
+			}
+		});
 		btnCancellaFoto.setBounds(164, 147, 116, 23);
 		btnCancellaFoto.setForeground(Color.RED);
 		btnCancellaFoto.setFont(new Font("Segoe Print", Font.BOLD, 16));
@@ -286,7 +291,8 @@ public class MagazzinoFrame extends JFrame {
 		btnCerca.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				model = controller.FillTableModel(txtCodice.getText());
+				model = controller.FillTableMagazzinoModel(txtCodice.getText());
+				
 			}
 		});
 		btnCerca.setFont(new Font("Segoe Print", Font.BOLD, 22));
@@ -387,6 +393,9 @@ public class MagazzinoFrame extends JFrame {
 		String selectedTipo = table.getValueAt(selectedRow, 9).toString();
 		tipoModel.setSelectedItem(selectedTipo);
 		
+		ImageIcon image = (ImageIcon) table.getValueAt(selectedRow, 10);
+		btnFoto.setIcon(image);
+		
 	}
 	
 	private void AggiungiArticolo() {
@@ -413,17 +422,9 @@ public class MagazzinoFrame extends JFrame {
 			sq.printStackTrace();
 		}
 	}
-}
 
-class FotoCellRenderer implements TableCellRenderer{
 
-	@Override
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-			int row, int column) {
-		// TODO Auto-generated method stub
 
-		return (Component) value;
-	}
 	
 }
 			

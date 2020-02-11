@@ -118,11 +118,12 @@ public class RegisterFrame extends JFrame {
 		lblDataDiNascita.setBounds(145, 358, 206, 29);
 		panel.add(lblDataDiNascita);
 		
+		JFrame RegisterFrame = this;
 		JLabel lblGoToLogin = new JLabel("Hai gi\u00E0 un account? Clicca Qui!\r\n");
 		lblGoToLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.GoToLoginFrame();
+				controller.GoToLoginFrame(RegisterFrame);
 			}
 		});
 		lblGoToLogin.addMouseMotionListener(new MouseMotionAdapter() {
@@ -181,6 +182,7 @@ public class RegisterFrame extends JFrame {
 		panel.add(passwordField_r);
 		
 		JButton btnlogin = new JButton("");
+		
 		btnlogin.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -197,6 +199,7 @@ public class RegisterFrame extends JFrame {
 						controller.CreateAccount(textNome.getText(),textCognome.getText(),textUsername.getText()
 									,passwordField.getPassword(),dateChooserCombo.getSelectedDate(), fotoFile,textEmail.getText());
 						VerifyFields();
+						
 					}
 					else
 						JOptionPane.showMessageDialog(null, "username non disponibile", "Errore", JOptionPane.ERROR_MESSAGE);

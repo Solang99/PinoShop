@@ -1,5 +1,8 @@
 package GUI;
 
+
+//TODO vedi register -> verify-Field
+
 import java.awt.Image;
 import java.io.File;
 
@@ -44,11 +47,12 @@ public class Controller {
 	private CassaDAO cassaDao;
 	public Commesso commesso;
     private ArrayList<Articolo> articoli;
-    private int position = -1;
+   
 	public ArrayList<ComponetArticolo> componetList;
 	public ArrayList<ComponetArticolo> cassaList;
 	private String selectItem ;
-	static DefaultTableModel tableModel;
+	private  DefaultTableModel tableMagazzino;
+	private  DefaultTableModel tableCassa;
 	
 	
 	
@@ -77,10 +81,11 @@ public class Controller {
 		
 		magazzino = new Magazzino();
 		magazzinoDao = new MagazzinoDAO();
+		magazzinoDao.fillMagazzino(magazzino.getArticolo());
 		cassaDao = new CassaDAO();
 		
 		
-		tableModel = new DefaultTableModel( ) {
+		tableMagazzino = new DefaultTableModel( ) {
 			@Override
 			public Class<?> getColumnClass (int column){
 				switch (column) {
@@ -90,11 +95,21 @@ public class Controller {
 			}
 		};
 		
+		tableCassa = new DefaultTableModel( ) {
+			@Override
+			public Class<?> getColumnClass (int column){
+				 return String.class;
+			
+			}
+		};
+		
+		
+		
 
 	}
 	
-	public void GoToLoginFrame() {
-		registerFrame.dispose();
+	public void GoToLoginFrame(JFrame frame) {
+		frame.dispose();
 		loginFrame= new LoginFrame(this);
 		loginFrame.setVisible(true);
 		
@@ -124,9 +139,10 @@ public class Controller {
 	public void Search(String id) {
 		mainFrame.dispose();
 		selectItem=id;
-	
-	//	mainFrame = new MainFrame(this,fotoList, nomiList,idList,prezzoList);
+		mainFrame = new MainFrame(this);
 		mainFrame.setVisible(true);
+	
+		
 
 	}
 	
@@ -154,15 +170,15 @@ public class Controller {
 		return commessoDao.CheckUsername(username);
 	}
 
-	public DefaultTableModel FillTableModel(String id) {
-		tableModel.setRowCount(0);
+	public DefaultTableModel FillTableMagazzinoModel(String id) {
+		tableMagazzino.setRowCount(0);
 		articoli.clear();
 	
 		
 		String headers[] = {"Nome","id","Produttore","Taglia","Colore","Collezione","Disponibili","Prezzo","Genere","Categoria","Foto"};
 		
 
-		tableModel.setColumnIdentifiers(headers);
+		tableMagazzino.setColumnIdentifiers(headers);
 		
 		
 		
@@ -173,7 +189,7 @@ public class Controller {
 	  
 	    
 	    	ImageIcon img = new ImageIcon (articoli.get(i).getFoto().getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH));
-	    	tableModel.addRow(new Object[] {articoli.get(i).getNome() ,
+	    	tableMagazzino.addRow(new Object[] {articoli.get(i).getNome() ,
 	    									articoli.get(i).getId(),
 	    									articoli.get(i).getProduttore(),
 	    									articoli.get(i).getTaglia(),
@@ -182,14 +198,48 @@ public class Controller {
 	    									articoli.get(i).getQuantita(),
 	    									articoli.get(i).getPrezzo(),
 	    									articoli.get(i).getGenere(),
-	    									articoli.get(i).getCategoria(),
-	    									
+	    									articoli.get(i).getCategoria(),									
 	    									img
 	    									});
 	    }
-	   
-	    return tableModel;
+	    selectItem= "all";
+	    return tableMagazzino;
 	    
+	}
+	
+	public DefaultTableModel FillTableRecentiModel() {
+		
+		tableCassa.setRowCount(0);
+		articoli.clear();
+	
+		
+		String headers[] = {"Codice Ordine","Commesso","Tipo pagamento","Pagamento dovuto","Pagamento versato","Resto"};
+
+		tableCassa.setColumnIdentifiers(headers);
+		
+		ArrayList<Cassa> recentiList = new ArrayList<Cassa>();
+		
+		for (Cassa c : cassaDao.getOrdini()) {
+			recentiList.add(c);
+			
+		}
+		
+	    for (int i = 0 ; i< recentiList.size();i++) {
+	    	System.out.println(recentiList.size());
+	    
+	    	
+	    	tableCassa.addRow(new Object[] {
+	    									recentiList.get(i).getNumeroOrdine(),
+	    									recentiList.get(i).getUsernameCommesso(),
+	    									recentiList.get(i).getPagamentoType(),
+	    									recentiList.get(i).getPagamentoDovuto(),
+	    									recentiList.get(i).getPagamentoVersato(),
+	    									recentiList.get(i).getResto()
+	    									
+	    									});
+	    }
+	    return tableCassa;
+		
 	}
 	
 	//DATABASE
@@ -210,8 +260,10 @@ public class Controller {
 	public DefaultTableModel  AddArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,String categoria,File foto) throws FileNotFoundException, SQLException {
 		
 		articoloDao.InsertArticolo(nome,id, produttore, taglia, colore, collezione, quantita, prezzo, genere,categoria,foto);
-		tableModel = FillTableModel(selectItem);
-		return tableModel;
+		tableMagazzino = FillTableMagazzinoModel(selectItem);
+		selectItem="all";
+		return tableMagazzino;
+		
 		
 	}
 	
@@ -220,17 +272,14 @@ public class Controller {
 		
 		articoloDao.DeleteArticolo(id);
 	
-		tableModel = FillTableModel(selectItem);
-		return tableModel;
+		tableMagazzino = FillTableMagazzinoModel(selectItem);
+		selectItem="all";
+		return tableMagazzino;
 	}
 	
 	public void aggiungiOrdine(String pagamentoType, float pagamentoDovuto, float pagamentoVersato,float resto) throws SQLException {
 		cassaDao.insertOrdine(pagamentoType, pagamentoDovuto, pagamentoVersato, resto);
 		
-	}
-	
-	public void FiltrByID(String id) {
-		magazzinoDao.SearchByID(id);
 	}
 	
 
@@ -239,11 +288,12 @@ public class Controller {
 	public void RemoveFromCassa(String id,int quantita) {
 		
 	
-		 magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		 //magazzinoDao.fillMagazzino(magazzino.getArticolo());
 		
 		 for (int i = 0 ;  i<cassaList.size() ; i++) {
 
 			 if (cassaList.get(i).getId().equals(id)) {
+				 magazzinoDao.AddToMagazzino(id, quantita);
 				 if (cassaList.get(i).getQuantita() == quantita)
 					 cassaList.remove(i);
 				 else {
@@ -263,32 +313,36 @@ public class Controller {
 	
 	public ArrayList<ComponetArticolo> FillComponentList(){
 		 componetList.clear();
-		 magazzinoDao.fillMagazzino(magazzino.getArticolo());
-
-		 for (Articolo a : magazzino.getArticolo())
-			 componetList.add(new ComponetArticolo(a.getFoto(),a.getNome(),a.getId(),a.getPrezzo(),0,this,0));
+		
+		 
+		 for (Articolo a : magazzinoDao.SearchByID(selectItem))
+			 	componetList.add(new ComponetArticolo(a.getFoto(),a.getNome(),a.getId(),a.getPrezzo(),a.getQuantita(),this,0));
 		 return componetList;
 	}
 	
 	
 	
 	
-	public ArrayList<ComponetArticolo> FillCassaList(String id , int quantia){
-		 magazzinoDao.fillMagazzino(magazzino.getArticolo());
-		 for (int i = 0; i<magazzino.getArticolo().size();i++) {
-			 if (magazzino.getArticolo().get(i).getId().equals(id)) {
-			 	cassaList.add(new ComponetArticolo(magazzino.getArticolo().get(i).getFoto(),
-			 			magazzino.getArticolo().get(i).getNome(),magazzino.getArticolo().get(i).getId(),
-			 			magazzino.getArticolo().get(i).getPrezzo(),quantia,this,1));
-			 	
-			 	magazzino.getArticolo().get(i).setQuantita(magazzino.getArticolo().get(i).getQuantita()-quantia);
-			 	
-			 	
-			 }
-		 }
+	public ArrayList<ComponetArticolo> FillCassaList(String id , int quantita){
+		
+		magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		if ( !FindInCassaList(id, quantita)) { 
+			for (int i = 0; i < magazzino.getArticolo().size(); i++) {
 
-		 
-		 return cassaList;
+				if (magazzino.getArticolo().get(i).getId().equals(id)) {
+
+					cassaList.add(new ComponetArticolo(magazzino.getArticolo().get(i).getFoto(),
+							magazzino.getArticolo().get(i).getNome(), magazzino.getArticolo().get(i).getId(),
+							magazzino.getArticolo().get(i).getPrezzo(), quantita, this, 1));
+
+					
+
+				}
+
+			} 
+		}
+		magazzinoDao.RemoveFromMagazzino(id, quantita);
+		return cassaList;
 	}
 	
 
@@ -302,19 +356,16 @@ public class Controller {
 		return totale;
 	}
 	
+
 	
-	
-	
-	
-	
-	private void FindInMagazzino(String id) {
-		
-		 magazzinoDao.fillMagazzino(magazzino.getArticolo());
-		 for (int i = magazzino.getArticolo().size()-1; i>0;i--) {
-			 if (magazzino.getArticolo().get(i).getId().equals(id))
-			 	position = i;
-		 }
-		
+	private boolean  FindInCassaList(String id, int quantita) {
+		for (ComponetArticolo c : cassaList)
+			if(c.getId().equals(id)) {
+				c.setQuantita( c.getQuantita() + quantita);
+
+				return true;
+			}
+		return false;
 	}
 	
 

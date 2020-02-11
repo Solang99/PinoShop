@@ -8,15 +8,25 @@ public class Cassa {
 	private float resto;
 	private float pagamentoDovuto;
 	private float pagamentoVersato;
-	private ArrayList<Articolo> carrello;
-	
-	public ArrayList<Articolo> getArticolo() {
+	private String usernameCommesso;
 
-		return carrello;
+
+	
+	
+	public String getUsernameCommesso() {
+		return usernameCommesso;
 	}
-	public void setArticolo(ArrayList<Articolo> articolo) {
-		
-		this.carrello = articolo;
+
+	public void setUsernameCommesso(String usernameCommesso) {
+		this.usernameCommesso = usernameCommesso;
+	}
+
+	public int getNumeroOrdine() {
+		return numeroOrdine;
+	}
+	
+	public void setNumeroOrdine(int numeroOrdine) {
+		this.numeroOrdine = numeroOrdine;		
 	}
 	
 	public String getPagamentoType() {
@@ -36,9 +46,7 @@ public class Cassa {
 		return pagamentoDovuto;
 	}
 	public void setPagamentoDovuto(float pagamentoDovuto) {
-		for (Articolo a : carrello) {
-			pagamentoDovuto +=( a.getPrezzo() * a.getQuantita());
-		}
+		
 		this.pagamentoDovuto = pagamentoDovuto;
 	}
 	public float getPagamentoVersato() {

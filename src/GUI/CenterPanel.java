@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
@@ -45,20 +46,18 @@ public class CenterPanel extends JPanel {
         GridBagLayout innerLayout = new GridBagLayout();
         GridBagConstraints innerConstraints = new GridBagConstraints();
         JPanel innerPanel = new JPanel(innerLayout);
-        
-        innerConstraints.weightx = 0.0;
-        innerConstraints.weighty = 0.0;
+
         innerConstraints.gridy = 0;
-		
+
+        innerConstraints.insets = new Insets(5, 5, 5, 5);
+        
         ArrayList<ComponetArticolo> component = controller.FillComponentList();
         
 		for (int i = component.size()-1; i >= 0;i--) {
-            innerConstraints.weightx = 0.5;
-            innerConstraints.weighty = 0.2;
-            innerConstraints.fill = GridBagConstraints.HORIZONTAL;
-			innerConstraints.gridwidth =4;
-            //innerConstraints.gridy = i + 1;
-			if( i%3 == 0)
+
+			innerConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+
+			if( i%4 == 0)
             	 innerConstraints.gridy =i;
             innerConstraints.gridx = GridBagConstraints.RELATIVE;
           
@@ -73,6 +72,6 @@ public class CenterPanel extends JPanel {
         JScrollPane scrollPanel = new JScrollPane(innerPanel);
         add(scrollPanel, BorderLayout.CENTER);
 	
-		//scrollPane.setViewportView(table);
+	
 	}
 }

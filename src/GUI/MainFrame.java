@@ -91,6 +91,8 @@ public class MainFrame extends JFrame {
 		topPanel.add(lblCerca);
 		
 		JButton btnSearch = new JButton("");
+
+		btnSearch.setIcon(new ImageIcon(MainFrame.class.getResource("/IconTopPanel/Group 1.png")));
 		btnSearch.setOpaque(false);
 		btnSearch.setContentAreaFilled(false);
 		btnSearch.setBorderPainted(false);
@@ -98,6 +100,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				controller.Search( txtCerca.getText());
+				
 			}
 		});
 	
