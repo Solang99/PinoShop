@@ -45,6 +45,7 @@ public class MainFrame extends JFrame {
 	private Controller controller;
 	private int mouseX,mouseY;
 	private JTextField txtCerca;
+	private CassaFrame cassaFrame;
 	
 	public MainFrame(Controller ctrl) {
 		controller = ctrl;
@@ -103,7 +104,22 @@ public class MainFrame extends JFrame {
 	
 		btnSearch.setBounds(587, 82, 50, 47);
 		topPanel.add(btnSearch);
-		contentPane.add(centralPanel);
+		
+		JPanel panelCard = new JPanel();
+		panelCard.setBounds(0, 144, 906, 541);
+		contentPane.add(panelCard);
+		panelCard.setLayout(new CardLayout(0, 0));
+		panelCard.add(centralPanel,"Card1");
+		
+		
+		
+		cassaFrame = new CassaFrame(controller);
+		
+		cassaFrame.setBounds(0, 144, 906, 541);
+		contentPane.setLayout(null);
+		contentPane.add(topPanel);
+		topPanel.setLayout(null);
+		
 
 	}
 }

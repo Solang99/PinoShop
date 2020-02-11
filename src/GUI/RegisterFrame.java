@@ -193,11 +193,13 @@ public class RegisterFrame extends JFrame {
 				
 				try {
 					boolean UsernameExists = controller.UsernameAlredyExists(textUsername.getText());
+					VerifyFields();
 					if (!UsernameExists) {
 						controller.CreateAccount(textNome.getText(),textCognome.getText(),textUsername.getText()
 									,passwordField.getPassword(),dateChooserCombo.getSelectedDate(), fotoFile,textEmail.getText());
-						VerifyFields();
+						
 					}
+					
 					else
 						JOptionPane.showMessageDialog(null, "username non disponibile", "Errore", JOptionPane.ERROR_MESSAGE);
 
