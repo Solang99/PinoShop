@@ -25,7 +25,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
-public class CassaFrame extends JFrame {
+public class CassaFrame extends JPanel {
 	
 	private JPanel contentPane;
 	
@@ -37,16 +37,17 @@ public class CassaFrame extends JFrame {
 	private JCheckBox checkBoxContanti;
 	private JLabel lblResto;
 	private Controller controller;
+	private CenterPanel centerPanel;
 	
 	public CassaFrame(Controller ctrl) {
 
 		controller = ctrl;
 		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 742, 603);
+		
+		setBounds(0, 144, 906, 541);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+
 		
 		
         GridBagLayout innerLayout = new GridBagLayout();
@@ -180,7 +181,9 @@ public class CassaFrame extends JFrame {
 						controller.aggiungiOrdine(pagamentoType,tot, pagamentoVersato,rest );
 						setResto();
 						JOptionPane.showMessageDialog(null, "Pagamento effetuato");
-						dispose();
+						centerPanel = new CenterPanel(ctrl);
+						centerPanel.setVisible(true);
+					     	
 						
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "Tipo pagamento non valido", "Errore", JOptionPane.ERROR_MESSAGE);

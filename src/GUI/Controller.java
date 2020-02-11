@@ -1,8 +1,12 @@
 package GUI;
 
+<<<<<<< HEAD
 
 //TODO vedi register -> verify-Field
 
+=======
+import java.awt.CardLayout;
+>>>>>>> 9625a4259cb94f5bdc6814705cffa20afcffa629
 import java.awt.Image;
 import java.io.File;
 
@@ -19,6 +23,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -153,10 +158,13 @@ public class Controller {
 	}
 	
 	public void GoToCassaFrame() {
-	
-		
+		CardLayout cl = new CardLayout();
+		cl.show(cassaFrame, "Card2");
 		cassaFrame = new CassaFrame(this);
 		cassaFrame.setVisible(true);
+		
+		
+		
 	}
 	
 	public void CreateUser(String nome,String cognome,String username,String password, 
@@ -306,7 +314,7 @@ public class Controller {
 			 
 		 }
 		 
-		cassaFrame.dispose();
+		
 		cassaFrame = new CassaFrame(this);
 		cassaFrame.setVisible(true);
 	}
