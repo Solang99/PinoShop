@@ -1,12 +1,10 @@
 package GUI;
 
-<<<<<<< HEAD
+
 
 //TODO vedi register -> verify-Field
 
-=======
-import java.awt.CardLayout;
->>>>>>> 9625a4259cb94f5bdc6814705cffa20afcffa629
+
 import java.awt.Image;
 import java.io.File;
 
@@ -100,13 +98,7 @@ public class Controller {
 			}
 		};
 		
-		tableCassa = new DefaultTableModel( ) {
-			@Override
-			public Class<?> getColumnClass (int column){
-				 return String.class;
-			
-			}
-		};
+		tableCassa = new DefaultTableModel( );
 		
 		
 		
@@ -117,6 +109,11 @@ public class Controller {
 		frame.dispose();
 		loginFrame= new LoginFrame(this);
 		loginFrame.setVisible(true);
+		
+	}
+	
+	public void IconifedFrame(JFrame frame) {
+		frame.setState(JFrame.ICONIFIED);
 		
 	}
 	
@@ -157,9 +154,8 @@ public class Controller {
 	
 	}
 	
-	public void GoToCassaFrame() {
-		CardLayout cl = new CardLayout();
-		cl.show(cassaFrame, "Card2");
+	public void GoToCassaFrame(JFrame frame) {
+		frame.dispose();
 		cassaFrame = new CassaFrame(this);
 		cassaFrame.setVisible(true);
 		
@@ -286,8 +282,14 @@ public class Controller {
 	}
 	
 	public void aggiungiOrdine(String pagamentoType, float pagamentoDovuto, float pagamentoVersato,float resto) throws SQLException {
-		cassaDao.insertOrdine(pagamentoType, pagamentoDovuto, pagamentoVersato, resto);
+		cassaDao.insertOrdine(pagamentoType, pagamentoDovuto, pagamentoVersato, resto,commesso.getUsername());
 		
+	}
+	
+	public void CloseAll() {
+		for(ComponetArticolo c : cassaList)
+			magazzinoDao.AddToMagazzino(c.getId(), c.getQuantita());
+		System.exit(0);
 	}
 	
 
@@ -296,7 +298,7 @@ public class Controller {
 	public void RemoveFromCassa(String id,int quantita) {
 		
 	
-		 //magazzinoDao.fillMagazzino(magazzino.getArticolo());
+		
 		
 		 for (int i = 0 ;  i<cassaList.size() ; i++) {
 

@@ -199,10 +199,9 @@ public class RegisterFrame extends JFrame {
 					if (!UsernameExists) {
 						controller.CreateAccount(textNome.getText(),textCognome.getText(),textUsername.getText()
 									,passwordField.getPassword(),dateChooserCombo.getSelectedDate(), fotoFile,textEmail.getText());
-<<<<<<< HEAD
+
 						VerifyFields();
-=======
->>>>>>> 9625a4259cb94f5bdc6814705cffa20afcffa629
+
 						
 					}
 					

@@ -24,6 +24,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.SpinnerModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ComponetArticolo extends JPanel {
 
@@ -80,13 +82,7 @@ public class ComponetArticolo extends JPanel {
 		lblPrezzo.setBounds(114, 86, 89, 23);
 		add(lblPrezzo);
 		
-		JButton btnEdit = new JButton("");
-		btnEdit.setIcon(new ImageIcon(ComponetArticolo.class.getResource("/IconComponentArticolo/25pxEdit.png")));
-		btnEdit.setOpaque(false);
-		btnEdit.setContentAreaFilled(false);
-		btnEdit.setBorderPainted(false);
-		btnEdit.setBounds(28, 143, 33, 23);
-		add(btnEdit);
+
 		
 		JLabel lblQuantita = new JLabel("x");
 		lblQuantita.setHorizontalAlignment(SwingConstants.CENTER);
@@ -108,6 +104,22 @@ public class ComponetArticolo extends JPanel {
 			
 			spinnerQuantita.setBounds(147, 108, 50, 24);
 			add(spinnerQuantita);
+			
+			JButton btnEdit = new JButton("");
+			btnEdit.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					controller.GoToAddArticolo();
+					controller.FillTableMagazzinoModel(id);
+				}
+			});
+		
+			btnEdit.setIcon(new ImageIcon(ComponetArticolo.class.getResource("/IconComponentArticolo/25pxEdit.png")));
+			btnEdit.setOpaque(false);
+			btnEdit.setContentAreaFilled(false);
+			btnEdit.setBorderPainted(false);
+			btnEdit.setBounds(28, 143, 33, 23);
+			add(btnEdit);
 			
 
 		
@@ -142,7 +154,7 @@ public class ComponetArticolo extends JPanel {
 			btnRimuovi.setOpaque(false);
 			btnRimuovi.setContentAreaFilled(false);
 			btnRimuovi.setBorderPainted(false);
-			btnRimuovi.setBounds(168, 143, 33, 23);
+			btnRimuovi.setBounds(87, 140, 33, 23);
 			btnRimuovi.setIcon(new ImageIcon(ComponetArticolo.class.getResource("/IconComponentArticolo/25pxRemove.png")));
 			add(btnRimuovi);
 		}

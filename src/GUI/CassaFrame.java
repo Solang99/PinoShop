@@ -1,13 +1,10 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.EventQueue;
+
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.util.ArrayList;
+
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -19,13 +16,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.border.EmptyBorder;
+
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.sql.SQLException;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class CassaFrame extends JPanel {
+public class CassaFrame extends JFrame {
 	
 	private JPanel contentPane;
 	
@@ -37,38 +37,57 @@ public class CassaFrame extends JPanel {
 	private JCheckBox checkBoxContanti;
 	private JLabel lblResto;
 	private Controller controller;
-	private CenterPanel centerPanel;
+	private TopPanel topPanel;
+	private int mouseX;
+	private int mouseY;
 	
 	public CassaFrame(Controller ctrl) {
 
 		controller = ctrl;
 		
 		
-		setBounds(0, 144, 906, 541);
+		setUndecorated(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 907, 648);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(null);
+		setContentPane(contentPane);
 
+		topPanel = new TopPanel(controller,this);
+		topPanel.setBounds(0, 0, 902, 133);
+		topPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				mouseX= e.getX();
+				mouseY = e.getY();
+			}
+		});
+		topPanel.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				int x =e.getXOnScreen();
+				int y = e.getYOnScreen();
+				setLocation(x-mouseX,y-mouseY);
+			}
+		});
 		
-		
-        GridBagLayout innerLayout = new GridBagLayout();
-        GridBagConstraints innerConstraints = new GridBagConstraints();
-        JPanel innerPanel = new JPanel(innerLayout);
-        
-        innerConstraints.weightx = 0.0;
-        innerConstraints.weighty = 0.0;
-        innerConstraints.gridy = 0;
-		
+		contentPane.add(topPanel);
+	    GridBagLayout innerLayout = new GridBagLayout();
+	    GridBagConstraints innerConstraints = new GridBagConstraints();
+	    JPanel innerPanel = new JPanel(innerLayout);
+	    
+	    innerConstraints.weightx = 0.0;
+	    innerConstraints.weighty = 0.0;
+	    innerConstraints.gridy = 0;
+  
     
        
         int i = 0;
 		for (ComponetArticolo ca : controller.cassaList){
 			
 
-           // innerConstraints.weightx = 0.5;
-          //  innerConstraints.weighty = 0.2;
-          //  innerConstraints.fill = GridBagConstraints.HORIZONTAL;
 			innerConstraints.gridwidth =4;
-            //innerConstraints.gridy = i + 1;
+      
 		
 			
          	innerConstraints.gridy = i++;
@@ -83,13 +102,9 @@ public class CassaFrame extends JPanel {
 		
         contentPane.setLayout(null);
         contentPane.setLayout(null);
-		
-        JScrollPane scrollPanel = new JScrollPane(innerPanel);
-        scrollPanel.setBounds(5, 5, 240, 558);
-        contentPane.add(scrollPanel);
         
         JPanel panel = new JPanel();
-        panel.setBounds(255, 0, 475, 558);
+        panel.setBounds(255, 139, 475, 509);
         panel.setLayout(null);
         contentPane.add(panel);
         
@@ -155,6 +170,16 @@ public class CassaFrame extends JPanel {
         spinnerPagamento.setBounds(226, 79, 50, 20);
         panelDati.add(spinnerPagamento);
         
+        JButton button = new JButton("Calcola Resto");
+        button.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		tipoPagamento();
+        		
+        	}
+        });
+        button.setBounds(283, 78, 89, 23);
+        panelDati.add(button);
+        
 		
 
 		
@@ -162,8 +187,13 @@ public class CassaFrame extends JPanel {
 		bg.add(checkBoxCarta);
 		bg.add(checkBoxContanti);
 		
-		
+		JFrame cassaFrame = this;
 	    JButton btnNewButton = new JButton("Paga");
+	    btnNewButton.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		
+	    	}
+	    });
 	        btnNewButton.addMouseListener(new MouseAdapter() {
 	        	@Override
 	        	public void mouseClicked(MouseEvent e) {
@@ -173,28 +203,33 @@ public class CassaFrame extends JPanel {
 	            		String pagamentoType= " ";
 		        		if (checkBoxCarta.isSelected())
 		        			pagamentoType = "Carta";
-		        		else if (checkBoxContanti.isSelected())
+		        		else if (checkBoxContanti.isSelected()) 
 		        			pagamentoType = "Contanti";
-		        			float tot = Float.parseFloat(setTotale());
-		        			float rest = Float.parseFloat(setResto());
 		        			
-						controller.aggiungiOrdine(pagamentoType,tot, pagamentoVersato,rest );
-						setResto();
+		        		float tot = Float.parseFloat(setTotale());
+		        		float rest = Float.parseFloat(setResto());
+						
+		        		controller.aggiungiOrdine(pagamentoType,tot, pagamentoVersato,rest );
+						
+		        		
+		        		
 						JOptionPane.showMessageDialog(null, "Pagamento effetuato");
-						centerPanel = new CenterPanel(ctrl);
-						centerPanel.setVisible(true);
-					     	
+						controller.GoToMainFrame(cassaFrame);
 						
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "Tipo pagamento non valido", "Errore", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					}
-	        		//tipoPagamento();
+	        		tipoPagamento();
 	        		
 	        	}
 	        });
 	        btnNewButton.setBounds(146, 152, 89, 23);
 	        panelTipoPagamento.add(btnNewButton);
+	        
+	        JScrollPane scrollPane = new JScrollPane(innerPanel);
+	        scrollPane.setBounds(10, 144, 240, 504);
+	        contentPane.add(scrollPane);
 	}
 	
 	
@@ -212,17 +247,21 @@ public class CassaFrame extends JPanel {
 			float resto = 0;
 			resto = pagamentoVersato - totale;
 			Float restoWrapper = resto;
+			
 			return restoWrapper.toString();
 		}
 		
 		private void tipoPagamento() {
 			if(checkBoxContanti.isSelected()) {
 				lblResto.setText("Resto: " + setResto());
+				lblResto.revalidate();
+				lblResto.repaint();
 			}
 			else if(checkBoxCarta.isSelected()) {
 				lblResto.setText("Resto: "+ 0);
 			}
+			else {
+				JOptionPane.showMessageDialog(null, "Selezione un metodo di pagamento valido", "Errore", JOptionPane.ERROR_MESSAGE);
+			}
 		}
-		
-	
 }

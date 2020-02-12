@@ -44,10 +44,11 @@ public class MainFrame extends JFrame {
 	private TopPanel topPanel;
 	private Controller controller;
 	private int mouseX,mouseY;
-	private JTextField txtCerca;
-	private CassaFrame cassaFrame;
+	private CardLayout cardLayout;
+	private JPanel panelCards;
 	
-	public MainFrame(Controller ctrl) {
+	
+	public MainFrame(Controller ctrl ) {
 		controller = ctrl;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
@@ -56,73 +57,37 @@ public class MainFrame extends JFrame {
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
 		
-		topPanel = new TopPanel(this.getWidth(),controller,this);
-		topPanel.setBounds(0, 0, 926, 133);
-		topPanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				mouseX= e.getX();
-				mouseY = e.getY();
-			}
-		});
-		topPanel.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				int x =e.getXOnScreen();
-				int y = e.getYOnScreen();
-				setLocation(x-mouseX,y-mouseY);
-			}
-		});
+	
+		topPanel = new TopPanel(controller, this);
+		
+		
+		
 		
 		centralPanel = new CenterPanel(controller);
-
-		centralPanel.setBounds(0, 144, 906, 541);
-		contentPane.setLayout(null);
-		contentPane.add(topPanel);
-		topPanel.setLayout(null);
-		
-		txtCerca = new JTextField();
-		txtCerca.setBounds(405, 103, 172, 30);
-		topPanel.add(txtCerca);
-		txtCerca.setColumns(10);
-		
-		JLabel lblCerca = new JLabel("Cerca:");
-		lblCerca.setBounds(303, 88, 101, 47);
-		lblCerca.setFont(new Font("Segoe Print", Font.BOLD, 30));
-		topPanel.add(lblCerca);
-		
-		JButton btnSearch = new JButton("");
-
-		btnSearch.setIcon(new ImageIcon(MainFrame.class.getResource("/IconTopPanel/Group 1.png")));
-		btnSearch.setOpaque(false);
-		btnSearch.setContentAreaFilled(false);
-		btnSearch.setBorderPainted(false);
-		btnSearch.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.Search( txtCerca.getText());
-				
-			}
-		});
-	
-		btnSearch.setBounds(587, 82, 50, 47);
-		topPanel.add(btnSearch);
-		
-		JPanel panelCard = new JPanel();
-		panelCard.setBounds(0, 144, 906, 541);
-		contentPane.add(panelCard);
-		panelCard.setLayout(new CardLayout(0, 0));
-		panelCard.add(centralPanel,"Card1");
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(centralPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE)
+						.addComponent(topPanel, GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE))
+					.addGap(0))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(centralPanel, GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		contentPane.setLayout(gl_contentPane);
 		
 		
-		
-		cassaFrame = new CassaFrame(controller);
-		
-		cassaFrame.setBounds(0, 144, 906, 541);
-		contentPane.setLayout(null);
-		contentPane.add(topPanel);
-		topPanel.setLayout(null);
-		
+		cardLayout = new CardLayout ();
+		panelCards = new JPanel();
+		panelCards.setLayout(cardLayout);
+		panelCards.setBounds(253, 146, 637, 481);
 
 	}
 }

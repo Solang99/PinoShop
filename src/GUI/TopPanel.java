@@ -1,3 +1,4 @@
+
 package GUI;
 
 import javax.swing.JPanel;
@@ -18,32 +19,24 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import javax.swing.UIManager;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class TopPanel extends JPanel {
 	private JButton btnUser;
 	private JButton btnCarrello;
 	private JButton btnLogo;
 	private JButton btnClose;
-	private JPanel munuPanel;
-	private JMenuBar menuPino;
-	private JMenu mnUomo;
-	private JMenu mnDonna;
-	private JMenuItem itemTshirtsUomo;
-	private JMenuItem itemPantaloniUomo;
-	private JMenuItem itemGiaccheUomo;
-	private JMenuItem itemScarpeUomo;
-	private JMenuItem itemAccessoriUomo;
-	private JMenuItem iteamTshirtsDonna;
 
 	private Controller controller;
+	private JButton button;
 	
-	public TopPanel(int x, Controller ctrl,JFrame container) {
+	public TopPanel( Controller ctrl,JFrame container) {
 		controller = ctrl;
 		setBorder(null);
 		setToolTipText("");
 		
-		setSize(902, 133);
-		setLayout(null);
+		//setSize(902, 133);
 		
 
 		
@@ -59,8 +52,6 @@ public class TopPanel extends JPanel {
 		btnLogo.setBorderPainted(false);
 		btnLogo.setBackground(new Color(240, 240, 240));
 		btnLogo.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/logo.png")));
-		btnLogo.setBounds(322, 11, 309, 62);
-		add(btnLogo);
 		
 		btnUser = new JButton("");
 		btnUser.setBorderPainted(false);
@@ -83,8 +74,6 @@ public class TopPanel extends JPanel {
 		btnUser.setOpaque(false);
 		btnUser.setContentAreaFilled(false);
 		btnUser.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/userIcon.png")));
-		btnUser.setBounds(779, 84, 30, 38);
-		add(btnUser);
 		
 		btnCarrello = new JButton("");
 		btnCarrello.setOpaque(false);
@@ -101,12 +90,10 @@ public class TopPanel extends JPanel {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.GoToCassaFrame();
+				controller.GoToCassaFrame(container);
 			}
 		});
 		btnCarrello.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/icons8_shopping_cart_30px.png")));
-		btnCarrello.setBounds(859, 84, 37, 38);
-		add(btnCarrello);
 		
 		btnClose = new JButton("");
 
@@ -120,67 +107,6 @@ public class TopPanel extends JPanel {
 		btnClose.setContentAreaFilled(false);
 		btnClose.setBorderPainted(false);
 		btnClose.setIcon(new ImageIcon(TopPanel.class.getResource("/IconMainFrame/closeIcon.png")));
-		btnClose.setBounds(859, 11, 37, 23);
-		add(btnClose);
-		
-		munuPanel = new JPanel();
-		munuPanel.setForeground(UIManager.getColor("Button.background"));
-		munuPanel.setBackground(UIManager.getColor("Button.background"));
-		munuPanel.setBounds(10, 94, 210, 39);
-		add(munuPanel);
-		munuPanel.setLayout(null);
-		munuPanel.setOpaque(false);
-		menuPino = new JMenuBar();
-		menuPino.setForeground(UIManager.getColor("Button.background"));
-		menuPino.setBackground(UIManager.getColor("Button.background"));
-		menuPino.setBounds(0, 0, 172, 39);
-		munuPanel.add(menuPino);
-		
-		mnUomo = new JMenu("UOMO");
-		mnUomo.setOpaque(true);
-		mnUomo.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/pinoIcon.png")));
-		mnUomo.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		
-		mnUomo.setBackground(UIManager.getColor("Button.background"));
-		menuPino.add(mnUomo);
-		
-		itemTshirtsUomo = new JMenuItem("T-SHIRTS E FELPE");
-		mnUomo.add(itemTshirtsUomo);
-		
-		itemPantaloniUomo = new JMenuItem("PANTALONI");
-		mnUomo.add(itemPantaloniUomo);
-		
-		itemGiaccheUomo = new JMenuItem("GIACCHE");
-		mnUomo.add(itemGiaccheUomo);
-		
-		itemScarpeUomo = new JMenuItem("SCARPE");
-		mnUomo.add(itemScarpeUomo);
-		
-		itemAccessoriUomo = new JMenuItem("ACCESSORI");
-		mnUomo.add(itemAccessoriUomo);
-		
-		mnDonna = new JMenu("DONNA");
-		
-		mnDonna.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		menuPino.add(mnDonna);
-		mnDonna.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/icons8-donna-in-piedi-30.png")));
-		mnDonna.setOpaque(true);
-		mnDonna.setBackground(UIManager.getColor("Button.background"));
-		
-		iteamTshirtsDonna = new JMenuItem("T-SHIRTS E FELPE");
-		mnDonna.add(iteamTshirtsDonna);
-		
-		JMenuItem itemPantaloniDonna = new JMenuItem("JEANS E GONNE");
-		mnDonna.add(itemPantaloniDonna);
-		
-		JMenuItem itemGiaccheDonna = new JMenuItem("GIACCHE");
-		mnDonna.add(itemGiaccheDonna);
-		
-		JMenuItem itemScarpeDonna = new JMenuItem("SCARPE");
-		mnDonna.add(itemScarpeDonna);
-		
-		JMenuItem itemAccessoriDonna = new JMenuItem("ACCESSORI");
-		mnDonna.add(itemAccessoriDonna);
 		
 		JButton btnAdd = new JButton("");
 		btnAdd.addActionListener(new ActionListener() {
@@ -192,7 +118,6 @@ public class TopPanel extends JPanel {
 		btnAdd.setOpaque(false);
 		btnAdd.setContentAreaFilled(false);
 		btnAdd.setBorderPainted(false);
-		btnAdd.setBounds(819, 84, 30, 38);
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -207,8 +132,53 @@ public class TopPanel extends JPanel {
 				controller.GoToAddArticolo();
 			}
 		});
-		add(btnAdd);
+		
+		button = new JButton("O");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				container.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			}
+		});
+	
+		button.setOpaque(false);
+		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(322)
+					.addComponent(btnLogo, GroupLayout.PREFERRED_SIZE, 315, Short.MAX_VALUE)
+					.addGap(160)
+					.addComponent(button, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+					.addGap(3)
+					.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGap(779)
+					.addComponent(btnUser, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(btnCarrello, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+					.addGap(6))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(11)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnLogo, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+						.addComponent(button)
+						.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+					.addGap(11)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnUser, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnCarrello, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)))
+		);
+		setLayout(groupLayout);
 		
 	}
 }
-

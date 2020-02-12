@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.event.MouseAdapter;
@@ -21,6 +22,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -60,7 +63,7 @@ public class UtenteFrame extends JFrame {
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
 
-		topPanel = new TopPanel(907,controller,this);
+		topPanel = new TopPanel(controller,this);
 		topPanel.setBounds(0, 0, 902, 133);
 		topPanel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -77,7 +80,7 @@ public class UtenteFrame extends JFrame {
 				setLocation(x-mouseX,y-mouseY);
 			}
 		});
-		
+		topPanel.setSize(902, 133);
 		sidePanel = new JPanel();
 		sidePanel.setBounds(0, 131, 243, 517);
 		sidePanel.setBorder(null);
@@ -171,7 +174,6 @@ public class UtenteFrame extends JFrame {
 		
 		JPanel recentiCard = new JPanel();
 		
-		
 
 		
 		model = controller.FillTableRecentiModel();
@@ -187,7 +189,11 @@ public class UtenteFrame extends JFrame {
 
 	    
 	    table.setModel(model);
-	    model.fireTableDataChanged();
+		
+	    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+	    centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+	    table.setDefaultRenderer(String.class, centerRenderer);
+	    
 	    scroll = new JScrollPane(table);
 	    scroll.setBounds(328, 10, 200, 531);
 	    recentiCard.add(scroll);
@@ -227,7 +233,7 @@ public class UtenteFrame extends JFrame {
 		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
 	
 		ImageIcon fotoProfilo = new ImageIcon(controller.commesso.getFoto());
-		lblFoto.setIcon(fotoProfilo);
+		lblFoto.setIcon(new ImageIcon(fotoProfilo.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH)));
 	
 		profileCard.setLayout(null);
 		profileCard.add(lblNome);
@@ -256,4 +262,7 @@ public class UtenteFrame extends JFrame {
 	private void ResetColor (JButton btn) {
 		btn.setBackground(new Color(155, 220, 193));
 	}
+	
+
+	
 }

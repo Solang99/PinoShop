@@ -22,24 +22,19 @@ public class CassaDAO {
 		connection = Connessione.getConnection();
 	}
 	
-	public void insertOrdine(String pagamentoType, float pagamentoDovuto, float pagamentoVersato,float resto)  {
-		String query = "INSERT INTO cassa(pagamento, pagamentodovuto, pagamentoversato, resto) VALUES (?::pagamento_type, ?, ?, ?);";
+	public void insertOrdine(String pagamentoType, float pagamentoDovuto, float pagamentoVersato,float resto,String username) throws SQLException  {
+		String query = "INSERT INTO cassa(pagamento, pagamentodovuto, pagamentoversato, resto,usernamecommesso) VALUES (?::pagamento_type, ?, ?, ?,?);";
 	
-			try {
 				preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, pagamentoType);
 				preparedStatement.setFloat(2, pagamentoDovuto);
 				preparedStatement.setFloat(3, pagamentoVersato);
 				preparedStatement.setFloat(4, resto);
-				
+				preparedStatement.setString(5, username);
 				
 				preparedStatement.executeUpdate();
 				preparedStatement.close();
-			
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
 			
 			
 		

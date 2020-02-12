@@ -265,17 +265,20 @@ public class MagazzinoFrame extends JFrame {
 		btnAggiungi.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JButton btnCancella = new JButton("Cancella");
+	
 		btnCancella.setBounds(482, 567, 126, 40);
 		btnCancella.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				int[] selectedRows = table.getSelectedRows();
-		        if (selectedRows.length > 0) {
-		            for (int i = selectedRows.length - 1; i >= 0; i--) {
-		                controller.RemoveArticolo(table.getValueAt(selectedRows[i], 1).toString());
-		            }
-		        }
+				int dialogResult =JOptionPane.showConfirmDialog (null, "Sicuro di voler cancellare gli elementi selezionati? L'operazione non è reversibile","Warning",JOptionPane.YES_NO_OPTION);
+				if (dialogResult == JOptionPane.YES_OPTION) {
+					int[] selectedRows = table.getSelectedRows();
+					if (selectedRows.length > 0) {
+						for (int i = selectedRows.length - 1; i >= 0; i--) {
+							controller.RemoveArticolo(table.getValueAt(selectedRows[i], 1).toString());
+						}
+					} 
+				}
 			}
 		});
 	
@@ -287,6 +290,10 @@ public class MagazzinoFrame extends JFrame {
 		lblPrezzo.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		btnCerca = new JButton("Cerca");
+		btnCerca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnCerca.setBounds(85, 567, 126, 40);
 		btnCerca.addMouseListener(new MouseAdapter() {
 			@Override
