@@ -43,27 +43,31 @@ public class CenterPanel extends JPanel {
 	private DefaultTableModel tableModel;
 	private final JPanel panel = new JPanel();
 	private JTextField txtCerca;
+	private JPanel innerPanel;
 
-	/**
-	 * Create the panel.
-	 */
-	public CenterPanel(Controller controller) {
+	private GridBagConstraints innerConstraints;
+	private GridBagLayout innerLayout;
+	private Controller controller;
+	
+	
+	public CenterPanel(Controller ctrl) {
+		controller = ctrl;
 		setBorder(null);
 		setSize(514, 298);
-		setBounds(0, 144, 906, 541);
+	//	setBounds(0, 144, 906, 541);
 		
 	
-        GridBagLayout innerLayout = new GridBagLayout();
-        GridBagConstraints innerConstraints = new GridBagConstraints();
-        JPanel innerPanel = new JPanel(innerLayout);
+        innerLayout = new GridBagLayout();
+        innerConstraints = new GridBagConstraints();
+        innerPanel = new JPanel(innerLayout);
 
         innerConstraints.gridy = 0;
 
         innerConstraints.insets = new Insets(5, 5, 5, 5);
         
         ArrayList<ComponetArticolo> component = controller.FillComponentList();
-        
-		for (int i = component.size()-1; i >= 0;i--) {
+       
+		for ( int i = component.size()-1; i >= 0;i--) {
 
 			innerConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
@@ -133,5 +137,24 @@ public class CenterPanel extends JPanel {
         setLayout(groupLayout);
 	
 	
+	}
+	
+	public void AggiornaHome() {
+        ArrayList<ComponetArticolo> component = controller.FillComponentList();
+        innerPanel.removeAll();
+		for ( int i = component.size()-1; i >= 0;i--) {
+
+			innerConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+
+			if( i%4 == 0)
+            	 innerConstraints.gridy =i;
+            innerConstraints.gridx = GridBagConstraints.RELATIVE;
+          
+            innerLayout.setConstraints(component.get(i), innerConstraints);
+            innerPanel.add(component.get(i));
+            
+            
+	    
+		}
 	}
 }

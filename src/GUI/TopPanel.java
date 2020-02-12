@@ -36,7 +36,7 @@ public class TopPanel extends JPanel {
 		setBorder(null);
 		setToolTipText("");
 		
-		//setSize(902, 133);
+		setSize(902, 133);
 		
 
 		
@@ -44,7 +44,7 @@ public class TopPanel extends JPanel {
 		btnLogo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.GoToMainFrame(container);
+				controller.GoToHomePanel();
 			}
 		});
 		btnLogo.setOpaque(false);
@@ -68,7 +68,7 @@ public class TopPanel extends JPanel {
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.GoToProfileFrame(container);
+				controller.GoToProfilePanel();
 			}
 		});
 		btnUser.setOpaque(false);
@@ -90,7 +90,7 @@ public class TopPanel extends JPanel {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.GoToCassaFrame(container);
+				controller.GoToCassaPanel();
 			}
 		});
 		btnCarrello.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/icons8_shopping_cart_30px.png")));
@@ -100,7 +100,7 @@ public class TopPanel extends JPanel {
 		btnClose.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
+				controller.CloseAll();
 			}
 		});
 		btnClose.setOpaque(false);

@@ -195,12 +195,12 @@ public class RegisterFrame extends JFrame {
 				
 				try {
 					boolean UsernameExists = controller.UsernameAlredyExists(textUsername.getText());
-					VerifyFields();
-					if (!UsernameExists) {
+				
+					if (!UsernameExists && VerifyFields()) {
 						controller.CreateAccount(textNome.getText(),textCognome.getText(),textUsername.getText()
 									,passwordField.getPassword(),dateChooserCombo.getSelectedDate(), fotoFile,textEmail.getText());
-
-						VerifyFields();
+						
+				
 
 						
 					}

@@ -252,6 +252,7 @@ public class MagazzinoFrame extends JFrame {
 		JButton btnAggiungi = new JButton("Aggiungi");
 	
 	
+	
 		btnAggiungi.setBounds(876, 567, 137, 40);
 
 		btnAggiungi.addMouseListener(new MouseAdapter() {

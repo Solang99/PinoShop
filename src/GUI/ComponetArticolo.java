@@ -43,7 +43,7 @@ public class ComponetArticolo extends JPanel {
 	public ComponetArticolo(Image foto , String nome,String id, float prezzo ,int quantia,Controller ctrl,int tipo) {
 		
 		controller = ctrl; 
-		
+		setSize(211, 174);
 		this.prezzo = prezzo;
 		this.id= id;
 		this.tipo=tipo;
@@ -60,7 +60,7 @@ public class ComponetArticolo extends JPanel {
 		lblIcon.setIcon(new ImageIcon(foto.getScaledInstance(lblIcon.getWidth(), lblIcon.getHeight(), java.awt.Image.SCALE_SMOOTH)));
 		add(lblIcon);
 		
-		
+	
 
 		
 		JLabel lblNome = new JLabel("");
@@ -178,6 +178,7 @@ public class ComponetArticolo extends JPanel {
 					JOptionPane.showMessageDialog(null, "Articolo Aggiunto");
 					selectedQuantia = Integer.parseInt(spinnerQuantita.getValue().toString());
 					controller.FillCassaList(id,selectedQuantia);
+					  
 				}
 		
 			});
@@ -219,14 +220,14 @@ public class ComponetArticolo extends JPanel {
 	
 	public void setQuantita (int quantita) {
 		this.quantita =quantita;
-		System.out.println(quantita);
 		spinnerQuantita.setValue(quantita);
 		modelQuantita.setMaximum(quantita);
-		
-
-		
-
 	
+	}
+	
+	public void AggiornaComponet() {
+		this.revalidate();
+		this.repaint();
 	}
 	
 

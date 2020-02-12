@@ -1,7 +1,6 @@
 package GUI;
 
 
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,22 +28,21 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.CardLayout;
 
+public class ProfilePanel extends JPanel {
 
-public class UtenteFrame extends JFrame {
-
-	private JPanel contentPane;
+	private static final String Image = null;
+	
 	private JButton btnRecenti;
 	private JButton btnProfilo;
 	private JButton btnLogOut;
 	private Controller controller;
-	private TopPanel topPanel;
+	
 	private JPanel panelCards;
 	private JPanel profileCard;
 	private JPanel sidePanel;
 	private JLabel logoIcon;
 	private JLabel lblNome;
-	private int mouseX;
-	private int mouseY;
+
 	private JLabel lblUsername;
 	private JLabel lblEmail;
 	private JLabel lblFoto;
@@ -53,36 +51,17 @@ public class UtenteFrame extends JFrame {
 	private JScrollPane scroll;
 	private CardLayout cardLayout;
 	
-	public UtenteFrame(Controller ctrl) {
+	public ProfilePanel(Controller ctrl) {
 		controller = ctrl;
-		
-		setUndecorated(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 907, 648);
-		contentPane = new JPanel();
-		contentPane.setBorder(null);
-		setContentPane(contentPane);
 
-		topPanel = new TopPanel(controller,this);
-		topPanel.setBounds(0, 0, 902, 133);
-		topPanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				mouseX= e.getX();
-				mouseY = e.getY();
-			}
-		});
-		topPanel.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				int x =e.getXOnScreen();
-				int y = e.getYOnScreen();
-				setLocation(x-mouseX,y-mouseY);
-			}
-		});
-		topPanel.setSize(902, 133);
+		setBorder(null);
+		setSize(514, 298);
+		setBounds(0, 144, 906, 541);
+		
+
+
 		sidePanel = new JPanel();
-		sidePanel.setBounds(0, 131, 243, 517);
+		sidePanel.setBounds(0, 0, 243, 552);
 		sidePanel.setBorder(null);
 		sidePanel.setBackground(new Color(155, 220, 193));
 		
@@ -112,7 +91,7 @@ public class UtenteFrame extends JFrame {
 		logoIcon = new JLabel("");
 		logoIcon.setBounds(10, 278, 216, 228);
 		logoIcon.setHorizontalAlignment(SwingConstants.CENTER);
-		logoIcon.setIcon(new ImageIcon(UtenteFrame.class.getResource("/IconProfile/PineIcon+.png")));
+		logoIcon.setIcon(new ImageIcon(ProfilePanel.class.getResource("/IconProfile/PineIcon+.png")));
 		logoIcon.setPreferredSize(new Dimension(232, 100));
 		
 		btnProfilo = new JButton("PROFILO");
@@ -139,12 +118,8 @@ public class UtenteFrame extends JFrame {
 		btnLogOut = new JButton("LOG OUT");
 		btnLogOut.setForeground(Color.BLACK);
 		btnLogOut.setBounds(0, 181, 242, 65);
-		JFrame frame = this;
-		btnLogOut.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.GoToLoginFrame(frame);
-			}
-		});
+		
+	
 		btnLogOut.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -158,14 +133,14 @@ public class UtenteFrame extends JFrame {
 		btnLogOut.setFont(new Font("Segoe Print", Font.BOLD, 20));
 		btnLogOut.setBorderPainted(false);
 		btnLogOut.setBackground(new Color(155, 220, 193));
-		contentPane.setLayout(null);
-		contentPane.add(topPanel);
-		contentPane.add(sidePanel);
+		setLayout(null);
+		
 		sidePanel.setLayout(null);
 		sidePanel.add(btnProfilo);
 		sidePanel.add(btnRecenti);
 		sidePanel.add(btnLogOut);
 		sidePanel.add(logoIcon);
+		add(sidePanel);
 		
 		
 		
@@ -232,8 +207,8 @@ public class UtenteFrame extends JFrame {
 		lblFoto.setBounds(192, 61, 201, 134);
 		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
 	
-		ImageIcon fotoProfilo = new ImageIcon(controller.commesso.getFoto());
-		lblFoto.setIcon(new ImageIcon(fotoProfilo.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH)));
+		Image fotoProfilo = (controller.commesso.getFoto());
+		lblFoto.setIcon(new ImageIcon(fotoProfilo));
 	
 		profileCard.setLayout(null);
 		profileCard.add(lblNome);
@@ -246,12 +221,12 @@ public class UtenteFrame extends JFrame {
 		cardLayout = new CardLayout ();
 		panelCards = new JPanel();
 		panelCards.setLayout(cardLayout);
-		panelCards.setBounds(253, 146, 637, 481);
-		panelCards.setBackground(new Color (220,255,192));
+		panelCards.setBounds(253, 40, 637, 441);
+		
 		panelCards.add(profileCard,"profile");
 		panelCards.add(recentiCard ,"recenti");
 		cardLayout.show(panelCards, "profile");
-		contentPane.add(panelCards);
+		add(panelCards);
 	    
 
 	}
@@ -263,6 +238,6 @@ public class UtenteFrame extends JFrame {
 		btn.setBackground(new Color(155, 220, 193));
 	}
 	
-
 	
+
 }

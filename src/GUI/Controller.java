@@ -7,7 +7,7 @@ package GUI;
 
 import java.awt.Image;
 import java.io.File;
-
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
@@ -39,10 +40,9 @@ public class Controller {
 	private static LoginFrame loginFrame;
 	private  RegisterFrame registerFrame;
 	private static  MainFrame mainFrame;
-	private UtenteFrame profileFrame;
 	public Cassa cassa;
 	private MagazzinoFrame magazzinoFrame;
-	private CassaFrame cassaFrame;
+	
 	private  ArticoloDAO articoloDao; 
 	private   Magazzino magazzino;
 	private   MagazzinoDAO magazzinoDao;
@@ -105,6 +105,12 @@ public class Controller {
 
 	}
 	
+	public void GoToMainFrame (JFrame frame) {
+		frame.dispose();
+		mainFrame = new MainFrame(this);
+		mainFrame.setVisible(true);
+	}
+	
 	public void GoToLoginFrame(JFrame frame) {
 		frame.dispose();
 		loginFrame= new LoginFrame(this);
@@ -112,10 +118,7 @@ public class Controller {
 		
 	}
 	
-	public void IconifedFrame(JFrame frame) {
-		frame.setState(JFrame.ICONIFIED);
-		
-	}
+	
 	
 	public void GoToRegisterFrame() {
 		loginFrame.dispose();
@@ -124,19 +127,18 @@ public class Controller {
 		
 	}
 	
-	public void GoToProfileFrame(JFrame frame) {
-		frame.dispose();
-		profileFrame= new UtenteFrame(this);
-		profileFrame.setVisible(true);
+	public void GoToProfilePanel() {
+		mainFrame.showProfile();
 	}
 	
-	public void GoToMainFrame(JFrame frame) {
-		frame.dispose();
-	
-	
-		mainFrame = new MainFrame(this);
-		mainFrame.setVisible(true);
+	public void GoToHomePanel() {
+		mainFrame.showHome();
 	}
+	public void GoToCassaPanel() {
+		mainFrame.showCassa();
+	}
+	
+
 	
 	public void Search(String id) {
 		mainFrame.dispose();
@@ -153,15 +155,7 @@ public class Controller {
 		magazzinoFrame.setVisible(true);
 	
 	}
-	
-	public void GoToCassaFrame(JFrame frame) {
-		frame.dispose();
-		cassaFrame = new CassaFrame(this);
-		cassaFrame.setVisible(true);
-		
-		
-		
-	}
+
 	
 	public void CreateUser(String nome,String cognome,String username,String password, 
 							Date dataNascita, Image foto,String email) {
@@ -229,8 +223,7 @@ public class Controller {
 		}
 		
 	    for (int i = 0 ; i< recentiList.size();i++) {
-	    	System.out.println(recentiList.size());
-	    
+	    	
 	    	
 	    	tableCassa.addRow(new Object[] {
 	    									recentiList.get(i).getNumeroOrdine(),
@@ -265,7 +258,25 @@ public class Controller {
 		
 		articoloDao.InsertArticolo(nome,id, produttore, taglia, colore, collezione, quantita, prezzo, genere,categoria,foto);
 		tableMagazzino = FillTableMagazzinoModel(selectItem);
+		
+		
 		selectItem="all";
+		
+		Image image;
+		try {
+			image = ImageIO.read(foto);
+			
+			mainFrame.AggiornaHome();
+			mainFrame.revalidate();
+			mainFrame.repaint();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	
+		
 		return tableMagazzino;
 		
 		
@@ -278,6 +289,9 @@ public class Controller {
 	
 		tableMagazzino = FillTableMagazzinoModel(selectItem);
 		selectItem="all";
+		mainFrame.AggiornaHome();
+		mainFrame.revalidate();
+		mainFrame.repaint();
 		return tableMagazzino;
 	}
 	
@@ -298,7 +312,7 @@ public class Controller {
 	public void RemoveFromCassa(String id,int quantita) {
 		
 	
-		
+		 
 		
 		 for (int i = 0 ;  i<cassaList.size() ; i++) {
 
@@ -315,10 +329,12 @@ public class Controller {
 			
 			 
 		 }
-		 
-		
-		cassaFrame = new CassaFrame(this);
-		cassaFrame.setVisible(true);
+		 mainFrame.AggiornaCassa();
+		 mainFrame.revalidate();
+		 mainFrame.repaint();
+//		
+//		cassaFrame = new CassaFrame(this);
+//		cassaFrame.setVisible(true);
 	}
 	
 	public ArrayList<ComponetArticolo> FillComponentList(){
@@ -333,7 +349,7 @@ public class Controller {
 	
 	
 	
-	public ArrayList<ComponetArticolo> FillCassaList(String id , int quantita){
+	public void FillCassaList(String id , int quantita){
 		
 		magazzinoDao.fillMagazzino(magazzino.getArticolo());
 		if ( !FindInCassaList(id, quantita)) { 
@@ -352,7 +368,10 @@ public class Controller {
 			} 
 		}
 		magazzinoDao.RemoveFromMagazzino(id, quantita);
-		return cassaList;
+		mainFrame.AggiornaCassa();
+		mainFrame.revalidate();
+		mainFrame.repaint();
+		
 	}
 	
 
