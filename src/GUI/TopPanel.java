@@ -21,6 +21,7 @@ import javax.swing.JMenu;
 import javax.swing.UIManager;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class TopPanel extends JPanel {
 	private JButton btnUser;
@@ -29,7 +30,8 @@ public class TopPanel extends JPanel {
 	private JButton btnClose;
 
 	private Controller controller;
-	private JButton button;
+	private JButton btnMaximize;
+	private JButton btnNormalSize;
 	
 	public TopPanel( Controller ctrl,JFrame container) {
 		controller = ctrl;
@@ -133,29 +135,64 @@ public class TopPanel extends JPanel {
 			}
 		});
 		
-		button = new JButton("O");
-		button.addMouseListener(new MouseAdapter() {
+		btnMaximize = new JButton("");
+
+		btnMaximize.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/fullScreenIcon.png")));
+		btnMaximize.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
 				container.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				setBtnNormalSize();
+				
 			}
 		});
 	
-		button.setOpaque(false);
-		button.setContentAreaFilled(false);
-		button.setBorderPainted(false);
+		btnMaximize.setOpaque(false);
+		btnMaximize.setContentAreaFilled(false);
+		btnMaximize.setBorderPainted(false);
+		
+		JButton btnIconifed = new JButton("");
+		btnIconifed.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				container.setState(JFrame.ICONIFIED);
+			}
+		});
+		btnIconifed.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/IconIconifed.png")));
+		btnIconifed.setOpaque(false);
+		btnIconifed.setContentAreaFilled(false);
+		btnIconifed.setBorderPainted(false);
+		
+		btnNormalSize = new JButton("");
+		btnNormalSize.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/IconNormalScreen.png")));
+		btnNormalSize.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				container.setExtendedState(JFrame.NORMAL);
+				setBtnMaxSize();
+			}
+		});
+		btnNormalSize.setOpaque(false);
+		btnNormalSize.setContentAreaFilled(false);
+		btnNormalSize.setBorderPainted(false);
+		btnNormalSize.setEnabled(false);
+		btnNormalSize.setVisible(false);
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(322)
+					.addGap(289)
 					.addComponent(btnLogo, GroupLayout.PREFERRED_SIZE, 315, Short.MAX_VALUE)
-					.addGap(160)
-					.addComponent(button, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-					.addGap(3)
+					.addGap(187)
+					.addComponent(btnIconifed, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnNormalSize, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnMaximize, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
 					.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(779)
 					.addComponent(btnUser, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addGap(10)
@@ -170,15 +207,33 @@ public class TopPanel extends JPanel {
 					.addGap(11)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnLogo, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button)
-						.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-					.addGap(11)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnUser, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnCarrello, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnIconifed, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
+								.addComponent(btnMaximize, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
+								.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
+								.addComponent(btnNormalSize, 0, 0, Short.MAX_VALUE))
+							.addGap(66)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnUser, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnCarrello, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))))
+					.addGap(11))
 		);
 		setLayout(groupLayout);
 		
+	}
+	
+	private void setBtnNormalSize() {
+		btnMaximize.setVisible(false);
+		btnMaximize.setEnabled(false);
+		btnNormalSize.setVisible(true);
+		btnNormalSize.setEnabled(true);
+	}
+	private void setBtnMaxSize() {
+		btnMaximize.setVisible(true);
+		btnMaximize.setEnabled(true);
+		btnNormalSize.setVisible(false);
+		btnNormalSize.setEnabled(false);
 	}
 }

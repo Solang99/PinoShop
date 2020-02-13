@@ -225,10 +225,7 @@ public class ComponetArticolo extends JPanel {
 	
 	}
 	
-	public void AggiornaComponet() {
-		this.revalidate();
-		this.repaint();
-	}
+
 	
 
 }

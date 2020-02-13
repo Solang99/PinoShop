@@ -40,7 +40,7 @@ import java.awt.event.MouseEvent;
 
 public class CenterPanel extends JPanel {
 
-	private DefaultTableModel tableModel;
+
 	private final JPanel panel = new JPanel();
 	private JTextField txtCerca;
 	private JPanel innerPanel;
@@ -87,34 +87,36 @@ public class CenterPanel extends JPanel {
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         
         JPanel panel_1 = new JPanel();
-        panel_1.setPreferredSize(new Dimension(300,50));
+        panel_1.setPreferredSize(new Dimension(400, 50));
         panel.add(panel_1);
-        panel_1.setLayout(null);
+        panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         
         JLabel lblCerca = new JLabel("Cerca");
-        lblCerca.setBounds(18, 5, 67, 43);
+        
         lblCerca.setFont(new Font("Segoe Print", Font.PLAIN, 24));
         panel_1.add(lblCerca);
         
         txtCerca = new JTextField();
-        txtCerca.setBounds(95, 15, 127, 32);
-        txtCerca.setColumns(10);
+        txtCerca.setColumns(20);
         panel_1.add(txtCerca);
         
         JButton btnCerca = new JButton();
+        btnCerca.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
         btnCerca.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		controller.Search(txtCerca.getText());
         	}
         });
-        btnCerca.setBounds(232, 5, 58, 43);
         btnCerca.setOpaque(false);
         btnCerca.setContentAreaFilled(false);
         btnCerca.setBorderPainted(false);
-		
+		btnCerca.setPreferredSize(new Dimension(50, 50));
         ImageIcon searchIcon =   new ImageIcon(CenterPanel.class.getResource("/IconTopPanel/Group 1.png"));
-        btnCerca.setIcon(new ImageIcon(searchIcon.getImage().getScaledInstance(btnCerca.getWidth(), btnCerca.getHeight(), Image.SCALE_SMOOTH)));
+        btnCerca.setIcon(new ImageIcon(searchIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
      
       
         panel_1.add(btnCerca);

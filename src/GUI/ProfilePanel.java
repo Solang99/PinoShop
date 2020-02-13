@@ -27,10 +27,11 @@ import java.awt.Image;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.CardLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ProfilePanel extends JPanel {
 
-	private static final String Image = null;
+
 	
 	private JButton btnRecenti;
 	private JButton btnProfilo;
@@ -61,7 +62,6 @@ public class ProfilePanel extends JPanel {
 
 
 		sidePanel = new JPanel();
-		sidePanel.setBounds(0, 0, 243, 552);
 		sidePanel.setBorder(null);
 		sidePanel.setBackground(new Color(155, 220, 193));
 		
@@ -133,14 +133,12 @@ public class ProfilePanel extends JPanel {
 		btnLogOut.setFont(new Font("Segoe Print", Font.BOLD, 20));
 		btnLogOut.setBorderPainted(false);
 		btnLogOut.setBackground(new Color(155, 220, 193));
-		setLayout(null);
 		
 		sidePanel.setLayout(null);
 		sidePanel.add(btnProfilo);
 		sidePanel.add(btnRecenti);
 		sidePanel.add(btnLogOut);
 		sidePanel.add(logoIcon);
-		add(sidePanel);
 		
 		
 		
@@ -171,7 +169,6 @@ public class ProfilePanel extends JPanel {
 	    
 	    scroll = new JScrollPane(table);
 	    scroll.setBounds(328, 10, 200, 531);
-	    recentiCard.add(scroll);
 
 	    
 	    profileCard = new JPanel();
@@ -184,49 +181,115 @@ public class ProfilePanel extends JPanel {
 		
 		
 		lblNome = new JLabel("Nome: " + controller.commesso.getNome());
-		lblNome.setBounds(40, 188, 201, 84);
 		lblNome.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNome.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		
 		JLabel lblCognome = new JLabel("Cognome: " + controller.commesso.getCognome() );
-		lblCognome.setBounds(350, 188, 201, 72);
 		lblCognome.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCognome.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		
 		lblUsername = new JLabel("Username: " + controller.commesso.getUsername());
-		lblUsername.setBounds(40, 293, 201, 72);
 		lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUsername.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		
 		lblEmail = new JLabel("Email: " + controller.commesso.getMail());
-		lblEmail.setBounds(350, 293, 201, 72);
 		lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEmail.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		
 		lblFoto = new JLabel("");
-		lblFoto.setBounds(192, 61, 201, 134);
 		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
 	
-		Image fotoProfilo = (controller.commesso.getFoto());
+		Image fotoProfilo = (controller.commesso.getFoto().getScaledInstance(120, 120, Image.SCALE_AREA_AVERAGING));
 		lblFoto.setIcon(new ImageIcon(fotoProfilo));
-	
-		profileCard.setLayout(null);
-		profileCard.add(lblNome);
-		profileCard.add(lblCognome);
-		profileCard.add(lblFoto);
-		profileCard.add(lblUsername);
-		profileCard.add(lblEmail);
 		
 	    
 		cardLayout = new CardLayout ();
 		panelCards = new JPanel();
 		panelCards.setLayout(cardLayout);
-		panelCards.setBounds(253, 40, 637, 441);
 		
 		panelCards.add(profileCard,"profile");
+		GroupLayout gl_profileCard = new GroupLayout(profileCard);
+		gl_profileCard.setHorizontalGroup(
+			gl_profileCard.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_profileCard.createSequentialGroup()
+					.addGap(40)
+					.addGroup(gl_profileCard.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_profileCard.createSequentialGroup()
+							.addGap(310)
+							.addComponent(lblCognome, GroupLayout.PREFERRED_SIZE, 201, Short.MAX_VALUE))
+						.addGroup(gl_profileCard.createSequentialGroup()
+							.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+							.addGap(310))
+						.addGroup(gl_profileCard.createSequentialGroup()
+							.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 201, Short.MAX_VALUE)
+							.addGap(109)
+							.addComponent(lblEmail, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)))
+					.addGap(49))
+				.addGroup(gl_profileCard.createSequentialGroup()
+					.addGap(192)
+					.addComponent(lblFoto, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+					.addGap(207))
+		);
+		gl_profileCard.setVerticalGroup(
+			gl_profileCard.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_profileCard.createSequentialGroup()
+					.addGap(61)
+					.addGroup(gl_profileCard.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_profileCard.createSequentialGroup()
+							.addGap(127)
+							.addComponent(lblCognome, GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+							.addGap(12))
+						.addGroup(gl_profileCard.createSequentialGroup()
+							.addGap(127)
+							.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
+						.addGroup(gl_profileCard.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblFoto, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)))
+					.addGap(21)
+					.addGroup(gl_profileCard.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblUsername, GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE))
+					.addGap(81))
+		);
+		profileCard.setLayout(gl_profileCard);
 		panelCards.add(recentiCard ,"recenti");
+		GroupLayout gl_recentiCard = new GroupLayout(recentiCard);
+		gl_recentiCard.setHorizontalGroup(
+			gl_recentiCard.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_recentiCard.createSequentialGroup()
+					.addGap(40)
+					.addComponent(scroll, GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+					.addGap(42))
+		);
+		gl_recentiCard.setVerticalGroup(
+			gl_recentiCard.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_recentiCard.createSequentialGroup()
+					.addGap(5)
+					.addComponent(scroll)
+					.addGap(39))
+		);
+		recentiCard.setLayout(gl_recentiCard);
 		cardLayout.show(panelCards, "profile");
-		add(panelCards);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addComponent(sidePanel, GroupLayout.PREFERRED_SIZE, 286, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(panelCards, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(46)
+					.addComponent(panelCards, GroupLayout.PREFERRED_SIZE, 446, Short.MAX_VALUE)
+					.addGap(49))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addComponent(sidePanel, GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+					.addGap(31))
+		);
+		setLayout(groupLayout);
 	    
 
 	}

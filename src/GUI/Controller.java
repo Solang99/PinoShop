@@ -368,6 +368,7 @@ public class Controller {
 			} 
 		}
 		magazzinoDao.RemoveFromMagazzino(id, quantita);
+		mainFrame.AggiornaHome();
 		mainFrame.AggiornaCassa();
 		mainFrame.revalidate();
 		mainFrame.repaint();
