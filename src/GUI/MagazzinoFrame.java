@@ -267,6 +267,7 @@ public class MagazzinoFrame extends JFrame {
 		
 		JButton btnCancella = new JButton("Cancella");
 	
+	
 		btnCancella.setBounds(482, 567, 126, 40);
 		btnCancella.addMouseListener(new MouseAdapter() {
 			@Override

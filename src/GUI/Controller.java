@@ -297,15 +297,13 @@ public class Controller {
 	
 	public void aggiungiOrdine(String pagamentoType, float pagamentoDovuto, float pagamentoVersato,float resto) throws SQLException {
 		cassaDao.insertOrdine(pagamentoType, pagamentoDovuto, pagamentoVersato, resto,commesso.getUsername());
+		cassaList.clear();
+		
+		mainFrame.AggiornaCassa();
+		mainFrame.revalidate();
+		mainFrame.repaint();
 		
 	}
-	
-	public void CloseAll() {
-		for(ComponetArticolo c : cassaList)
-			magazzinoDao.AddToMagazzino(c.getId(), c.getQuantita());
-		System.exit(0);
-	}
-	
 
 
 
@@ -330,11 +328,15 @@ public class Controller {
 			 
 		 }
 		 mainFrame.AggiornaCassa();
+		 mainFrame.AggiornaHome();
 		 mainFrame.revalidate();
 		 mainFrame.repaint();
-//		
-//		cassaFrame = new CassaFrame(this);
-//		cassaFrame.setVisible(true);
+
+	}
+	public void CloseAll() {
+		for(ComponetArticolo c : cassaList)
+			magazzinoDao.AddToMagazzino(c.getId(), c.getQuantita());
+		System.exit(0);
 	}
 	
 	public ArrayList<ComponetArticolo> FillComponentList(){

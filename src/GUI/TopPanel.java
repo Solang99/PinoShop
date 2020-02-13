@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseMotionAdapter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -15,13 +17,18 @@ import javax.swing.JFrame;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 import javax.swing.UIManager;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.BoxLayout;
+import java.awt.Component;
 
 public class TopPanel extends JPanel {
 	private JButton btnUser;
@@ -32,15 +39,42 @@ public class TopPanel extends JPanel {
 	private Controller controller;
 	private JButton btnMaximize;
 	private JButton btnNormalSize;
+	private JLabel IconCommesso;
+	private JLabel lblDate;
+	private JPanel panel;
+	private int mouseX;
+	private int mouseY;
+	private JFrame frame;
+	private boolean state;
 	
 	public TopPanel( Controller ctrl,JFrame container) {
+		state = true;
 		controller = ctrl;
+		frame = container;
 		setBorder(null);
 		setToolTipText("");
 		
-		setSize(902, 133);
+		setSize(906, 138);
 		
 
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				mouseX= e.getX();
+				mouseY = e.getY();
+			}
+		});
+		addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				if (state) {
+					int x = e.getXOnScreen();
+					int y = e.getYOnScreen();
+					frame.setLocation(x - mouseX, y - mouseY);
+					System.out.println(state);
+				}
+			}
+		});
 		
 		btnLogo = new JButton("");
 		btnLogo.addMouseListener(new MouseAdapter() {
@@ -102,7 +136,10 @@ public class TopPanel extends JPanel {
 		btnClose.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.CloseAll();
+				int dialogResult =JOptionPane.showConfirmDialog (null, "Sicuro di voler uscire? La cassa verra svuotata","Warning",JOptionPane.YES_NO_OPTION);
+				if (dialogResult == JOptionPane.YES_OPTION) {
+					controller.CloseAll();
+				}
 			}
 		});
 		btnClose.setOpaque(false);
@@ -142,7 +179,7 @@ public class TopPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				container.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				setBtnNormalSize();
 				
 			}
@@ -156,7 +193,7 @@ public class TopPanel extends JPanel {
 		btnIconifed.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				container.setState(JFrame.ICONIFIED);
+				frame.setState(JFrame.ICONIFIED);
 			}
 		});
 		btnIconifed.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/IconIconifed.png")));
@@ -169,7 +206,7 @@ public class TopPanel extends JPanel {
 		btnNormalSize.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				container.setExtendedState(JFrame.NORMAL);
+				frame.setExtendedState(JFrame.NORMAL);
 				setBtnMaxSize();
 			}
 		});
@@ -179,61 +216,100 @@ public class TopPanel extends JPanel {
 		btnNormalSize.setEnabled(false);
 		btnNormalSize.setVisible(false);
 		
+		panel = new JPanel();
+		panel.setLayout(null);
+		
+		
+		SimpleDateFormat formatterYear = new SimpleDateFormat("dd/MM/yyyy");   
+		Date date = new Date();  
+
+		IconCommesso = new JLabel("");
+		IconCommesso.setBounds(21, 11, 102, 112);
+		panel.add(IconCommesso);
+		IconCommesso.setHorizontalAlignment(SwingConstants.CENTER);
+		Image commessoIcon = controller.commesso.getFoto().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+		IconCommesso.setIcon(new ImageIcon(commessoIcon));
+		
+		
+		
+
+		lblDate = new JLabel("<html><center> Ciao "+ controller.commesso.getNome()+" :) <br> Oggi è il " + formatterYear.format(date)+"<br> </center> </html>");
+		lblDate.setBounds(147, 11, 208, 62);
+		lblDate.setAlignmentY(Component.TOP_ALIGNMENT);
+		panel.add(lblDate);
+		lblDate.setFont(new Font("Segoe Print", Font.PLAIN, 17));
+		
+		panel.setVisible(false);
+		panel.setEnabled(false);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(289)
-					.addComponent(btnLogo, GroupLayout.PREFERRED_SIZE, 315, Short.MAX_VALUE)
-					.addGap(187)
+					.addGap(263)
+					.addComponent(btnLogo, GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+					.addGap(106)
 					.addComponent(btnIconifed, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGap(6)
 					.addComponent(btnNormalSize, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGap(6)
 					.addComponent(btnMaximize, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-					.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))
+					.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+					.addGap(5))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(779)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 365, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(541, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(779, Short.MAX_VALUE)
 					.addComponent(btnUser, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addGap(10)
 					.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addGap(10)
 					.addComponent(btnCarrello, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-					.addGap(6))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(11)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnLogo, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(btnIconifed, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
-								.addComponent(btnMaximize, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
-								.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
-								.addComponent(btnNormalSize, 0, 0, Short.MAX_VALUE))
-							.addGap(66)
+							.addGap(11)
+							.addComponent(btnLogo, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(11)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnUser, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnCarrello, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))))
-					.addGap(11))
+								.addComponent(btnIconifed, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnNormalSize, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnMaximize, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(panel, 0, 0, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnUser, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnCarrello, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 		);
 		setLayout(groupLayout);
-		
 	}
 	
 	private void setBtnNormalSize() {
+		
 		btnMaximize.setVisible(false);
 		btnMaximize.setEnabled(false);
 		btnNormalSize.setVisible(true);
 		btnNormalSize.setEnabled(true);
+		panel.setVisible(true);
+		panel.setEnabled(true);
+		state=false;
 	}
 	private void setBtnMaxSize() {
 		btnMaximize.setVisible(true);
 		btnMaximize.setEnabled(true);
 		btnNormalSize.setVisible(false);
 		btnNormalSize.setEnabled(false);
+		panel.setVisible(false);
+		panel.setEnabled(false);
+		state=true;
+
 	}
 }

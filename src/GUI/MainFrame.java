@@ -63,21 +63,21 @@ public class MainFrame extends JFrame {
 		
 	
 		topPanel = new TopPanel(controller, this);
-		topPanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				mouseX= e.getX();
-				mouseY = e.getY();
-			}
-		});
-		topPanel.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				int x =e.getXOnScreen();
-				int y = e.getYOnScreen();
-				setLocation(x-mouseX,y-mouseY);
-			}
-		});
+//		topPanel.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				mouseX= e.getX();
+//				mouseY = e.getY();
+//			}
+//		});
+//		topPanel.addMouseMotionListener(new MouseMotionAdapter() {
+//			@Override
+//			public void mouseDragged(MouseEvent e) {
+//				int x =e.getXOnScreen();
+//				int y = e.getYOnScreen();
+//				setLocation(x-mouseX,y-mouseY);
+//			}
+//		});
 		
 		
 		
@@ -135,13 +135,16 @@ public class MainFrame extends JFrame {
 	
 	public void AggiornaHome() {
 		centralPanel.AggiornaHome();
-	
+		topPanel.revalidate();
+		topPanel.getIgnoreRepaint();
 		
 	}
 	
 	public void AggiornaCassa() {
 		
+		
 		cassaPanel.AggiornaCassa();
+	
 		cassaPanel.revalidate();
 		cassaPanel.repaint();
 

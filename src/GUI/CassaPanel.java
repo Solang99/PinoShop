@@ -4,7 +4,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
-
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
@@ -93,13 +94,10 @@ public class CassaPanel extends JPanel {
         checkBoxCarta.setBounds(189, 69, 175, 23);
         panelTipoPagamento.add(checkBoxCarta);
         
-        JButton btnNewButton = new JButton("Paga");
-	    btnNewButton.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		
-	    	}
-	    });
-	        btnNewButton.addMouseListener(new MouseAdapter() {
+        JButton btnPaga = new JButton("Paga");
+        btnPaga.setIcon(new ImageIcon(CassaPanel.class.getResource("/IconCassaFrame/iconPaga.png")));
+
+	        btnPaga.addMouseListener(new MouseAdapter() {
 	        	@Override
 	        	public void mouseClicked(MouseEvent e) {
 	    
@@ -116,6 +114,7 @@ public class CassaPanel extends JPanel {
 						
 		        		controller.aggiungiOrdine(pagamentoType,tot, pagamentoVersato,rest );
 						
+						
 		        		
 		        		
 						JOptionPane.showMessageDialog(null, "Pagamento effetuato");
@@ -129,18 +128,18 @@ public class CassaPanel extends JPanel {
 	        		
 	        	}
 	        });
-	        btnNewButton.setBounds(146, 152, 89, 23);
-	        panelTipoPagamento.add(btnNewButton);
+	        btnPaga.setBounds(133, 152, 175, 38);
+	        panelTipoPagamento.add(btnPaga);
         
-        JLabel label_2 = new JLabel(" ");
-        label_2.setIcon(new ImageIcon(CassaPanel.class.getResource("/IconCassaFrame/icons8-contanti-40.png")));
-        label_2.setBounds(63, 100, 48, 30);
-        panelTipoPagamento.add(label_2);
+        JLabel IconContanti = new JLabel(" ");
+        IconContanti.setIcon(new ImageIcon(CassaPanel.class.getResource("/IconCassaFrame/icons8-contanti-40.png")));
+        IconContanti.setBounds(63, 100, 48, 30);
+        panelTipoPagamento.add(IconContanti);
         
-        JLabel label_3 = new JLabel("");
-        label_3.setIcon(new ImageIcon(CassaPanel.class.getResource("/IconCassaFrame/icons8-visa-40.png")));
-        label_3.setBounds(260, 99, 48, 31);
-        panelTipoPagamento.add(label_3);
+        JLabel IconcCartaCredito = new JLabel("");
+        IconcCartaCredito.setIcon(new ImageIcon(CassaPanel.class.getResource("/IconCassaFrame/icons8-visa-40.png")));
+        IconcCartaCredito.setBounds(260, 99, 48, 31);
+        panelTipoPagamento.add(IconcCartaCredito);
         
         
         JPanel panelDati = new JPanel();
@@ -164,17 +163,24 @@ public class CassaPanel extends JPanel {
         modelPagamento = new SpinnerNumberModel(0.0, 0.0, 1000.0, 0.5);
         JSpinner spinnerPagamento = new JSpinner(modelPagamento);
         spinnerPagamento.setBounds(226, 79, 50, 20);
+        spinnerPagamento.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+               tipoPagamento();
+            }
+        });
         panelDati.add(spinnerPagamento);
         
-        JButton button = new JButton("Calcola Resto");
-        button.setBounds(283, 78, 89, 23);
-        button.addActionListener(new ActionListener() {
+        JButton btnResto = new JButton("Calcola Resto");
+        btnResto.setIcon(new ImageIcon(CassaPanel.class.getResource("/IconCassaFrame/icibResto.png")));
+        btnResto.setBounds(283, 78, 143, 23);
+        btnResto.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		tipoPagamento();
         		
         	}
         });
-        panelDati.add(button);
+        panelDati.add(btnResto);
         
 		
 
@@ -253,10 +259,14 @@ public class CassaPanel extends JPanel {
 			}
 			else if(checkBoxCarta.isSelected()) {
 				lblResto.setText("Resto: "+ 0);
+			
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Selezione un metodo di pagamento valido", "Errore", JOptionPane.ERROR_MESSAGE);
 			}
+		}
+		private void AggiornaResto(){
+			
 		}
 	
 		

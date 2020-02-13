@@ -2,35 +2,27 @@ package GUI;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
+
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+
 import javax.swing.JLabel;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
+
 import java.awt.Image;
 import java.awt.Insets;
 import java.util.ArrayList;
-import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JScrollBar;
-import net.miginfocom.swing.MigLayout;
+
 import javax.swing.JTextField;
 import java.awt.GridBagLayout;
-import javax.swing.JComboBox;
+
 import java.awt.GridBagConstraints;
-import javax.swing.JCheckBox;
-import java.awt.Button;
-import java.awt.Color;
+
 import java.awt.Dimension;
 
 import javax.swing.JButton;
-import javax.swing.LayoutStyle.ComponentPlacement;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
