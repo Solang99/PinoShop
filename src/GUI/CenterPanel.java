@@ -40,14 +40,14 @@ public class CenterPanel extends JPanel {
 	private GridBagConstraints innerConstraints;
 	private GridBagLayout innerLayout;
 	private Controller controller;
-	
+	private int componetPerLine;
 	
 	public CenterPanel(Controller ctrl) {
+		componetPerLine =4;
 		controller = ctrl;
 		setBorder(null);
-		setSize(514, 298);
-	//	setBounds(0, 144, 906, 541);
-		
+
+	
 	
         innerLayout = new GridBagLayout();
         innerConstraints = new GridBagConstraints();
@@ -57,23 +57,23 @@ public class CenterPanel extends JPanel {
 
         innerConstraints.insets = new Insets(5, 5, 5, 5);
         
-        ArrayList<ComponetArticolo> component = controller.FillComponentList();
-       
-		for ( int i = component.size()-1; i >= 0;i--) {
-
-			innerConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
-
-			if( i%4 == 0)
-            	 innerConstraints.gridy =i;
-            innerConstraints.gridx = GridBagConstraints.RELATIVE;
-          
-            innerLayout.setConstraints(component.get(i), innerConstraints);
-            innerPanel.add(component.get(i));
-            
-            
-	    
-		}
-		
+//        ArrayList<ComponetArticolo> component = controller.FillComponentList();
+//       
+//		for ( int i = component.size()-1; i >= 0;i--) {
+//
+//			innerConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+//
+//			if( i%4 == 0)
+//            	 innerConstraints.gridy =i;
+//            innerConstraints.gridx = GridBagConstraints.RELATIVE;
+//          
+//            innerLayout.setConstraints(component.get(i), innerConstraints);
+//            innerPanel.add(component.get(i));
+//            
+//            
+//	    
+//		}
+		AggiornaHome();
 		
         JScrollPane scrollPanel = new JScrollPane(innerPanel);
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -93,10 +93,7 @@ public class CenterPanel extends JPanel {
         panel_1.add(txtCerca);
         
         JButton btnCerca = new JButton();
-        btnCerca.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
+  
         btnCerca.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
@@ -116,17 +113,17 @@ public class CenterPanel extends JPanel {
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addComponent(panel, GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE)
-        		.addComponent(scrollPanel, GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE)
+        		.addComponent(panel, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+        		.addComponent(scrollPanel, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
         );
         groupLayout.setVerticalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
         		.addGroup(groupLayout.createSequentialGroup()
         			.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(481, Short.MAX_VALUE))
+        			.addContainerGap(240, Short.MAX_VALUE))
         		.addGroup(groupLayout.createSequentialGroup()
         			.addGap(59)
-        			.addComponent(scrollPanel, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE))
+        			.addComponent(scrollPanel, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
         );
         setLayout(groupLayout);
 	
@@ -134,13 +131,14 @@ public class CenterPanel extends JPanel {
 	}
 	
 	public void AggiornaHome() {
+		
         ArrayList<ComponetArticolo> component = controller.FillComponentList();
         innerPanel.removeAll();
 		for ( int i = component.size()-1; i >= 0;i--) {
 
 			innerConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
-			if( i%4 == 0)
+			if( i%componetPerLine == 0)
             	 innerConstraints.gridy =i;
             innerConstraints.gridx = GridBagConstraints.RELATIVE;
           
@@ -151,4 +149,14 @@ public class CenterPanel extends JPanel {
 	    
 		}
 	}
+	public void setComponetPerLine(boolean isMax , int min , int max) {
+		if (isMax)
+			this.componetPerLine = max;
+		else
+			this.componetPerLine = min;
+		
+		AggiornaHome();
+		
+	}
+
 }

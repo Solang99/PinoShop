@@ -22,7 +22,6 @@ public class CommessoDAO {
 	private PreparedStatement preparedStatement;
 	public CommessoDAO() {
 		connection = Connessione.getConnection();
-		
 	}
 	 	
 	
@@ -51,6 +50,7 @@ public class CommessoDAO {
 			
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
+
 		} catch (SQLException e) {
 	
 			e.printStackTrace();
@@ -78,8 +78,8 @@ public class CommessoDAO {
 				String nomeUser = risultato.getString(1);
 				String cognomeUser= risultato.getString(2);
 				String usernameUser = risultato.getString(3);
-				String emailUser = risultato.getString(4);
-				String passwordUser = risultato.getString(5);
+				String emailUser = risultato.getString(5);
+				String passwordUser = risultato.getString(4);
 				java.util.Date dataNascitaUser = risultato.getTimestamp(6);
 				InputStream fotoStream = risultato.getBinaryStream(7);
 				Image fotoUser = ImageIO.read(fotoStream);
@@ -88,11 +88,13 @@ public class CommessoDAO {
 				controller.CreateUser(nomeUser,cognomeUser,usernameUser,passwordUser,dataNascitaUser,fotoUser,emailUser);
 				
 				preparedStatement.close();
+			
 				return true;
 			}
 				
 			else {
 				preparedStatement.close();
+				
 				return false; 
 			}
 	}
@@ -112,11 +114,13 @@ public class CommessoDAO {
 			ResultSet risultato = preparedStatement.executeQuery();
 			if (risultato.next()) {		
 					preparedStatement.close();
+					connection.close();
 					return true;
 			}
 		
 			else {
 					preparedStatement.close();
+					
 					return false; 
 			}
 		} catch (SQLException e) {

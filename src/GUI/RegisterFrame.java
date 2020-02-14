@@ -118,12 +118,12 @@ public class RegisterFrame extends JFrame {
 		lblDataDiNascita.setBounds(145, 358, 206, 29);
 		panel.add(lblDataDiNascita);
 		
-		JFrame RegisterFrame = this;
+
 		JLabel lblGoToLogin = new JLabel("Hai gi\u00E0 un account? Clicca Qui!\r\n");
 		lblGoToLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.GoToLoginFrame(RegisterFrame);
+				controller.fromRegisterToLoginFrame();
 			}
 		});
 		lblGoToLogin.addMouseMotionListener(new MouseMotionAdapter() {
@@ -190,23 +190,26 @@ public class RegisterFrame extends JFrame {
 			}
 		});
 		btnlogin.setBounds(223, 539, 54, 48);
+		JFrame thisFrame = this;
 		btnlogin.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
 					boolean UsernameExists = controller.UsernameAlredyExists(textUsername.getText());
 				
-					if (!UsernameExists && VerifyFields()) {
-						controller.CreateAccount(textNome.getText(),textCognome.getText(),textUsername.getText()
-									,passwordField.getPassword(),dateChooserCombo.getSelectedDate(), fotoFile,textEmail.getText());
-						
-				
+					if (VerifyFields()) {
+						if (!UsernameExists ) {
+							controller.CreateAccount(textNome.getText(), textCognome.getText(), textUsername.getText(),
+									passwordField.getPassword(), dateChooserCombo.getSelectedDate(), fotoFile,
+									textEmail.getText());
+							controller.GoToMainFrame(thisFrame);
 
-						
+						}
+
+						else
+							JOptionPane.showMessageDialog(null, "username non disponibile", "Errore",
+									JOptionPane.ERROR_MESSAGE);
 					}
-					
-					else
-						JOptionPane.showMessageDialog(null, "username non disponibile", "Errore", JOptionPane.ERROR_MESSAGE);
 
 				} catch (FileNotFoundException e1) {
 					JOptionPane.showMessageDialog(null, "Foto non trovata", "Errore", 2);

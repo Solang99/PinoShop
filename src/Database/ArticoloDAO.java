@@ -47,6 +47,7 @@ public class ArticoloDAO {
 			
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
+		connection.close();
 
 	
 	}
@@ -61,6 +62,9 @@ public class ArticoloDAO {
 			preparedStatement.setString(1, id);
 
 			preparedStatement.execute();
+			preparedStatement.close();
+		
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

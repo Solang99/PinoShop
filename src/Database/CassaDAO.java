@@ -34,6 +34,7 @@ public class CassaDAO {
 				
 				preparedStatement.executeUpdate();
 				preparedStatement.close();
+			
 		
 			
 			
@@ -65,6 +66,7 @@ public class CassaDAO {
 			
 			preparedStatement.execute();
 			preparedStatement.close();
+			
 		} catch (SQLException  e) {
 			
 			e.printStackTrace();

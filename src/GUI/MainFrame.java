@@ -41,83 +41,65 @@ public class MainFrame extends JFrame {
 	private JPanel contentPane;
 	private final DateChooserDialog dateChooserDialog = new DateChooserDialog();
 	private CenterPanel centralPanel;
-	private ProfilePanel profilePanel;
 	private CassaPanel cassaPanel;
-	private TopPanel topPanel;
 	private Controller controller;
-	private int mouseX,mouseY;
+	private ProfilePanel profilePanel;
+	
 	private CardLayout cardLayout;
 	private JPanel panelCards;
-	
+	private TopPanel topPanel;
 	
 	public MainFrame(Controller ctrl ) {
 		controller = ctrl;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
-		setSize(906, 685);
+		//setSize(906, 685);
 		setBounds(100, 100, 906, 685);
 		contentPane = new JPanel();
-		contentPane.setBorder(null);
+		contentPane.setBorder(new EmptyBorder(0, 1, 1, 0));
+		setLocationRelativeTo(null);
 		setContentPane(contentPane);
-		
-	
-		topPanel = new TopPanel(controller, this);
-//		topPanel.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//				mouseX= e.getX();
-//				mouseY = e.getY();
-//			}
-//		});
-//		topPanel.addMouseMotionListener(new MouseMotionAdapter() {
-//			@Override
-//			public void mouseDragged(MouseEvent e) {
-//				int x =e.getXOnScreen();
-//				int y = e.getYOnScreen();
-//				setLocation(x-mouseX,y-mouseY);
-//			}
-//		});
+
 		
 		
-		
-		
-		centralPanel = new CenterPanel(controller);
-		profilePanel = new ProfilePanel(controller);
-		cassaPanel = new CassaPanel(controller);
+		topPanel  = new TopPanel(controller, this);
+		contentPane.add(topPanel);
 		
 		
 		cardLayout = new CardLayout ();
 		panelCards = new JPanel();
 		panelCards.setLayout(cardLayout);
 		
+		centralPanel = new CenterPanel(controller);
+		cassaPanel = new CassaPanel(controller);
+		profilePanel = new ProfilePanel(controller);
+		
+		
 		panelCards.add(centralPanel,"centerPanel");
 		panelCards.add(profilePanel,"profilePanel");
 		panelCards.add(cassaPanel,"cassaPanel");
-		cardLayout.show(panelCards, "centerPanel");
-		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addGap(2)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panelCards, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 902, Short.MAX_VALUE)
-						.addComponent(topPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(2))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(topPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(3))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(3)
+					.addComponent(panelCards, GroupLayout.PREFERRED_SIZE, 902, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(5)
-					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(5)
-					.addComponent(panelCards, GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE)
-					.addContainerGap())
+					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panelCards, GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+					.addGap(0))
 		);
 		contentPane.setLayout(gl_contentPane);
-
+		
 	}
 	
 	
@@ -135,8 +117,7 @@ public class MainFrame extends JFrame {
 	
 	public void AggiornaHome() {
 		centralPanel.AggiornaHome();
-		topPanel.revalidate();
-		topPanel.getIgnoreRepaint();
+
 		
 	}
 	
@@ -148,6 +129,18 @@ public class MainFrame extends JFrame {
 		cassaPanel.revalidate();
 		cassaPanel.repaint();
 
+	}
+	
+	public void AggiornaSizeCassa(boolean isMax,int min,int max) {
+
+		cassaPanel.setComponetPerLine(isMax,min,max);
+	
+		
+	}
+	public void AggiornaSizeHome(boolean isMax,int min,int max) {
+		centralPanel.setComponetPerLine(isMax,min,max);
+	
+		
 	}
 	
 	

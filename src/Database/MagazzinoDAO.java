@@ -46,6 +46,7 @@ public class MagazzinoDAO {
 				
 				magazzino = new Magazzino();
 				magazzino.setArticolo(articoloList);
+			
 
 			} catch (SQLException | IOException e) {
 				e.printStackTrace();

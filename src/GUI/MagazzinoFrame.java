@@ -1,7 +1,6 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,17 +15,17 @@ import java.awt.Image;
 
 import javax.swing.JTextField;
 import java.awt.Color;
-import java.awt.Component;
 
 import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
+
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JButton;
-import java.awt.SystemColor;
+
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
@@ -35,31 +34,24 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
-import Database.ArticoloDAO;
-import Entita.Articolo;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.Dialog.ModalExclusionType;
-import java.awt.FlowLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
 
 public class MagazzinoFrame extends JFrame {
 
 	private JPanel contentPane;
 	private Controller controller;
-	private JButton btnFoto;
 	private JComboBox<String> comboBoxTaglia;
 	private JComboBox<String> comboBoxGenere;
 	private JComboBox<String> comboBoxCategoria;
@@ -83,6 +75,7 @@ public class MagazzinoFrame extends JFrame {
 	private SpinnerNumberModel modelQuantita;
 	private SpinnerNumberModel modelPrezzo;
 	private JButton btnCerca;
+	private JLabel lblFotoArticolo;
 	
 	public MagazzinoFrame(Controller ctrl) {
 		
@@ -122,7 +115,6 @@ public class MagazzinoFrame extends JFrame {
 	    table.setModel(model);
 	    model.fireTableDataChanged();
 	    scroll = new JScrollPane(table);
-	    scroll.setBounds(328, 10, 842, 531);
 	    table.setFillsViewportHeight(true);
 	   
 
@@ -137,60 +129,47 @@ public class MagazzinoFrame extends JFrame {
 	    
 	    
 		txtCollezione = new JTextField();
-		txtCollezione.setBounds(151, 326, 151, 20);
 		txtCollezione.setColumns(10);
 		txtCollezione.setBackground(new Color(191, 191, 191));
 		
 		txtColore = new JTextField();
-		txtColore.setBounds(151, 292, 151, 20);
 		txtColore.setColumns(10);
 		txtColore.setBackground(new Color(191, 191, 191));
 		
 		txtProduttore = new JTextField();
-		txtProduttore.setBounds(151, 256, 151, 20);
 		txtProduttore.setColumns(10);
 		txtProduttore.setBackground(new Color(191, 191, 191));
 		
 		txtCodice = new JTextField();
-		txtCodice.setBounds(151, 222, 151, 20);
 		txtCodice.setColumns(10);
 		txtCodice.setBackground(new Color(191, 191, 191));
 		
 		txtNome = new JTextField();
-		txtNome.setBounds(151, 186, 151, 20);
 		txtNome.setColumns(10);
 		txtNome.setBackground(new Color(191, 191, 191));
 		
 		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setBounds(15, 181, 87, 23);
 		lblNome.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblCodice = new JLabel("Codice:");
-		lblCodice.setBounds(15, 217, 87, 23);
 		lblCodice.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblProduttore = new JLabel("Produttore: ");
-		lblProduttore.setBounds(15, 253, 160, 23);
 		lblProduttore.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblColore = new JLabel("Colore:");
-		lblColore.setBounds(15, 287, 126, 23);
 		lblColore.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblCollezione = new JLabel("Collezione:");
-		lblCollezione.setBounds(15, 323, 126, 23);
 		lblCollezione.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblQuantita = new JLabel("Quantit\u00E0:");
-		lblQuantita.setBounds(15, 357, 126, 23);
 		lblQuantita.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblTaglia = new JLabel("Taglia:");
-		lblTaglia.setBounds(15, 426, 87, 30);
 		lblTaglia.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		comboBoxTaglia = new JComboBox<String>();
-		comboBoxTaglia.setBounds(147, 434, 110, 22);
 		tagliaModel = new DefaultComboBoxModel<String>(new String[] {"XS", "S", "M", "L", "XL", "XXL"});
 		comboBoxTaglia.setModel(tagliaModel);
 		comboBoxTaglia.setBackground(new Color(191, 191, 191));
@@ -198,62 +177,56 @@ public class MagazzinoFrame extends JFrame {
 		
 		modelQuantita = new SpinnerNumberModel(1, 1, 300, 1);
 		JSpinner spinnerQuantita = new JSpinner(modelQuantita);
-		spinnerQuantita.setBounds(151, 359, 75, 24);
 		spinnerQuantita.setForeground(Color.WHITE);
 		spinnerQuantita.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		spinnerQuantita.setBackground(new Color(191, 191, 191));
 		
 		JLabel lblImmagine = new JLabel("Immagine:");
-		lblImmagine.setBounds(15, 63, 126, 30);
 		lblImmagine.setFont(new Font("Segoe Print", Font.BOLD, 22));
-		
-		btnFoto = new JButton("");
-		btnFoto.setIcon(new ImageIcon(MagazzinoFrame.class.getResource("/IconRegister/addFoto.png")));
-		btnFoto.setBounds(151, 10, 160, 132);
-		
-		btnFoto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CaricaFoto();
-			}
-		});
-		btnFoto.setOpaque(false);
-		btnFoto.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		btnFoto.setContentAreaFilled(false);
-		btnFoto.setBorderPainted(false);
-		btnFoto.setBackground(SystemColor.menu);
 		
 		modelPrezzo = new SpinnerNumberModel(0.0, 0.0, 1000.0, 0.5);
 		JSpinner spinnerPrezzo = new JSpinner(modelPrezzo);
-		spinnerPrezzo.setBounds(151, 394, 75, 24);
 		spinnerPrezzo.setForeground(Color.WHITE);
 		spinnerPrezzo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		spinnerPrezzo.setBackground(new Color(191, 191, 191));
 		
-		JButton btnCancellaFoto = new JButton("Cancella");
-		btnCancellaFoto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnFoto.setIcon(new ImageIcon(MagazzinoFrame.class.getResource("/IconRegister/addFoto.png")));
-			}
-		});
-		btnCancellaFoto.setBounds(164, 147, 116, 23);
-		btnCancellaFoto.setForeground(Color.RED);
-		btnCancellaFoto.setFont(new Font("Segoe Print", Font.BOLD, 16));
+		JButton btnCancellaFoto = new JButton("");
+		Image cancellaFotoIcon;
+		try {
+			cancellaFotoIcon = ImageIO.read(MagazzinoFrame.class.getResource("/IconMagazzino/iconRemove.png"));
+			btnCancellaFoto.setIcon(new ImageIcon(cancellaFotoIcon.getScaledInstance(30, 30, Image.SCALE_AREA_AVERAGING)));
+			btnCancellaFoto.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Image defaultFoto = ImageIO.read(MagazzinoFrame .class.getResource("/IconRegister/notFound.png"));
+						lblFotoArticolo.setIcon(new ImageIcon(defaultFoto.getScaledInstance(94, 93, Image.SCALE_SMOOTH)));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
+				}
+			});
+			btnCancellaFoto.setOpaque(false);
+			btnCancellaFoto.setContentAreaFilled(false);
+			btnCancellaFoto.setBorderPainted(false);	
+			btnCancellaFoto.setFont(new Font("Segoe Print", Font.BOLD, 16));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 		
 		comboBoxGenere = new JComboBox<String>();
-		comboBoxGenere.setBounds(147, 467, 110, 22);
 		genereModel = new DefaultComboBoxModel<String>(new String[] {"MASCHILE", "FEMMINILE"});
 		comboBoxGenere.setModel(genereModel);
 		comboBoxGenere.setBackground(new Color(191, 191, 191));
 		
 		JLabel lblGenere = new JLabel("Genere:");
-		lblGenere.setBounds(15, 467, 87, 30);
 		lblGenere.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JButton btnAggiungi = new JButton("Aggiungi");
-	
-	
-	
-		btnAggiungi.setBounds(876, 567, 137, 40);
 
 		btnAggiungi.addMouseListener(new MouseAdapter() {
 			@Override
@@ -266,9 +239,6 @@ public class MagazzinoFrame extends JFrame {
 		btnAggiungi.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JButton btnCancella = new JButton("Cancella");
-	
-	
-		btnCancella.setBounds(482, 567, 126, 40);
 		btnCancella.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -288,7 +258,6 @@ public class MagazzinoFrame extends JFrame {
 		btnCancella.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		JLabel lblPrezzo = new JLabel("Prezzo:");
-		lblPrezzo.setBounds(10, 391, 87, 30);
 		lblPrezzo.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		btnCerca = new JButton("Cerca");
@@ -296,7 +265,6 @@ public class MagazzinoFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnCerca.setBounds(85, 567, 126, 40);
 		btnCerca.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -305,76 +273,218 @@ public class MagazzinoFrame extends JFrame {
 			}
 		});
 		btnCerca.setFont(new Font("Segoe Print", Font.BOLD, 22));
-		contentPane.setLayout(null);
-		contentPane.add(lblImmagine);
-		contentPane.add(btnFoto);
-		contentPane.add(btnCancellaFoto);
-		contentPane.add(lblNome);
-		contentPane.add(txtNome);
-		contentPane.add(lblCodice);
-		contentPane.add(txtCodice);
-		contentPane.add(txtProduttore);
-		contentPane.add(lblProduttore);
-		contentPane.add(lblColore);
-		contentPane.add(txtColore);
-		contentPane.add(lblCollezione);
-		contentPane.add(txtCollezione);
-		contentPane.add(lblQuantita);
-		contentPane.add(spinnerQuantita);
-		contentPane.add(lblPrezzo);
-		contentPane.add(spinnerPrezzo);
-		contentPane.add(lblTaglia);
-		contentPane.add(comboBoxTaglia);
-		contentPane.add(lblGenere);
-		contentPane.add(comboBoxGenere);
-		contentPane.add(scroll);
-		contentPane.add(btnCerca);
-		contentPane.add(btnCancella);
-		contentPane.add(btnAggiungi);
 		
 		JLabel lblTipo = new JLabel("Tipo:");
 		lblTipo.setFont(new Font("Segoe Print", Font.BOLD, 22));
-		lblTipo.setBounds(15, 508, 87, 30);
-		contentPane.add(lblTipo);
 		
 		comboBoxCategoria = new JComboBox<String>();
 		tipoModel = new DefaultComboBoxModel<String>(new String[] {"Maglieria" , "Pantaloni","Soprabiti","Scarpe","Accessori'"});
 		comboBoxCategoria.setModel(tipoModel);
 		comboBoxCategoria.setBackground(new Color(191, 191, 191));
-		comboBoxCategoria.setBounds(147, 508, 110, 22);
-		contentPane.add(comboBoxCategoria);
 		
-		
-		
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	private void CaricaFoto() {
-		JFileChooser fileChooser = new JFileChooser();
-		FileNameExtensionFilter fileExtensionFilter = new FileNameExtensionFilter("jpg","png");
-		fileChooser.setFileFilter(fileExtensionFilter);
-		int returnValue = fileChooser.showOpenDialog(null);
-		if (returnValue == JFileChooser.APPROVE_OPTION) {
-			fotoFile = fileChooser.getSelectedFile();
-			
-			try {
-				Image fotoImage = ImageIO.read(fotoFile);
-				ImageIcon fotoIcon = new ImageIcon(fotoImage);
-				btnFoto.setIcon(fotoIcon);
-			} catch (IOException e) {
-
-				JOptionPane.showMessageDialog(null, "Foto non valida", "Errore", 2);
-				e.printStackTrace();
+		JButton btnAddFoto = new JButton("");
+		btnAddFoto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				caricaFoto();
 			}
-
+		});
+		
+		try {
+			Image AddFotoIcon = ImageIO.read(MagazzinoFrame.class.getResource("/IconMagazzino/iconAdd.png"));
+			btnAddFoto.setIcon(new ImageIcon(AddFotoIcon.getScaledInstance(30, 30, Image.SCALE_AREA_AVERAGING)));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-			
+		btnAddFoto.setForeground(Color.RED);
+		btnAddFoto.setFont(new Font("Segoe Print", Font.BOLD, 16));
+		btnAddFoto.setOpaque(false);
+		btnAddFoto.setContentAreaFilled(false);
+		btnAddFoto.setBorderPainted(false);
+		
+		lblFotoArticolo = new JLabel("");
+		Image defaultFoto;
+		try {
+			defaultFoto = ImageIO.read(MagazzinoFrame .class.getResource("/IconRegister/notFound.png"));
+			lblFotoArticolo.setIcon(new ImageIcon(defaultFoto.getScaledInstance(94, 93, Image.SCALE_SMOOTH)));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(5)
+							.addComponent(lblImmagine, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+							.addGap(23)
+							.addComponent(lblFotoArticolo, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(154)
+							.addComponent(btnCancellaFoto, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+							.addGap(23)
+							.addComponent(btnAddFoto, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(5)
+							.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+							.addGap(49)
+							.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(5)
+							.addComponent(lblCodice, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+							.addGap(49)
+							.addComponent(txtCodice, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(5)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblProduttore, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(136)
+									.addComponent(txtProduttore, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(5)
+							.addComponent(lblColore, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(txtColore, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(5)
+							.addComponent(lblCollezione, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(txtCollezione, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(5)
+							.addComponent(lblQuantita, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(spinnerQuantita, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblPrezzo, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+							.addGap(54)
+							.addComponent(spinnerPrezzo, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(5)
+							.addComponent(lblTaglia, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+							.addGap(45)
+							.addComponent(comboBoxTaglia, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(5)
+							.addComponent(lblGenere, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+							.addGap(45)
+							.addComponent(comboBoxGenere, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(5)
+							.addComponent(lblTipo, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+							.addGap(45)
+							.addComponent(comboBoxCategoria, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)))
+					.addGap(26)
+					.addComponent(scroll, GroupLayout.DEFAULT_SIZE, 842, Short.MAX_VALUE)
+					.addGap(5))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(80)
+					.addComponent(btnCerca, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+					.addGap(271)
+					.addComponent(btnCancella, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+					.addGap(268)
+					.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(15)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(38)
+									.addComponent(lblImmagine, GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
+									.addGap(26))
+								.addComponent(lblFotoArticolo, GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
+							.addGap(11)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnCancellaFoto, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnAddFoto, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+							.addGap(11)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
+									.addGap(2))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(5)
+									.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGap(11)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblCodice, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
+									.addGap(2))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(5)
+									.addComponent(txtCodice, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGap(11)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblProduttore, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(3)
+									.addComponent(txtProduttore, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGap(11)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblColore, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
+									.addGap(2))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(5)
+									.addComponent(txtColore, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGap(11)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblCollezione, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(3)
+									.addComponent(txtCollezione, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGap(11)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblQuantita, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
+									.addGap(3))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(2)
+									.addComponent(spinnerQuantita, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGap(8)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblPrezzo, GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(3)
+									.addComponent(spinnerPrezzo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGap(5)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblTaglia, GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(8)
+									.addComponent(comboBoxTaglia, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
+							.addGap(11)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblGenere, GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
+								.addComponent(comboBoxGenere, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+							.addGap(11)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblTipo, GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
+								.addComponent(comboBoxCategoria, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+							.addGap(3))
+						.addComponent(scroll, GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE))
+					.addGap(26)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnCerca, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnCancella, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+					.addGap(17))
+		);
+		contentPane.setLayout(gl_contentPane);
+		
+		
+		
+		
 	}
 	
 	
@@ -403,7 +513,7 @@ public class MagazzinoFrame extends JFrame {
 		tipoModel.setSelectedItem(selectedTipo);
 		
 		ImageIcon image = (ImageIcon) table.getValueAt(selectedRow, 10);
-		btnFoto.setIcon(image);
+		lblFotoArticolo.setIcon(image);
 		
 	}
 	
@@ -431,9 +541,29 @@ public class MagazzinoFrame extends JFrame {
 			sq.printStackTrace();
 		}
 	}
+	
 
+	private void caricaFoto() {
+		JFileChooser fileChooser = new JFileChooser();
+		FileNameExtensionFilter fileExtensionFilter = new FileNameExtensionFilter("jpg","png");
+		fileChooser.setFileFilter(fileExtensionFilter);
+		int returnValue = fileChooser.showOpenDialog(null);
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			fotoFile = fileChooser.getSelectedFile();
+			
+			try {
+				Image fotoImage = ImageIO.read(fotoFile).getScaledInstance(94, 93, Image.SCALE_SMOOTH);
+				ImageIcon fotoIcon = new ImageIcon(fotoImage);
+				lblFotoArticolo.setIcon(fotoIcon);
+			} catch (IOException e) {
 
+				JOptionPane.showMessageDialog(null, "Foto non valida", "Errore", 2);
+				e.printStackTrace();
+			}
 
+		}
+			
+	}
 	
 }
 			

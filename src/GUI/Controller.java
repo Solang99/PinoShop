@@ -49,7 +49,7 @@ public class Controller {
 	private  CommessoDAO commessoDao;
 	private CassaDAO cassaDao;
 	public Commesso commesso;
-    private ArrayList<Articolo> articoli;
+    private ArrayList<Articolo> articoliList;
    
 	public ArrayList<ComponetArticolo> componetList;
 	public ArrayList<ComponetArticolo> cassaList;
@@ -67,7 +67,7 @@ public class Controller {
 		
 		
 
-//		
+		
 		loginFrame = new LoginFrame(controller);	
 		loginFrame.setVisible(true);
 
@@ -76,7 +76,7 @@ public class Controller {
 	
 	public Controller() {
 		selectItem = "all";
-		articoli = new ArrayList<Articolo>();
+		articoliList = new ArrayList<Articolo>();
 		componetList = new ArrayList<ComponetArticolo>();
 		cassaList = new ArrayList<ComponetArticolo>();
 		articoloDao = new ArticoloDAO();
@@ -111,13 +111,21 @@ public class Controller {
 		mainFrame.setVisible(true);
 	}
 	
-	public void GoToLoginFrame(JFrame frame) {
-		frame.dispose();
+	public void fromRegisterToLoginFrame() {
+		registerFrame.dispose();
 		loginFrame= new LoginFrame(this);
 		loginFrame.setVisible(true);
 		
 	}
-	
+	public void fromMainToLoginFrame() {
+		for(ComponetArticolo c : cassaList)
+			magazzinoDao.AddToMagazzino(c.getId(), c.getQuantita());
+		
+		mainFrame.dispose();
+		loginFrame= new LoginFrame(this);
+		loginFrame.setVisible(true);
+		
+	}
 	
 	
 	public void GoToRegisterFrame() {
@@ -141,10 +149,10 @@ public class Controller {
 
 	
 	public void Search(String id) {
-		mainFrame.dispose();
+		
 		selectItem=id;
-		mainFrame = new MainFrame(this);
-		mainFrame.setVisible(true);
+		mainFrame.AggiornaHome();
+
 	
 		
 
@@ -156,6 +164,16 @@ public class Controller {
 	
 	}
 
+	
+	public void resizeComponet(boolean isMax) {
+
+		
+		
+		mainFrame.AggiornaSizeCassa(isMax,1,2);
+		mainFrame.AggiornaSizeHome(isMax, 4, 6);
+		mainFrame.revalidate();
+		mainFrame.repaint();
+	}
 	
 	public void CreateUser(String nome,String cognome,String username,String password, 
 							Date dataNascita, Image foto,String email) {
@@ -170,7 +188,7 @@ public class Controller {
 
 	public DefaultTableModel FillTableMagazzinoModel(String id) {
 		tableMagazzino.setRowCount(0);
-		articoli.clear();
+		articoliList.clear();
 	
 		
 		String headers[] = {"Nome","id","Produttore","Taglia","Colore","Collezione","Disponibili","Prezzo","Genere","Categoria","Foto"};
@@ -181,22 +199,22 @@ public class Controller {
 		
 		
 		for (Articolo a : magazzinoDao.SearchByID(id))
-			articoli.add(a);
+			articoliList.add(a);
 		
-	    for (int i = 0 ; i< articoli.size();i++) {
+	    for (int i = 0 ; i< articoliList.size();i++) {
 	  
 	    
-	    	ImageIcon img = new ImageIcon (articoli.get(i).getFoto().getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH));
-	    	tableMagazzino.addRow(new Object[] {articoli.get(i).getNome() ,
-	    									articoli.get(i).getId(),
-	    									articoli.get(i).getProduttore(),
-	    									articoli.get(i).getTaglia(),
-	    									articoli.get(i).getColore(),
-	    									articoli.get(i).getCollezione(),
-	    									articoli.get(i).getQuantita(),
-	    									articoli.get(i).getPrezzo(),
-	    									articoli.get(i).getGenere(),
-	    									articoli.get(i).getCategoria(),									
+	    	ImageIcon img = new ImageIcon (articoliList.get(i).getFoto().getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH));
+	    	tableMagazzino.addRow(new Object[] {articoliList.get(i).getNome() ,
+	    									articoliList.get(i).getId(),
+	    									articoliList.get(i).getProduttore(),
+	    									articoliList.get(i).getTaglia(),
+	    									articoliList.get(i).getColore(),
+	    									articoliList.get(i).getCollezione(),
+	    									articoliList.get(i).getQuantita(),
+	    									articoliList.get(i).getPrezzo(),
+	    									articoliList.get(i).getGenere(),
+	    									articoliList.get(i).getCategoria(),									
 	    									img
 	    									});
 	    }
@@ -208,7 +226,7 @@ public class Controller {
 	public DefaultTableModel FillTableRecentiModel() {
 		
 		tableCassa.setRowCount(0);
-		articoli.clear();
+		articoliList.clear();
 	
 		
 		String headers[] = {"Codice Ordine","Commesso","Tipo pagamento","Pagamento dovuto","Pagamento versato","Resto"};
@@ -217,10 +235,9 @@ public class Controller {
 		
 		ArrayList<Cassa> recentiList = new ArrayList<Cassa>();
 		
-		for (Cassa c : cassaDao.getOrdini()) {
-			recentiList.add(c);
+		recentiList= cassaDao.getOrdini();
+		
 			
-		}
 		
 	    for (int i = 0 ; i< recentiList.size();i++) {
 	    	
@@ -262,9 +279,9 @@ public class Controller {
 		
 		selectItem="all";
 		
-		Image image;
+		 
 		try {
-			image = ImageIO.read(foto);
+			Image image = ImageIO.read(foto);
 			
 			mainFrame.AggiornaHome();
 			mainFrame.revalidate();
