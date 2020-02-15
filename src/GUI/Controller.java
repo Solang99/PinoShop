@@ -41,18 +41,17 @@ public class Controller {
 	private  RegisterFrame registerFrame;
 	private static  MainFrame mainFrame;
 	public Cassa cassa;
-	private MagazzinoFrame magazzinoFrame;
-	
+	private MagazzinoFrame magazzinoFrame;	
 	private  ArticoloDAO articoloDao; 
 	private   Magazzino magazzino;
 	private   MagazzinoDAO magazzinoDao;
 	private  CommessoDAO commessoDao;
 	private CassaDAO cassaDao;
 	public Commesso commesso;
-    private ArrayList<Articolo> articoliList;
-   
+	private ArrayList<Articolo> articoliList; 
 	public ArrayList<ComponetArticolo> componetList;
 	public ArrayList<ComponetArticolo> cassaList;
+	
 	private String selectItem ;
 	private  DefaultTableModel tableMagazzino;
 	private  DefaultTableModel tableCassa;
@@ -105,7 +104,7 @@ public class Controller {
 
 	}
 	
-	public void GoToMainFrame (JFrame frame) {
+	public void goToMainFrame (JFrame frame) {
 		frame.dispose();
 		mainFrame = new MainFrame(this);
 		mainFrame.setVisible(true);
@@ -119,7 +118,7 @@ public class Controller {
 	}
 	public void fromMainToLoginFrame() {
 		for(ComponetArticolo c : cassaList)
-			magazzinoDao.AddToMagazzino(c.getId(), c.getQuantita());
+			magazzinoDao.addToMagazzino(c.getId(), c.getQuantita());
 		
 		mainFrame.dispose();
 		loginFrame= new LoginFrame(this);
@@ -128,37 +127,37 @@ public class Controller {
 	}
 	
 	
-	public void GoToRegisterFrame() {
+	public void goToRegisterFrame() {
 		loginFrame.dispose();
 		registerFrame= new RegisterFrame(this);
 		registerFrame.setVisible(true);
 		
 	}
 	
-	public void GoToProfilePanel() {
+	public void goToProfilePanel() {
 		mainFrame.showProfile();
 	}
 	
-	public void GoToHomePanel() {
+	public void goToHomePanel() {
 		mainFrame.showHome();
 	}
-	public void GoToCassaPanel() {
+	public void goToCassaPanel() {
 		mainFrame.showCassa();
 	}
 	
 
 	
-	public void Search(String id) {
+	public void search(String id) {
 		
 		selectItem=id;
-		mainFrame.AggiornaHome();
+		mainFrame.aggiornaHome();
 
 	
 		
 
 	}
 	
-	public void GoToAddArticolo() {
+	public void goToAddArticolo() {
 		magazzinoFrame = new MagazzinoFrame(this);
 		magazzinoFrame.setVisible(true);
 	
@@ -169,24 +168,24 @@ public class Controller {
 
 		
 		
-		mainFrame.AggiornaSizeCassa(isMax,1,2);
-		mainFrame.AggiornaSizeHome(isMax, 4, 6);
+		mainFrame.aggiornaSizeCassa(isMax,1,2);
+		mainFrame.aggiornaSizeHome(isMax, 4, 6);
 		mainFrame.revalidate();
 		mainFrame.repaint();
 	}
 	
-	public void CreateUser(String nome,String cognome,String username,String password, 
+	public void createUser(String nome,String cognome,String username,String password, 
 							Date dataNascita, Image foto,String email) {
 		commesso = new Commesso(nome,cognome,username,password,dataNascita,foto,email);
 		
 	}
 	
-	public boolean UsernameAlredyExists(String username) {
+	public boolean usernameAlredyExists(String username) {
 		
 		return commessoDao.CheckUsername(username);
 	}
 
-	public DefaultTableModel FillTableMagazzinoModel(String id) {
+	public DefaultTableModel fillTableMagazzinoModel(String id) {
 		tableMagazzino.setRowCount(0);
 		articoliList.clear();
 	
@@ -198,7 +197,7 @@ public class Controller {
 		
 		
 		
-		for (Articolo a : magazzinoDao.SearchByID(id))
+		for (Articolo a : magazzinoDao.searchByID(id))
 			articoliList.add(a);
 		
 	    for (int i = 0 ; i< articoliList.size();i++) {
@@ -223,7 +222,7 @@ public class Controller {
 	    
 	}
 	
-	public DefaultTableModel FillTableRecentiModel() {
+	public DefaultTableModel fillTableRecentiModel() {
 		
 		tableCassa.setRowCount(0);
 		articoliList.clear();
@@ -257,40 +256,35 @@ public class Controller {
 	}
 	
 	//DATABASE
-	public void CreateAccount(String nome,String cognome,String username,char[] password,Calendar date,File fotoFile,String email) throws FileNotFoundException {
+	public void createAccount(String nome,String cognome,String username,char[] password,Calendar date,File fotoFile,String email) throws FileNotFoundException {
 		
 		String s = String.copyValueOf(password);
-		commessoDao.AddUser(nome, cognome,username, s, date, fotoFile, email);
+		commessoDao.addUser(nome, cognome,username, s, date, fotoFile, email);
 		
 	}
 
 	
-	public boolean LogIn(String username, char[] password) throws SQLException, IOException  {
+	public boolean logIn(String username, char[] password) throws SQLException, IOException  {
 		
 		String s = String.copyValueOf(password);
-		return commessoDao.LogInUser(username, s,this);
+		return commessoDao.logInUser(username, s,this);
 	}
 	
-	public DefaultTableModel  AddArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,String categoria,File foto) throws FileNotFoundException, SQLException {
+	
+	
+	public DefaultTableModel  addArticolo(String nome,String id, String produttore, String taglia, String colore, String collezione, int quantita, float prezzo,String genere,String categoria,File foto) throws FileNotFoundException, SQLException {
 		
-		articoloDao.InsertArticolo(nome,id, produttore, taglia, colore, collezione, quantita, prezzo, genere,categoria,foto);
-		tableMagazzino = FillTableMagazzinoModel(selectItem);
+		articoloDao.insertArticolo(nome,id, produttore, taglia, colore, collezione, quantita, prezzo, genere,categoria,foto);
+		tableMagazzino = fillTableMagazzinoModel(selectItem);
 		
 		
 		selectItem="all";
 		
-		 
-		try {
-			Image image = ImageIO.read(foto);
-			
-			mainFrame.AggiornaHome();
+	
+			mainFrame.aggiornaHome();
 			mainFrame.revalidate();
 			mainFrame.repaint();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
 		
 	
 		
@@ -300,23 +294,24 @@ public class Controller {
 	}
 	
 
-	public DefaultTableModel RemoveArticolo(String id) {
+	public DefaultTableModel removeArticolo(String id) {
 		
-		articoloDao.DeleteArticolo(id);
+		articoloDao.deleteArticolo(id);
 	
-		tableMagazzino = FillTableMagazzinoModel(selectItem);
+		tableMagazzino = fillTableMagazzinoModel(selectItem);
 		selectItem="all";
-		mainFrame.AggiornaHome();
+		mainFrame.aggiornaHome();
 		mainFrame.revalidate();
 		mainFrame.repaint();
 		return tableMagazzino;
 	}
+	
 	
 	public void aggiungiOrdine(String pagamentoType, float pagamentoDovuto, float pagamentoVersato,float resto) throws SQLException {
 		cassaDao.insertOrdine(pagamentoType, pagamentoDovuto, pagamentoVersato, resto,commesso.getUsername());
 		cassaList.clear();
 		
-		mainFrame.AggiornaCassa();
+		mainFrame.aggiornaCassa();
 		mainFrame.revalidate();
 		mainFrame.repaint();
 		
@@ -324,7 +319,7 @@ public class Controller {
 
 
 
-	public void RemoveFromCassa(String id,int quantita) {
+	public void removeFromCassa(String id,int quantita) {
 		
 	
 		 
@@ -332,7 +327,7 @@ public class Controller {
 		 for (int i = 0 ;  i<cassaList.size() ; i++) {
 
 			 if (cassaList.get(i).getId().equals(id)) {
-				 magazzinoDao.AddToMagazzino(id, quantita);
+				 magazzinoDao.addToMagazzino(id, quantita);
 				 if (cassaList.get(i).getQuantita() == quantita)
 					 cassaList.remove(i);
 				 else {
@@ -344,15 +339,17 @@ public class Controller {
 			
 			 
 		 }
-		 mainFrame.AggiornaCassa();
-		 mainFrame.AggiornaHome();
+		 mainFrame.aggiornaCassa();
+		 mainFrame.aggiornaHome();
 		 mainFrame.revalidate();
 		 mainFrame.repaint();
 
 	}
-	public void CloseAll() {
+	
+	
+	public void closeAll() {
 		for(ComponetArticolo c : cassaList)
-			magazzinoDao.AddToMagazzino(c.getId(), c.getQuantita());
+			magazzinoDao.addToMagazzino(c.getId(), c.getQuantita());
 		System.exit(0);
 	}
 	
@@ -360,7 +357,7 @@ public class Controller {
 		 componetList.clear();
 		
 		 
-		 for (Articolo a : magazzinoDao.SearchByID(selectItem))
+		 for (Articolo a : magazzinoDao.searchByID(selectItem))
 			 	componetList.add(new ComponetArticolo(a.getFoto(),a.getNome(),a.getId(),a.getPrezzo(),a.getQuantita(),this,0));
 		 return componetList;
 	}
@@ -368,10 +365,10 @@ public class Controller {
 	
 	
 	
-	public void FillCassaList(String id , int quantita){
+	public void fillCassaList(String id , int quantita){
 		
 		magazzinoDao.fillMagazzino(magazzino.getArticolo());
-		if ( !FindInCassaList(id, quantita)) { 
+		if ( !findInCassaList(id, quantita)) { 
 			for (int i = 0; i < magazzino.getArticolo().size(); i++) {
 
 				if (magazzino.getArticolo().get(i).getId().equals(id)) {
@@ -386,9 +383,9 @@ public class Controller {
 
 			} 
 		}
-		magazzinoDao.RemoveFromMagazzino(id, quantita);
-		mainFrame.AggiornaHome();
-		mainFrame.AggiornaCassa();
+		magazzinoDao.removeFromMagazzino(id, quantita);
+		mainFrame.aggiornaHome();
+		mainFrame.aggiornaCassa();
 		mainFrame.revalidate();
 		mainFrame.repaint();
 		
@@ -396,7 +393,7 @@ public class Controller {
 	
 
 	
-	public float TotaleCassa() {
+	public float totaleCassa() {
 		float totale = 0;
 		
 		 for (ComponetArticolo c : cassaList) {
@@ -407,7 +404,7 @@ public class Controller {
 	
 
 	
-	private boolean  FindInCassaList(String id, int quantita) {
+	private boolean  findInCassaList(String id, int quantita) {
 		for (ComponetArticolo c : cassaList)
 			if(c.getId().equals(id)) {
 				c.setQuantita( c.getQuantita() + quantita);

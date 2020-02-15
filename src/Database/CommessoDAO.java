@@ -20,12 +20,13 @@ public class CommessoDAO {
 	private Connection connection;
 	
 	private PreparedStatement preparedStatement;
+	
 	public CommessoDAO() {
 		connection = Connessione.getConnection();
 	}
 	 	
 	
-	public void AddUser(String nome,String cognome,String username,String password, Calendar date, File fotoFile,String email) throws FileNotFoundException {
+	public void addUser(String nome,String cognome,String username,String password, Calendar date, File fotoFile,String email) throws FileNotFoundException {
 		
 		try {
 			String query = "INSERT INTO commesso VALUES (?,?,?,?,?,?,?)";
@@ -59,7 +60,7 @@ public class CommessoDAO {
 		
 	}
 
-	public boolean LogInUser(String username, String password,Controller controller) throws SQLException, IOException {
+	public boolean logInUser(String username, String password,Controller controller) throws SQLException, IOException {
 			
 			String query ="SELECT * "
 							+ "FROM commesso "
@@ -85,7 +86,7 @@ public class CommessoDAO {
 				Image fotoUser = ImageIO.read(fotoStream);
 			
 			
-				controller.CreateUser(nomeUser,cognomeUser,usernameUser,passwordUser,dataNascitaUser,fotoUser,emailUser);
+				controller.createUser(nomeUser,cognomeUser,usernameUser,passwordUser,dataNascitaUser,fotoUser,emailUser);
 				
 				preparedStatement.close();
 			
@@ -114,7 +115,7 @@ public class CommessoDAO {
 			ResultSet risultato = preparedStatement.executeQuery();
 			if (risultato.next()) {		
 					preparedStatement.close();
-					connection.close();
+					
 					return true;
 			}
 		

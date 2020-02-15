@@ -22,6 +22,7 @@ public class CassaDAO {
 		connection = Connessione.getConnection();
 	}
 	
+	
 	public void insertOrdine(String pagamentoType, float pagamentoDovuto, float pagamentoVersato,float resto,String username) throws SQLException  {
 		String query = "INSERT INTO cassa(pagamento, pagamentodovuto, pagamentoversato, resto,usernamecommesso) VALUES (?::pagamento_type, ?, ?, ?,?);";
 	
@@ -58,7 +59,7 @@ public class CassaDAO {
 			
 
 			while (risultato.next()) {
-				Cassa a = CreaOrdine(risultato);
+				Cassa a = creaOrdine(risultato);
 				ordiniList.add(a);
 			
 
@@ -75,7 +76,7 @@ public class CassaDAO {
 		return ordiniList;
 	}
 	
-	private Cassa CreaOrdine(ResultSet risultato) throws SQLException {			
+	private Cassa creaOrdine(ResultSet risultato) throws SQLException {			
 		Cassa cassa = new Cassa();		
 		cassa.setPagamentoType(risultato.getString(1));
 		cassa.setPagamentoDovuto(risultato.getFloat(2));

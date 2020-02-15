@@ -71,7 +71,6 @@ public class TopPanel extends JPanel {
 					int x = e.getXOnScreen();
 					int y = e.getYOnScreen();
 					frame.setLocation(x - mouseX, y - mouseY);
-					System.out.println(state);
 				}
 			}
 		});
@@ -80,7 +79,7 @@ public class TopPanel extends JPanel {
 		btnLogo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.GoToHomePanel();
+				controller.goToHomePanel();
 			}
 		});
 		btnLogo.setOpaque(false);
@@ -104,7 +103,7 @@ public class TopPanel extends JPanel {
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.GoToProfilePanel();
+				controller.goToProfilePanel();
 			}
 		});
 		btnUser.setOpaque(false);
@@ -126,7 +125,7 @@ public class TopPanel extends JPanel {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.GoToCassaPanel();
+				controller.goToCassaPanel();
 			}
 		});
 		btnCarrello.setIcon(new ImageIcon(TopPanel.class.getResource("/IconTopPanel/icons8_shopping_cart_30px.png")));
@@ -138,7 +137,7 @@ public class TopPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				int dialogResult =JOptionPane.showConfirmDialog (null, "Sicuro di voler uscire? La cassa verra svuotata","Warning",JOptionPane.YES_NO_OPTION);
 				if (dialogResult == JOptionPane.YES_OPTION) {
-					controller.CloseAll();
+					controller.closeAll();
 				}
 			}
 		});
@@ -168,7 +167,7 @@ public class TopPanel extends JPanel {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.GoToAddArticolo();
+				controller.goToAddArticolo();
 			}
 		});
 		

@@ -30,7 +30,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
-public class CenterPanel extends JPanel {
+public class HomePanel extends JPanel {
 
 
 	private final JPanel panel = new JPanel();
@@ -42,7 +42,7 @@ public class CenterPanel extends JPanel {
 	private Controller controller;
 	private int componetPerLine;
 	
-	public CenterPanel(Controller ctrl) {
+	public HomePanel(Controller ctrl) {
 		componetPerLine =4;
 		controller = ctrl;
 		setBorder(null);
@@ -73,7 +73,7 @@ public class CenterPanel extends JPanel {
 //            
 //	    
 //		}
-		AggiornaHome();
+		aggiornaHome();
 		
         JScrollPane scrollPanel = new JScrollPane(innerPanel);
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -97,14 +97,14 @@ public class CenterPanel extends JPanel {
         btnCerca.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
-        		controller.Search(txtCerca.getText());
+        		controller.search(txtCerca.getText());
         	}
         });
         btnCerca.setOpaque(false);
         btnCerca.setContentAreaFilled(false);
         btnCerca.setBorderPainted(false);
 		btnCerca.setPreferredSize(new Dimension(50, 50));
-        ImageIcon searchIcon =   new ImageIcon(CenterPanel.class.getResource("/IconTopPanel/Group 1.png"));
+        ImageIcon searchIcon =   new ImageIcon(HomePanel.class.getResource("/IconTopPanel/Group 1.png"));
         btnCerca.setIcon(new ImageIcon(searchIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
      
       
@@ -130,7 +130,7 @@ public class CenterPanel extends JPanel {
 	
 	}
 	
-	public void AggiornaHome() {
+	public void aggiornaHome() {
 		
         ArrayList<ComponetArticolo> component = controller.FillComponentList();
         innerPanel.removeAll();
@@ -155,7 +155,7 @@ public class CenterPanel extends JPanel {
 		else
 			this.componetPerLine = min;
 		
-		AggiornaHome();
+		aggiornaHome();
 		
 	}
 

@@ -136,7 +136,7 @@ public class LoginFrame extends JFrame {
 		lblRegistrati.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.GoToRegisterFrame();
+				controller.goToRegisterFrame();
 			}
 		});
 		lblRegistrati.addMouseMotionListener(new MouseMotionAdapter() {
@@ -187,9 +187,9 @@ public class LoginFrame extends JFrame {
 	
 	private void CheckLogin() {
 		try {
-			boolean find = controller.LogIn(textUsername.getText(), passwordField.getPassword());
+			boolean find = controller.logIn(textUsername.getText(), passwordField.getPassword());
 			if (find) {
-				controller.GoToMainFrame(this);
+				controller.goToMainFrame(this);
 				
 			}
 			else

@@ -40,7 +40,7 @@ public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
 	private final DateChooserDialog dateChooserDialog = new DateChooserDialog();
-	private CenterPanel centralPanel;
+	private HomePanel homePanel;
 	private CassaPanel cassaPanel;
 	private Controller controller;
 	private ProfilePanel profilePanel;
@@ -71,12 +71,12 @@ public class MainFrame extends JFrame {
 		panelCards = new JPanel();
 		panelCards.setLayout(cardLayout);
 		
-		centralPanel = new CenterPanel(controller);
+		homePanel = new HomePanel(controller);
 		cassaPanel = new CassaPanel(controller);
 		profilePanel = new ProfilePanel(controller);
 		
 		
-		panelCards.add(centralPanel,"centerPanel");
+		panelCards.add(homePanel,"homePanel");
 		panelCards.add(profilePanel,"profilePanel");
 		panelCards.add(cassaPanel,"cassaPanel");
 		
@@ -112,33 +112,33 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void showHome(){
-		cardLayout.show(panelCards, "centerPanel");
+		cardLayout.show(panelCards, "homePanel");
 	}
 	
-	public void AggiornaHome() {
-		centralPanel.AggiornaHome();
+	public void aggiornaHome() {
+		homePanel.aggiornaHome();
 
 		
 	}
 	
-	public void AggiornaCassa() {
+	public void aggiornaCassa() {
 		
 		
-		cassaPanel.AggiornaCassa();
+		cassaPanel.aggiornaCassa();
 	
 		cassaPanel.revalidate();
 		cassaPanel.repaint();
 
 	}
 	
-	public void AggiornaSizeCassa(boolean isMax,int min,int max) {
+	public void aggiornaSizeCassa(boolean isMax,int min,int max) {
 
 		cassaPanel.setComponetPerLine(isMax,min,max);
 	
 		
 	}
-	public void AggiornaSizeHome(boolean isMax,int min,int max) {
-		centralPanel.setComponetPerLine(isMax,min,max);
+	public void aggiornaSizeHome(boolean isMax,int min,int max) {
+		homePanel.setComponetPerLine(isMax,min,max);
 	
 		
 	}

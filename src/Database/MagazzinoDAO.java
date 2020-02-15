@@ -35,7 +35,7 @@ public class MagazzinoDAO {
 				articoloList.clear();
 
 				while (risultato.next()) {
-					Articolo a = CreateArticolo(risultato);
+					Articolo a = createArticolo(risultato);
 					articoloList.add(a);
 
 				}
@@ -55,7 +55,7 @@ public class MagazzinoDAO {
 
 		}
 		
-		public ArrayList<Articolo> SearchByID(String id){
+		public ArrayList<Articolo> searchByID(String id){
 			String query = "select * FROM selectAllOrFilter (?);";	
 
 			ArrayList<Articolo> itemFilter = new ArrayList<Articolo>();
@@ -71,7 +71,7 @@ public class MagazzinoDAO {
 				
 
 				while (risultato.next()) {
-					Articolo a = CreateArticolo(risultato);
+					Articolo a = createArticolo(risultato);
 					itemFilter.add(a);
 				
 
@@ -90,7 +90,7 @@ public class MagazzinoDAO {
 			return itemFilter;
 		}
 		
-		public void RemoveFromMagazzino(String id, int quantita) {
+		public void removeFromMagazzino(String id, int quantita) {
 			String query = "UPDATE articolo SET quantita = quantita - ? WHERE codA = ?";	
 			
 			try {
@@ -114,7 +114,7 @@ public class MagazzinoDAO {
 		}
 		
 		
-		public void AddToMagazzino(String id, int quantita) {
+		public void addToMagazzino(String id, int quantita) {
 			String query = "UPDATE articolo SET quantita = quantita + ? WHERE codA = ?";	
 			
 			try {
@@ -139,7 +139,7 @@ public class MagazzinoDAO {
 		
 		
 		
-		private Articolo CreateArticolo(ResultSet risultato) throws SQLException, IOException {			
+		private Articolo createArticolo(ResultSet risultato) throws SQLException, IOException {			
 			Articolo articolo = new Articolo();																
 			articolo.setNome(risultato.getString(1));													
 			articolo.setId(risultato.getString(2));														

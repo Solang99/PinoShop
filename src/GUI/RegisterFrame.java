@@ -195,14 +195,14 @@ public class RegisterFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
-					boolean UsernameExists = controller.UsernameAlredyExists(textUsername.getText());
+					boolean UsernameExists = controller.usernameAlredyExists(textUsername.getText());
 				
-					if (VerifyFields()) {
+					if (verifyFields()) {
 						if (!UsernameExists ) {
-							controller.CreateAccount(textNome.getText(), textCognome.getText(), textUsername.getText(),
+							controller.createAccount(textNome.getText(), textCognome.getText(), textUsername.getText(),
 									passwordField.getPassword(), dateChooserCombo.getSelectedDate(), fotoFile,
 									textEmail.getText());
-							controller.GoToMainFrame(thisFrame);
+							controller.goToMainFrame(thisFrame);
 
 						}
 
@@ -290,7 +290,7 @@ public class RegisterFrame extends JFrame {
 		btnAddPhoto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				CaricaFoto();
+				caricaFoto();
 			}
 		});
 		btnAddPhoto.addMouseMotionListener(new MouseMotionAdapter() {
@@ -310,7 +310,7 @@ public class RegisterFrame extends JFrame {
 	}
 	
 	
-	private boolean VerifyFields() {
+	private boolean verifyFields() {
 		String nome = textNome.getText();
 		String cognome = textCognome.getText();
 		String username = textUsername.getText();
@@ -336,7 +336,7 @@ public class RegisterFrame extends JFrame {
 		}
 	}
 	
-	private void CaricaFoto() {
+	private void caricaFoto() {
 		JFileChooser fileChooser = new JFileChooser();
 		FileNameExtensionFilter fileExtensionFilter = new FileNameExtensionFilter("jpg","png");
 		fileChooser.setFileFilter(fileExtensionFilter);

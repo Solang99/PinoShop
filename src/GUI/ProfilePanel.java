@@ -76,9 +76,9 @@ public class ProfilePanel extends JPanel {
 		 btnRecenti.addMouseListener(new MouseAdapter() {
 		 	@Override
 		 	public void mouseClicked(MouseEvent e) {
-		 		SetColor(btnRecenti);
-		 		ResetColor(btnProfilo);
-		 		ResetColor(btnLogOut);
+		 		setColor(btnRecenti);
+		 		resetColor(btnProfilo);
+		 		resetColor(btnLogOut);
 		 		cardLayout.show(panelCards, "recenti");
 		 	}
 		 });
@@ -103,9 +103,9 @@ public class ProfilePanel extends JPanel {
 		btnProfilo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				SetColor(btnProfilo);
-				ResetColor(btnRecenti);
-				ResetColor(btnLogOut);
+				setColor(btnProfilo);
+				resetColor(btnRecenti);
+				resetColor(btnLogOut);
 				cardLayout.show(panelCards, "profile");
 				
 			}
@@ -125,9 +125,9 @@ public class ProfilePanel extends JPanel {
 		btnLogOut.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				SetColor(btnLogOut);
-				ResetColor(btnProfilo);
-				ResetColor(btnRecenti);
+				setColor(btnLogOut);
+				resetColor(btnProfilo);
+				resetColor(btnRecenti);
 				int dialogResult =JOptionPane.showConfirmDialog (null, "Sicuro di voler effettuare il LogOut? La cassa verra svuotata","Warning",JOptionPane.YES_NO_OPTION);
 				if (dialogResult == JOptionPane.YES_OPTION) {
 					controller.fromMainToLoginFrame();
@@ -156,7 +156,7 @@ public class ProfilePanel extends JPanel {
 		
 
 		
-		model = controller.FillTableRecentiModel();
+		model = controller.fillTableRecentiModel();
 	    table = new JTable(){
 
 			@Override
@@ -288,10 +288,10 @@ public class ProfilePanel extends JPanel {
 
 	}
 	
-	private void SetColor(JButton btn) {
+	private void setColor(JButton btn) {
 		btn.setBackground(new Color(131,181,160));
 	}
-	private void ResetColor (JButton btn) {
+	private void resetColor (JButton btn) {
 		btn.setBackground(new Color(155, 220, 193));
 	}
 }

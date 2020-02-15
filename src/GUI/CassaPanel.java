@@ -279,7 +279,7 @@ public class CassaPanel extends JPanel {
 	
 	
 		private String setTotale() {
-			totale = controller.TotaleCassa();
+			totale = controller.totaleCassa();
 			Float totaleWrapper = totale;
 			return totaleWrapper.toString();
 		}
@@ -312,14 +312,9 @@ public class CassaPanel extends JPanel {
 
 	
 		
-		public void AggiornaCassa() {
+		public void aggiornaCassa() {
 	  
-	       
-	        
-	       
-			
-	    
-	        
+
 	        innerPanel.removeAll();
 	        ArrayList<ComponetArticolo> cassaComponet = controller.cassaList;
 			for ( int i = cassaComponet.size()-1; i >= 0;i--) {
@@ -344,8 +339,6 @@ public class CassaPanel extends JPanel {
 				this.componetPerLine = max;
 			else
 				this.componetPerLine = min;
-			
-			AggiornaCassa();
 			
 		}
 

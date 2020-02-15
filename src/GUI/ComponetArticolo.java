@@ -109,8 +109,8 @@ public class ComponetArticolo extends JPanel {
 			btnEdit.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					controller.GoToAddArticolo();
-					controller.FillTableMagazzinoModel(id);
+					controller.goToAddArticolo();
+					controller.fillTableMagazzinoModel(id);
 				}
 			});
 		
@@ -146,7 +146,7 @@ public class ComponetArticolo extends JPanel {
 					JOptionPane.showMessageDialog(null, "Articolo Rimosso");
 					selectedQuantia = Integer.parseInt(spinnerQuantita.getValue().toString());
 				
-					controller.RemoveFromCassa(id,selectedQuantia);
+					controller.removeFromCassa(id,selectedQuantia);
 					spinnerQuantita.setValue(quantita);
 				}
 		
@@ -177,7 +177,7 @@ public class ComponetArticolo extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					JOptionPane.showMessageDialog(null, "Articolo Aggiunto");
 					selectedQuantia = Integer.parseInt(spinnerQuantita.getValue().toString());
-					controller.FillCassaList(id,selectedQuantia);
+					controller.fillCassaList(id,selectedQuantia);
 					  
 				}
 		

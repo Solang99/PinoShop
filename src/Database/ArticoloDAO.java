@@ -25,7 +25,7 @@ public class ArticoloDAO {
 	}
 	
 	
-	public void InsertArticolo(String nome,String id,String produttore,String taglia,String colore, String collezione,int quantita, float prezzo,
+	public void insertArticolo(String nome,String id,String produttore,String taglia,String colore, String collezione,int quantita, float prezzo,
 							String genere,String categoria, File fotoFile) throws SQLException, FileNotFoundException {
 		
 			String query = "INSERT INTO articolo VALUES (?,?,?,?::taglia_type,?,?,?,?,?::genere_type,?,?);";
@@ -47,13 +47,12 @@ public class ArticoloDAO {
 			
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
-		connection.close();
 
 	
 	}
 
 
-	public void DeleteArticolo(String id) {
+	public void deleteArticolo(String id) {
 
 		try {
 			String query = "DELETE FROM articolo WHERE coda = ?;";

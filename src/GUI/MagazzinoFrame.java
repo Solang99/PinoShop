@@ -91,7 +91,7 @@ public class MagazzinoFrame extends JFrame {
 		setContentPane(contentPane);
 		
 
-	    model = controller.FillTableMagazzinoModel("all");
+	    model = controller.fillTableMagazzinoModel("all");
 	    table = new JTable(){
 
 			@Override
@@ -247,7 +247,7 @@ public class MagazzinoFrame extends JFrame {
 					int[] selectedRows = table.getSelectedRows();
 					if (selectedRows.length > 0) {
 						for (int i = selectedRows.length - 1; i >= 0; i--) {
-							controller.RemoveArticolo(table.getValueAt(selectedRows[i], 1).toString());
+							controller.removeArticolo(table.getValueAt(selectedRows[i], 1).toString());
 						}
 					} 
 				}
@@ -268,7 +268,7 @@ public class MagazzinoFrame extends JFrame {
 		btnCerca.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				model = controller.FillTableMagazzinoModel(txtCodice.getText());
+				model = controller.fillTableMagazzinoModel(txtCodice.getText());
 				
 			}
 		});
@@ -527,7 +527,7 @@ public class MagazzinoFrame extends JFrame {
 		
 		try {
 			
-			model = controller.AddArticolo(txtNome.getText(),txtCodice.getText(), txtProduttore.getText(), selectedTaglia, txtColore.getText(), 
+			model = controller.addArticolo(txtNome.getText(),txtCodice.getText(), txtProduttore.getText(), selectedTaglia, txtColore.getText(), 
 								 txtCollezione.getText(),selectedQuantita ,selectedPrezzo,selectedGenere,selectedCategoira, fotoFile);
 		
 				JOptionPane.showMessageDialog(null, "Articolo aggiunto correttamentoe", "Errore", JOptionPane.INFORMATION_MESSAGE
