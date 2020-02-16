@@ -33,6 +33,8 @@ import java.net.URL;
 import datechooser.beans.DateChooserCombo;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class RegisterFrame extends JFrame {
 
@@ -160,23 +162,55 @@ public class RegisterFrame extends JFrame {
 		
 
 		textNome = new JTextField();
+		textNome.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (textNome.getText().length() >= 20 ) 
+			            e.consume(); 
+			}
+		});
 		textNome.setBounds(69, 134, 143, 20);
-		textNome.setColumns(10);
+		
 		textNome.setBackground(new Color(191, 191, 191));
 		panel.add(textNome);
 		
 		textEmail = new JTextField();
 		textEmail.setBounds(298, 217, 143, 20);
-		textEmail.setColumns(10);
+		textEmail.setColumns(30);
+		textEmail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (textEmail.getText().length() >= 30 ) 
+			            e.consume(); 
+			}
+		});
 		textEmail.setBackground(new Color(191, 191, 191));
 		panel.add(textEmail);
 		
 		passwordField = new JPasswordField();
+		passwordField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (passwordField.getText().length() >= 20 ) 
+					e.consume(); 
+				
+			}
+		});
+		passwordField.setColumns(50);
 		passwordField.setBounds(69, 312, 143, 20);
 		passwordField.setBackground(new Color(191, 191, 191));
 		panel.add(passwordField);
 		
 		passwordField_r = new JPasswordField();
+		passwordField_r.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (passwordField_r.getText().length() >= 20 ) 
+					e.consume(); 
+				
+			}
+		});
+		passwordField_r.setColumns(50);
 		passwordField_r.setBounds(298, 312, 143, 20);
 		passwordField_r.setBackground(new Color(191, 191, 191));
 		panel.add(passwordField_r);
@@ -190,25 +224,35 @@ public class RegisterFrame extends JFrame {
 			}
 		});
 		btnlogin.setBounds(223, 539, 54, 48);
-		JFrame thisFrame = this;
+	
 		btnlogin.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
-					boolean UsernameExists = controller.usernameAlredyExists(textUsername.getText());
+					boolean usernameExists = controller.usernameAlreadyExists(textUsername.getText());
+					boolean emailExists = controller.usernameAlreadyExists(textUsername.getText());
 				
 					if (verifyFields()) {
-						if (!UsernameExists ) {
+						if (!usernameExists  || !emailExists) {
 							controller.createAccount(textNome.getText(), textCognome.getText(), textUsername.getText(),
 									passwordField.getPassword(), dateChooserCombo.getSelectedDate(), fotoFile,
 									textEmail.getText());
-							controller.goToMainFrame(thisFrame);
+							JOptionPane.showMessageDialog(null, "account creato");
+							controller.fromRegisterToLoginFrame();
+				
 
 						}
 
-						else
-							JOptionPane.showMessageDialog(null, "username non disponibile", "Errore",
-									JOptionPane.ERROR_MESSAGE);
+						else { 
+							if (usernameExists)
+									JOptionPane.showMessageDialog(null, "username non disponibile", "Errore",
+											JOptionPane.ERROR_MESSAGE);
+							else
+								JOptionPane.showMessageDialog(null, "Email gia in uso", "Errore",
+										JOptionPane.ERROR_MESSAGE);
+						}	
+							
+							
 					}
 
 				} catch (FileNotFoundException e1) {
@@ -248,7 +292,15 @@ public class RegisterFrame extends JFrame {
 		panel.add(btnclose);
 		
 		textCognome = new JTextField();
-		textCognome.setColumns(10);
+		
+		textCognome.setColumns(20);
+		textCognome.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (textCognome.getText().length() >= 20 ) 
+			            e.consume(); 
+			}
+		});
 		textCognome.setBackground(new Color(191, 191, 191));
 		textCognome.setBounds(300, 134, 143, 20);
 		panel.add(textCognome);
@@ -261,7 +313,14 @@ public class RegisterFrame extends JFrame {
 		panel.add(lblCognome);
 		
 		textUsername = new JTextField();
-		textUsername.setColumns(10);
+		textUsername.setColumns(20);
+		textUsername.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (textUsername.getText().length() >= 20 ) 
+			            e.consume(); 
+			}
+		});
 		textUsername.setBackground(new Color(191, 191, 191));
 		textUsername.setBounds(67, 217, 143, 20);
 		panel.add(textUsername);
@@ -317,10 +376,10 @@ public class RegisterFrame extends JFrame {
 		String email = textEmail.getText();
 		String password = String.valueOf(passwordField.getPassword());
 		String confirmpass = String.valueOf(passwordField_r.getPassword());
-		String dataNascita = " ";
+		String dataNascita = dateChooserCombo.getText();
 		
 		if(username.trim().equals("") || email.trim().equals("") || password.trim().equals("") || confirmpass.trim().equals("") 
-				|| nome.trim().equals("") || cognome.trim().equals("")) {
+				|| nome.trim().equals("") || cognome.trim().equals("") || dataNascita.equals("")){
 			JOptionPane.showMessageDialog(null, "Uno o più campi sono vuoti", "Campi vuoti",2);
 			return false;
 		}
@@ -329,17 +388,19 @@ public class RegisterFrame extends JFrame {
 			return false;
 		}
 		else {
-			JOptionPane.showMessageDialog(null, "Account creato");
-			if(!dateChooserCombo.getText().equals("")) 
-				dataNascita = dateChooserCombo.getText();
+	
 			return true;
 		}
+		
+		
+		
 	}
 	
 	private void caricaFoto() {
 		JFileChooser fileChooser = new JFileChooser();
 		FileNameExtensionFilter fileExtensionFilter = new FileNameExtensionFilter("jpg","png");
 		fileChooser.setFileFilter(fileExtensionFilter);
+		
 		int returnValue = fileChooser.showOpenDialog(null);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 					fotoFile = fileChooser.getSelectedFile();
@@ -347,6 +408,7 @@ public class RegisterFrame extends JFrame {
 					try {
 						fotoImage = ImageIO.read(fotoFile);
 						btnAddPhoto.setIcon(new ImageIcon(fotoImage.getScaledInstance(btnAddPhoto.getWidth(), btnAddPhoto.getHeight(), Image.SCALE_SMOOTH)));
+					
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

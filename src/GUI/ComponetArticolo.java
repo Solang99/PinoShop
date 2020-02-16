@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -16,6 +17,8 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.SoftBevelBorder;
@@ -35,12 +38,12 @@ public class ComponetArticolo extends JPanel {
 	private String nome;
 	private int tipo;
 	private int quantita;
-	private int selectedQuantia;
+	private int selectedQuantita;
 	private SpinnerNumberModel modelQuantita;
 	private Controller controller;
 	private JSpinner spinnerQuantita;
 	
-	public ComponetArticolo(Image foto , String nome,String id, float prezzo ,int quantia,Controller ctrl,int tipo) {
+	public ComponetArticolo(Image foto , String nome,String id, float prezzo ,int quantita,Controller ctrl,int tipo) {
 		
 		controller = ctrl; 
 		setSize(211, 174);
@@ -48,7 +51,7 @@ public class ComponetArticolo extends JPanel {
 		this.id= id;
 		this.tipo=tipo;
 		this.nome= nome;
-		this.quantita = quantia;
+		this.quantita = quantita;
 		setBorder(new LineBorder(new Color(44, 85, 69), 1, true));
 		setLayout(null);
 		setPreferredSize(new Dimension(211, 174));
@@ -93,7 +96,7 @@ public class ComponetArticolo extends JPanel {
 		
 		if (tipo == 0) {
 			
-			CheckPresenza(quantia);
+			CheckPresenza(quantita);
 			
 			spinnerQuantita = new JSpinner(modelQuantita);
 			spinnerQuantita.setForeground(Color.WHITE);
@@ -111,6 +114,12 @@ public class ComponetArticolo extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					controller.goToAddArticolo();
 					controller.fillTableMagazzinoModel(id);
+				}
+			});
+			btnEdit.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 			});
 		
@@ -144,9 +153,9 @@ public class ComponetArticolo extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JOptionPane.showMessageDialog(null, "Articolo Rimosso");
-					selectedQuantia = Integer.parseInt(spinnerQuantita.getValue().toString());
+					selectedQuantita = Integer.parseInt(spinnerQuantita.getValue().toString());
 				
-					controller.removeFromCassa(id,selectedQuantia);
+					controller.removeFromCassa(id,selectedQuantita);
 					spinnerQuantita.setValue(quantita);
 				}
 		
@@ -155,6 +164,12 @@ public class ComponetArticolo extends JPanel {
 			btnRimuovi.setContentAreaFilled(false);
 			btnRimuovi.setBorderPainted(false);
 			btnRimuovi.setBounds(87, 140, 33, 23);
+			btnRimuovi.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					btnRimuovi.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				}
+			});
 			btnRimuovi.setIcon(new ImageIcon(ComponetArticolo.class.getResource("/IconComponentArticolo/25pxRemove.png")));
 			add(btnRimuovi);
 		}
@@ -176,8 +191,8 @@ public class ComponetArticolo extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JOptionPane.showMessageDialog(null, "Articolo Aggiunto");
-					selectedQuantia = Integer.parseInt(spinnerQuantita.getValue().toString());
-					controller.fillCassaList(id,selectedQuantia);
+					selectedQuantita = Integer.parseInt(spinnerQuantita.getValue().toString());
+					controller.fillCassaList(id,selectedQuantita);
 					  
 				}
 		
@@ -186,6 +201,12 @@ public class ComponetArticolo extends JPanel {
 			btnAggiungi.setContentAreaFilled(false);
 			btnAggiungi.setBorderPainted(false);
 			btnAggiungi.setBounds(168, 143, 33, 23);
+			btnAggiungi.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					btnAggiungi.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				}
+			});
 			btnAggiungi.setIcon(new ImageIcon(ComponetArticolo.class.getResource("/IconComponentArticolo/25pxadd.png")));
 			add(btnAggiungi);
 		}

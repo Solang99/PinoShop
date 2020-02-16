@@ -30,6 +30,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -130,22 +132,57 @@ public class MagazzinoFrame extends JFrame {
 	    
 		txtCollezione = new JTextField();
 		txtCollezione.setColumns(10);
+		txtCollezione.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (txtCollezione.getText().length() >= 20 ) 
+			            e.consume(); 
+			}
+		});
 		txtCollezione.setBackground(new Color(191, 191, 191));
 		
 		txtColore = new JTextField();
 		txtColore.setColumns(10);
+		txtColore.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (txtColore.getText().length() >= 10 ) 
+			            e.consume(); 
+			}
+		});
 		txtColore.setBackground(new Color(191, 191, 191));
 		
 		txtProduttore = new JTextField();
 		txtProduttore.setColumns(10);
+		txtProduttore.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (txtProduttore.getText().length() >= 20 ) 
+			            e.consume(); 
+			}
+		});
 		txtProduttore.setBackground(new Color(191, 191, 191));
 		
 		txtCodice = new JTextField();
 		txtCodice.setColumns(10);
+		txtCodice.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (txtCodice.getText().length() >= 20 ) 
+			            e.consume(); 
+			}
+		});
 		txtCodice.setBackground(new Color(191, 191, 191));
 		
 		txtNome = new JTextField();
 		txtNome.setColumns(10);
+		txtNome.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (txtNome.getText().length() >= 20 ) 
+			            e.consume(); 
+			}
+		});
 		txtNome.setBackground(new Color(191, 191, 191));
 		
 		JLabel lblNome = new JLabel("Nome:");

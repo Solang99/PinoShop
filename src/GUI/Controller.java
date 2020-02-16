@@ -2,7 +2,7 @@ package GUI;
 
 
 
-//TODO vedi register -> verify-Field
+
 
 
 import java.awt.Image;
@@ -180,10 +180,16 @@ public class Controller {
 		
 	}
 	
-	public boolean usernameAlredyExists(String username) {
+	public boolean usernameAlreadyExists(String username) {
 		
-		return commessoDao.CheckUsername(username);
+		return commessoDao.checkUsername(username);
 	}
+	
+	public boolean validEmail(String email) {
+		
+		return commessoDao.checkEmail(email);
+	}
+
 
 	public DefaultTableModel fillTableMagazzinoModel(String id) {
 		tableMagazzino.setRowCount(0);
