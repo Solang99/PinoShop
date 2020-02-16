@@ -25,14 +25,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
 import datechooser.beans.DateChooserCombo;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -229,8 +226,8 @@ public class RegisterFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
-					boolean usernameExists = controller.usernameAlreadyExists(textUsername.getText());
-					boolean emailExists = controller.usernameAlreadyExists(textUsername.getText());
+					boolean usernameExists = controller.usernameAlredyExists(textUsername.getText());
+					boolean emailExists = controller.usernameAlredyExists(textUsername.getText());
 				
 					if (verifyFields()) {
 						if (!usernameExists  || !emailExists) {

@@ -38,12 +38,12 @@ public class ComponetArticolo extends JPanel {
 	private String nome;
 	private int tipo;
 	private int quantita;
-	private int selectedQuantita;
+	private int selectedQuantia;
 	private SpinnerNumberModel modelQuantita;
 	private Controller controller;
 	private JSpinner spinnerQuantita;
 	
-	public ComponetArticolo(Image foto , String nome,String id, float prezzo ,int quantita,Controller ctrl,int tipo) {
+	public ComponetArticolo(Image foto , String nome,String id, float prezzo ,int quantia,Controller ctrl,int tipo) {
 		
 		controller = ctrl; 
 		setSize(211, 174);
@@ -51,7 +51,7 @@ public class ComponetArticolo extends JPanel {
 		this.id= id;
 		this.tipo=tipo;
 		this.nome= nome;
-		this.quantita = quantita;
+		this.quantita = quantia;
 		setBorder(new LineBorder(new Color(44, 85, 69), 1, true));
 		setLayout(null);
 		setPreferredSize(new Dimension(211, 174));
@@ -96,7 +96,7 @@ public class ComponetArticolo extends JPanel {
 		
 		if (tipo == 0) {
 			
-			CheckPresenza(quantita);
+			CheckPresenza(quantia);
 			
 			spinnerQuantita = new JSpinner(modelQuantita);
 			spinnerQuantita.setForeground(Color.WHITE);
@@ -153,9 +153,9 @@ public class ComponetArticolo extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JOptionPane.showMessageDialog(null, "Articolo Rimosso");
-					selectedQuantita = Integer.parseInt(spinnerQuantita.getValue().toString());
+					selectedQuantia = Integer.parseInt(spinnerQuantita.getValue().toString());
 				
-					controller.removeFromCassa(id,selectedQuantita);
+					controller.removeFromCassa(id,selectedQuantia);
 					spinnerQuantita.setValue(quantita);
 				}
 		
@@ -191,8 +191,8 @@ public class ComponetArticolo extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JOptionPane.showMessageDialog(null, "Articolo Aggiunto");
-					selectedQuantita = Integer.parseInt(spinnerQuantita.getValue().toString());
-					controller.fillCassaList(id,selectedQuantita);
+					selectedQuantia = Integer.parseInt(spinnerQuantita.getValue().toString());
+					controller.fillCassaList(id,selectedQuantia);
 					  
 				}
 		

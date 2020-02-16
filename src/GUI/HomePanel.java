@@ -24,8 +24,7 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 
 import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -33,7 +32,7 @@ import java.awt.event.MouseEvent;
 public class HomePanel extends JPanel {
 
 
-	private final JPanel panel = new JPanel();
+	private final JPanel topPanel = new JPanel();
 	private JTextField txtCerca;
 	private JPanel innerPanel;
 
@@ -76,21 +75,21 @@ public class HomePanel extends JPanel {
 		aggiornaHome();
 		
         JScrollPane scrollPanel = new JScrollPane(innerPanel);
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         
-        JPanel panel_1 = new JPanel();
-        panel_1.setPreferredSize(new Dimension(400, 50));
-        panel.add(panel_1);
-        panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        JPanel centerPanel = new JPanel();
+        centerPanel.setPreferredSize(new Dimension(400, 50));
+        topPanel.add(centerPanel);
+        centerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         
         JLabel lblCerca = new JLabel("Cerca");
         
         lblCerca.setFont(new Font("Segoe Print", Font.PLAIN, 24));
-        panel_1.add(lblCerca);
+        centerPanel.add(lblCerca);
         
         txtCerca = new JTextField();
         txtCerca.setColumns(20);
-        panel_1.add(txtCerca);
+        centerPanel.add(txtCerca);
         
         JButton btnCerca = new JButton();
   
@@ -108,18 +107,18 @@ public class HomePanel extends JPanel {
         btnCerca.setIcon(new ImageIcon(searchIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
      
       
-        panel_1.add(btnCerca);
+        centerPanel.add(btnCerca);
         
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addComponent(panel, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+        		.addComponent(topPanel, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
         		.addComponent(scrollPanel, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
         );
         groupLayout.setVerticalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
         		.addGroup(groupLayout.createSequentialGroup()
-        			.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap(240, Short.MAX_VALUE))
         		.addGroup(groupLayout.createSequentialGroup()
         			.addGap(59)

@@ -4,10 +4,9 @@ package GUI;
 
 
 
-
 import java.awt.Image;
 import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,15 +14,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.imageio.ImageIO;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.Icon;
+
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTable;
+
 import javax.swing.table.DefaultTableModel;
 
 import Database.ArticoloDAO;
@@ -139,6 +134,7 @@ public class Controller {
 	}
 	
 	public void goToHomePanel() {
+		selectItem="all";
 		mainFrame.showHome();
 	}
 	public void goToCassaPanel() {
@@ -150,7 +146,11 @@ public class Controller {
 	public void search(String id) {
 		
 		selectItem=id;
+		
 		mainFrame.aggiornaHome();
+		mainFrame.revalidate();
+		mainFrame.repaint();
+		
 
 	
 		
@@ -180,7 +180,7 @@ public class Controller {
 		
 	}
 	
-	public boolean usernameAlreadyExists(String username) {
+	public boolean usernameAlredyExists(String username) {
 		
 		return commessoDao.checkUsername(username);
 	}

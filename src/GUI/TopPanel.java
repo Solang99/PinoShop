@@ -19,15 +19,12 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Image;
 
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+
 import javax.swing.JOptionPane;
-import javax.swing.JMenu;
-import javax.swing.UIManager;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.BoxLayout;
 import java.awt.Component;
 import javax.swing.border.MatteBorder;
 
@@ -255,6 +252,7 @@ public class TopPanel extends JPanel {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				controller.search("all");
 				controller.goToHomePanel();
 			}
 		});

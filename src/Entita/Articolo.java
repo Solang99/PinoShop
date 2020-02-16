@@ -1,7 +1,7 @@
 package Entita;
 
 import java.awt.Image;
-import java.io.File;
+
 
 public class Articolo {
 		private String nome;

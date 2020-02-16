@@ -1,7 +1,7 @@
 package Database;
 
 import java.awt.Image;
-import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -113,10 +113,34 @@ public class MagazzinoDAO {
 
 		}
 		
+		
+		public void addToMagazzino(String id, int quantita) {
+			String query = "UPDATE articolo SET quantita = quantita + ? WHERE codA = ?";	
+			
+			try {
+				
+						
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setInt(1, quantita);
+				preparedStatement.setString(2, id);
+				
+			
+			
 
 		
+				preparedStatement.execute();
+				preparedStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 		
 		
+		
+		
+			
 		
 		
 		private Articolo createArticolo(ResultSet risultato) throws SQLException, IOException {			
