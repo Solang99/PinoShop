@@ -5,7 +5,7 @@
 ## - Sviluppato con
    -    GUI : Java Swing
    -    DBMS: Postgresql
-   -    Mokup : Axure
+   -    Mockup : Axure
 
 ## - Autori
    -    Angelo solimeno 
