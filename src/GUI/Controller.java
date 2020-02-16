@@ -2,12 +2,11 @@ package GUI;
 
 
 
-//TODO vedi register -> verify-Field
 
 
 import java.awt.Image;
 import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,15 +14,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.imageio.ImageIO;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.Icon;
+
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTable;
+
 import javax.swing.table.DefaultTableModel;
 
 import Database.ArticoloDAO;
@@ -34,7 +29,7 @@ import Entita.Articolo;
 import Entita.Cassa;
 import Entita.Commesso;
 import Entita.Magazzino;
-import GUI.ComponetArticolo;
+import GUI.ComponentArticolo;
 
 public class Controller {
 	private static LoginFrame loginFrame;
@@ -49,8 +44,8 @@ public class Controller {
 	private CassaDAO cassaDao;
 	public Commesso commesso;
 	private ArrayList<Articolo> articoliList; 
-	public ArrayList<ComponetArticolo> componetList;
-	public ArrayList<ComponetArticolo> cassaList;
+	public ArrayList<ComponentArticolo> componetList;
+	public ArrayList<ComponentArticolo> cassaList;
 	
 	private String selectItem ;
 	private  DefaultTableModel tableMagazzino;
@@ -76,8 +71,8 @@ public class Controller {
 	public Controller() {
 		selectItem = "all";
 		articoliList = new ArrayList<Articolo>();
-		componetList = new ArrayList<ComponetArticolo>();
-		cassaList = new ArrayList<ComponetArticolo>();
+		componetList = new ArrayList<ComponentArticolo>();
+		cassaList = new ArrayList<ComponentArticolo>();
 		articoloDao = new ArticoloDAO();
 		commessoDao = new CommessoDAO();
 		
@@ -117,7 +112,7 @@ public class Controller {
 		
 	}
 	public void fromMainToLoginFrame() {
-		for(ComponetArticolo c : cassaList)
+		for(ComponentArticolo c : cassaList)
 			magazzinoDao.addToMagazzino(c.getId(), c.getQuantita());
 		
 		mainFrame.dispose();
@@ -139,6 +134,7 @@ public class Controller {
 	}
 	
 	public void goToHomePanel() {
+		selectItem="all";
 		mainFrame.showHome();
 	}
 	public void goToCassaPanel() {
@@ -150,7 +146,11 @@ public class Controller {
 	public void search(String id) {
 		
 		selectItem=id;
+		
 		mainFrame.aggiornaHome();
+		mainFrame.revalidate();
+		mainFrame.repaint();
+		
 
 	
 		
@@ -180,10 +180,16 @@ public class Controller {
 		
 	}
 	
-	public boolean usernameAlredyExists(String username) {
+	public boolean usernameAlreadyExists(String username) {
 		
-		return commessoDao.CheckUsername(username);
+		return commessoDao.checkUsername(username);
 	}
+	
+	public boolean validEmail(String email) {
+		
+		return commessoDao.checkEmail(email);
+	}
+
 
 	public DefaultTableModel fillTableMagazzinoModel(String id) {
 		tableMagazzino.setRowCount(0);
@@ -348,17 +354,17 @@ public class Controller {
 	
 	
 	public void closeAll() {
-		for(ComponetArticolo c : cassaList)
+		for(ComponentArticolo c : cassaList)
 			magazzinoDao.addToMagazzino(c.getId(), c.getQuantita());
 		System.exit(0);
 	}
 	
-	public ArrayList<ComponetArticolo> FillComponentList(){
+	public ArrayList<ComponentArticolo> FillComponentList(){
 		 componetList.clear();
 		
 		 
 		 for (Articolo a : magazzinoDao.searchByID(selectItem))
-			 	componetList.add(new ComponetArticolo(a.getFoto(),a.getNome(),a.getId(),a.getPrezzo(),a.getQuantita(),this,0));
+			 	componetList.add(new ComponentArticolo(a.getFoto(),a.getNome(),a.getId(),a.getPrezzo(),a.getQuantita(),this,0));
 		 return componetList;
 	}
 	
@@ -373,7 +379,7 @@ public class Controller {
 
 				if (magazzino.getArticolo().get(i).getId().equals(id)) {
 
-					cassaList.add(new ComponetArticolo(magazzino.getArticolo().get(i).getFoto(),
+					cassaList.add(new ComponentArticolo(magazzino.getArticolo().get(i).getFoto(),
 							magazzino.getArticolo().get(i).getNome(), magazzino.getArticolo().get(i).getId(),
 							magazzino.getArticolo().get(i).getPrezzo(), quantita, this, 1));
 
@@ -396,7 +402,7 @@ public class Controller {
 	public float totaleCassa() {
 		float totale = 0;
 		
-		 for (ComponetArticolo c : cassaList) {
+		 for (ComponentArticolo c : cassaList) {
 			totale+=c.getPrezzo()*c.getQuantita();
 		}
 		return totale;
@@ -405,7 +411,7 @@ public class Controller {
 
 	
 	private boolean  findInCassaList(String id, int quantita) {
-		for (ComponetArticolo c : cassaList)
+		for (ComponentArticolo c : cassaList)
 			if(c.getId().equals(id)) {
 				c.setQuantita( c.getQuantita() + quantita);
 

@@ -1,9 +1,7 @@
 package Entita;
 
-import java.awt.Image;
 import java.util.ArrayList;
 
-import Database.MagazzinoDAO;
 
 public class Magazzino {
 	private ArrayList<Articolo> articolo ;

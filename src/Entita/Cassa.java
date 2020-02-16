@@ -1,6 +1,5 @@
 package Entita;
 
-import java.util.ArrayList;
 
 public class Cassa {
 	private int numeroOrdine;

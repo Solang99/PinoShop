@@ -104,12 +104,40 @@ public class CommessoDAO {
 	
 	
 	
-	public boolean CheckUsername(String username) {
+	public boolean checkUsername(String username) {
 		
 		String query ="SELECT * FROM commesso WHERE \"username\"  = ? ";
 		try {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, username);
+			preparedStatement.executeQuery();
+
+			ResultSet risultato = preparedStatement.executeQuery();
+			if (risultato.next()) {		
+					preparedStatement.close();
+					
+					return true;
+			}
+		
+			else {
+					preparedStatement.close();
+					
+					return false; 
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+	
+	public boolean checkEmail(String email) {
+		
+		String query ="SELECT * FROM commesso WHERE mail  = ? ";
+		try {
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, email);
 			preparedStatement.executeQuery();
 
 			ResultSet risultato = preparedStatement.executeQuery();

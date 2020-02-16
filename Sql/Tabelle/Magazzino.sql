@@ -6,7 +6,8 @@ CREATE TABLE magazzino (
   codMagazzino BIGSERIAL PRIMARY KEY,
   reparto VARCHAR (30),
   capacita INTEGER ,
-  coda VARCHAR(30),   
+  coda VARCHAR(30),
+  quantita INTEGER,   
   constraint fk_coda FOREIGN KEY (coda) REFERENCES articolo(coda) on delete cascade
 );
 

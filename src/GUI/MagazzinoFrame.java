@@ -30,6 +30,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -130,22 +132,58 @@ public class MagazzinoFrame extends JFrame {
 	    
 		txtCollezione = new JTextField();
 		txtCollezione.setColumns(10);
+		txtCollezione.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (txtCollezione.getText().length() >= 20 ) 
+			            e.consume(); 
+			}
+		});
 		txtCollezione.setBackground(new Color(191, 191, 191));
 		
 		txtColore = new JTextField();
 		txtColore.setColumns(10);
+		txtColore.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (txtColore.getText().length() >= 10 ) 
+			            e.consume(); 
+			}
+		});
 		txtColore.setBackground(new Color(191, 191, 191));
 		
 		txtProduttore = new JTextField();
 		txtProduttore.setColumns(10);
+		txtProduttore.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (txtProduttore.getText().length() >= 20 ) 
+			            e.consume(); 
+			}
+		});
 		txtProduttore.setBackground(new Color(191, 191, 191));
 		
 		txtCodice = new JTextField();
+		txtCodice.setToolTipText("Cerca \"all\" per azzerare i filtri");
 		txtCodice.setColumns(10);
+		txtCodice.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (txtCodice.getText().length() >= 20 ) 
+			            e.consume(); 
+			}
+		});
 		txtCodice.setBackground(new Color(191, 191, 191));
 		
 		txtNome = new JTextField();
 		txtNome.setColumns(10);
+		txtNome.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			       if (txtNome.getText().length() >= 20 ) 
+			            e.consume(); 
+			}
+		});
 		txtNome.setBackground(new Color(191, 191, 191));
 		
 		JLabel lblNome = new JLabel("Nome:");
@@ -261,6 +299,7 @@ public class MagazzinoFrame extends JFrame {
 		lblPrezzo.setFont(new Font("Segoe Print", Font.BOLD, 22));
 		
 		btnCerca = new JButton("Cerca");
+		btnCerca.setToolTipText("Ricerca per id");
 		btnCerca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -283,6 +322,7 @@ public class MagazzinoFrame extends JFrame {
 		comboBoxCategoria.setBackground(new Color(191, 191, 191));
 		
 		JButton btnAddFoto = new JButton("");
+	
 		btnAddFoto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -405,9 +445,9 @@ public class MagazzinoFrame extends JFrame {
 								.addComponent(lblFotoArticolo, GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
 							.addGap(11)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnCancellaFoto, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnAddFoto, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-							.addGap(11)
+								.addComponent(btnAddFoto, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnCancellaFoto))
+							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)

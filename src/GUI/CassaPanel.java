@@ -9,7 +9,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,17 +20,15 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.BoxLayout;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Color;
+import java.awt.Cursor;
 
 public class CassaPanel extends JPanel {
 	
@@ -86,12 +84,16 @@ public class CassaPanel extends JPanel {
         lblTipoPagamento.setBounds(33, 11, 199, 30);
         
         checkBoxContanti = new JCheckBox("Contanti");
-        checkBoxContanti.setFont(new Font("Segoe Print", Font.PLAIN, 18));
+        checkBoxContanti.setFont(new Font("Segoe Print", Font.PLAIN, 25));
         
         checkBoxCarta = new JCheckBox("Carta di Credito");
-        checkBoxCarta.setFont(new Font("Segoe Print", Font.PLAIN, 18));
+        checkBoxCarta.setFont(new Font("Segoe Print", Font.PLAIN, 25));
         
         JButton btnPaga = new JButton("Paga");
+        btnPaga.setBorderPainted(false);
+        btnPaga.setFont(new Font("Segoe Print", Font.PLAIN, 25));
+        btnPaga.setForeground(Color.WHITE);
+        btnPaga.setBackground(new Color (98, 156, 133));
         btnPaga.setIcon(new ImageIcon(CassaPanel.class.getResource("/IconCassaFrame/iconPaga.png")));
 
 	        btnPaga.addMouseListener(new MouseAdapter() {
@@ -120,8 +122,23 @@ public class CassaPanel extends JPanel {
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "Tipo pagamento non valido", "Errore", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
-					}
+					}		
+	        	
+	        				
+	        	
 	       
+	        		
+	        	}
+	        	@Override
+	        	public void mouseEntered(MouseEvent e) {
+	        	       btnPaga.setBackground(new Color (238,232,170));
+	        	       btnPaga.setForeground(Color.BLACK);
+	        	       btnPaga.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	        	}
+	        	@Override
+	        	public void mouseExited(MouseEvent e) {
+	        	    btnPaga.setBackground(new Color (98, 156, 133));
+	        	    btnPaga.setForeground(Color.WHITE);
 	        		
 	        	}
 	        });
@@ -236,40 +253,39 @@ public class CassaPanel extends JPanel {
 	        panelDati.setLayout(gl_panelDati);
 	        GroupLayout gl_panelTipoPagamento = new GroupLayout(panelTipoPagamento);
 	        gl_panelTipoPagamento.setHorizontalGroup(
-	        	gl_panelTipoPagamento.createParallelGroup(Alignment.TRAILING)
+	        	gl_panelTipoPagamento.createParallelGroup(Alignment.LEADING)
 	        		.addGroup(gl_panelTipoPagamento.createSequentialGroup()
-	        			.addGap(27)
-	        			.addComponent(checkBoxContanti, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
-	        			.addGap(45)
-	        			.addComponent(checkBoxCarta)
-	        			.addContainerGap(164, Short.MAX_VALUE))
+	        			.addGap(32)
+	        			.addGroup(gl_panelTipoPagamento.createParallelGroup(Alignment.LEADING)
+	        				.addGroup(gl_panelTipoPagamento.createSequentialGroup()
+	        					.addComponent(checkBoxContanti, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE)
+	        					.addGap(36)
+	        					.addComponent(checkBoxCarta))
+	        				.addGroup(gl_panelTipoPagamento.createSequentialGroup()
+	        					.addGap(70)
+	        					.addComponent(IconContanti, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+	        					.addGap(227)
+	        					.addComponent(IconcCartaCredito, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))
+	        			.addContainerGap())
 	        		.addGroup(gl_panelTipoPagamento.createSequentialGroup()
-	        			.addGap(63)
-	        			.addComponent(IconContanti, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-	        			.addGap(149)
-	        			.addComponent(IconcCartaCredito, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-	        			.addContainerGap(220, Short.MAX_VALUE))
-	        		.addGroup(gl_panelTipoPagamento.createSequentialGroup()
-	        			.addGap(133)
+	        			.addGap(150)
 	        			.addComponent(btnPaga, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-	        			.addGap(220))
+	        			.addGap(203))
 	        );
 	        gl_panelTipoPagamento.setVerticalGroup(
 	        	gl_panelTipoPagamento.createParallelGroup(Alignment.LEADING)
 	        		.addGroup(gl_panelTipoPagamento.createSequentialGroup()
-	        			.addGap(69)
-	        			.addGroup(gl_panelTipoPagamento.createParallelGroup(Alignment.LEADING)
+	        			.addGap(49)
+	        			.addGroup(gl_panelTipoPagamento.createParallelGroup(Alignment.BASELINE)
 	        				.addComponent(checkBoxContanti, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
 	        				.addComponent(checkBoxCarta, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE))
-	        			.addGap(7)
+	        			.addGap(8)
 	        			.addGroup(gl_panelTipoPagamento.createParallelGroup(Alignment.LEADING)
-	        				.addGroup(gl_panelTipoPagamento.createSequentialGroup()
-	        					.addGap(1)
-	        					.addComponent(IconContanti, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+	        				.addComponent(IconContanti, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 	        				.addComponent(IconcCartaCredito, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-	        			.addGap(22)
-	        			.addComponent(btnPaga, GroupLayout.PREFERRED_SIZE, 38, Short.MAX_VALUE)
-	        			.addGap(36))
+	        			.addGap(60)
+	        			.addComponent(btnPaga, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+	        			.addContainerGap())
 	        );
 	        panelTipoPagamento.setLayout(gl_panelTipoPagamento);
 	        panel.setLayout(gl_panel);
@@ -316,7 +332,7 @@ public class CassaPanel extends JPanel {
 	  
 
 	        innerPanel.removeAll();
-	        ArrayList<ComponetArticolo> cassaComponet = controller.cassaList;
+	        ArrayList<ComponentArticolo> cassaComponet = controller.cassaList;
 			for ( int i = cassaComponet.size()-1; i >= 0;i--) {
 				
 				innerConstraints.gridwidth =4;
@@ -339,6 +355,7 @@ public class CassaPanel extends JPanel {
 				this.componetPerLine = max;
 			else
 				this.componetPerLine = min;
+			aggiornaCassa();
 			
 		}
 

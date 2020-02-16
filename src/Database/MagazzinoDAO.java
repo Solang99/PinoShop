@@ -1,7 +1,7 @@
 package Database;
 
 import java.awt.Image;
-import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -137,6 +137,10 @@ public class MagazzinoDAO {
 
 		}
 		
+		
+		
+		
+			
 		
 		
 		private Articolo createArticolo(ResultSet risultato) throws SQLException, IOException {			

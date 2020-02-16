@@ -126,8 +126,6 @@ public class MainFrame extends JFrame {
 		
 		cassaPanel.aggiornaCassa();
 	
-		cassaPanel.revalidate();
-		cassaPanel.repaint();
 
 	}
 	
