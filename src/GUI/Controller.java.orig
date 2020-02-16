@@ -185,10 +185,16 @@ public class Controller {
 		return commessoDao.checkUsername(username);
 	}
 	
-
+	public boolean validEmail(String email) {
+		
+<<<<<<< HEAD
+=======
+		return commessoDao.checkUsername(username);
+	}
 	
 	public boolean validEmail(String email) {
-
+		
+>>>>>>> 15fdc43714fa9755abf8b20a643423e134cdc05e
 		return commessoDao.checkEmail(email);
 	}
 

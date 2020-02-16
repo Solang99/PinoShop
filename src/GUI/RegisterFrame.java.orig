@@ -226,10 +226,14 @@ public class RegisterFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
-
+<<<<<<< HEAD
 					boolean usernameExists = controller.usernameAlreadyExists(textUsername.getText());
-					boolean emailExists = controller.validEmail(textEmail.getText());
-
+					boolean emailExists = controller.usernameAlreadyExists(textUsername.getText());
+=======
+					boolean usernameExists = controller.usernameAlredyExists(textUsername.getText());
+					boolean emailExists = controller.usernameAlredyExists(textUsername.getText());
+>>>>>>> 15fdc43714fa9755abf8b20a643423e134cdc05e
+				
 					if (verifyFields()) {
 						if (!usernameExists  || !emailExists) {
 							controller.createAccount(textNome.getText(), textCognome.getText(), textUsername.getText(),

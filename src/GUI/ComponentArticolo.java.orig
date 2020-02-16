@@ -174,10 +174,11 @@ public class ComponentArticolo extends JPanel {
 					btnRimuovi.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 			});
-
+<<<<<<< HEAD:src/GUI/ComponentArticolo.java
 			btnRimuovi.setIcon(new ImageIcon(ComponentArticolo.class.getResource("/IconComponentArticolo/25pxRemove.png")));
-
-
+=======
+			btnRimuovi.setIcon(new ImageIcon(ComponetArticolo.class.getResource("/IconComponentArticolo/25pxRemove.png")));
+>>>>>>> 15fdc43714fa9755abf8b20a643423e134cdc05e:src/GUI/ComponetArticolo.java
 			add(btnRimuovi);
 		}
 		
@@ -214,9 +215,11 @@ public class ComponentArticolo extends JPanel {
 					btnAggiungi.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 			});
-
+<<<<<<< HEAD:src/GUI/ComponentArticolo.java
 			btnAggiungi.setIcon(new ImageIcon(ComponentArticolo.class.getResource("/IconComponentArticolo/25pxadd.png")));
-
+=======
+			btnAggiungi.setIcon(new ImageIcon(ComponetArticolo.class.getResource("/IconComponentArticolo/25pxadd.png")));
+>>>>>>> 15fdc43714fa9755abf8b20a643423e134cdc05e:src/GUI/ComponetArticolo.java
 			add(btnAggiungi);
 		}
 	}
