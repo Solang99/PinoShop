@@ -1,4 +1,4 @@
-# Pino Abbigliametno  Software per la gestione di un negozio di abbigliamento
+# Pino Abbigliamento  Software per la gestione di un negozio di abbigliamento
 
 [Project Presentation](https://github.com/Soli99/PinoShop/blob/master/Pdf%20Unico.pdf)
 
